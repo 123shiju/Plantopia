@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/famm/css/user/login.css" type="text/html">
+  <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" >
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" >
+
+  <title>Login page</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      background-image: url(/famm/img/loginpage/tropical-leaves-plants-background_161844-342.avif);
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body>
+  <form action="" method="post">
+  <div class="flex justify-center items-center min-h-screen bg-indigo-700" style="background-image: url(/famm/img/loginpage/tropical-leaves-plants-background_161844-342.avif);">
+    <div class="card transition-all h-auto p-4 w-96 relative bg-white rounded-lg">
+      <div class="user h-full w-full flex">    
+        <div class="signup w-full transition-all">
+            <hr class="mt-5">
+            <div class="relative"> <input class="text-sm border border-indigo-100 px-2 rounded-lg w-full h-12 mt-7 transition-all focus:border-blue-400 outline-none" type="email" placeholder="Enter your email" name="email" required> <span class="text-pink-800 text-sm absolute top-2 left-0"  style="color: #256e03;">Email</span> 
+              <label  style="display: none;" id="errorEmail"><u style="color: red;"> Email is required</u></label>
+            </div>
+            <div class="relative"> <input class="signup_pass text-sm border border-indigo-100 px-2 rounded-lg w-full pr-12 h-12 mt-7 transition-all focus:border-blue-400 outline-none" type="password" placeholder="Enter your password" name="password" required> <span class="text-pink-800 text-sm absolute top-2 left-0"  style="color: #256e03;">Password
+              <label  style="display: none;" id="errorPassword"><u style="color: red;"> password is required</u></label>
+            </div>
+             <button class="signup_btn mt-5 h-12 w-full outline-none bg-blue-500 rounded-lg text-sm text-white hover:bg-blue-600 transition-all"  onclick="login()" style="background: #70c745;;">Log in</button>
+             <p class="text-sm text-center text-pink-800 mt-6">Create new account<br> <a class="login_page text-blue-600" href="/register" styel="color:green">sign up</a></p>
+            <hr class="mt-5">
+            <% 
+            if(typeof message !=='undefined' ){
+              %>
+              <p style="color: rgb(248, 22, 14);"><%= message %></p>
+              <%
+            } 
+            %>
+        </div>
+      </div>    
+    </div>   
+</div>
+</form>
+<script>
+  $(document).ready(function () {
+      $("#email").blur(function () {
+        var text = $(this).val();
+    
+        var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+        if (!emailRegex.test(text) || text.length < 4) {
+          $("#errorEmail").show();
+        } else {
+          $("#errorEmail").hide();
+        }
+      });
+    });
+
+  $(document).ready(function(){
+    $("#password").blur(function(){
+        var text=$(this).val()
+    if(text.length<4){
+  
+        $("#errorPassword").show()
+    }else{
+        $("#errorPassword").hide()
+    }
+    })
+  })
+  </script>
+    
+</body>
+</html>

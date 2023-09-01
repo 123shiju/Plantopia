@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>plantopia</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/famm/img/core-img/company_logo.png">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="/famm/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif
+        }
+
+        .container {
+            margin: 30px auto;
+        }
+
+        .container .card {
+            width: 100%;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            background: #fff;
+            border-radius: 0px;
+        }
+
+        body {
+            background: #eee
+        }
+
+
+
+        .btn.btn-primary {
+            background-color: #ddd;
+            color: black;
+            box-shadow: none;
+            border: none;
+            font-size: 20px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .btn.btn-primary:focus {
+            box-shadow: none;
+        }
+
+        .container .card .img-box {
+            width: 80px;
+            height: 50px;
+        }
+
+        .container .card img {
+            width: 100%;
+            object-fit: fill;
+        }
+
+        .container .card .number {
+            font-size: 24px;
+        }
+
+        .container .card-body .btn.btn-primary .fab.fa-cc-paypal {
+            font-size: 32px;
+            color: #3333f7;
+        }
+
+        .fab.fa-cc-amex {
+            color: #1c6acf;
+            font-size: 32px;
+        }
+
+        .fab.fa-cc-mastercard {
+            font-size: 32px;
+            color: red;
+        }
+
+        .fab.fa-cc-discover {
+            font-size: 32px;
+            color: orange;
+        }
+
+        .c-green {
+            color: green;
+        }
+
+        .box {
+            height: 40px;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ddd;
+        }
+
+        .btn.btn-primary.payment {
+            background-color: #1c6acf;
+            color: white;
+            border-radius: 0px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+
+        .form__div {
+            height: 50px;
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 45px;
+            font-size: 14px;
+            border: 1px solid #DADCE0;
+            border-radius: 0;
+            outline: none;
+            padding: 2px;
+            background: none;
+            z-index: 1;
+            box-shadow: none;
+        }
+
+        .form__label {
+            position: absolute;
+            left: 16px;
+            top: 10px;
+            background-color: #fff;
+            color: #80868B;
+            font-size: 16px;
+            transition: .3s;
+            text-transform: uppercase;
+        }
+
+        .form-control:focus+.form__label {
+            top: -8px;
+            left: 12px;
+            color: #1A73E8;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 10;
+        }
+
+        .form-control:not(:placeholder-shown).form-control:not(:focus)+.form__label {
+            top: -8px;
+            left: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 10;
+        }
+
+        .form-control:focus {
+            border: 1.5px solid #1A73E8;
+            box-shadow: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- ##### Header Area Start ##### -->
+    <% if(!user){ %>
+        <header class="header-area">
+            <div class="top-header-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="top-header-content d-flex align-items-center justify-content-between">
+                                <!-- Top Header Content -->
+                                <div class="top-header-meta">
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom"
+                                        title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
+                                            aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i
+                                            class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122
+                                            122</span></a>
+                                </div>
+
+                                <!-- Top Header Content -->
+                                <div class="top-header-meta d-flex">
+                                    <!-- Language Dropdown -->
+                                    <div class="language-dropdown">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">Language</button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">USA</a>
+                                                <a class="dropdown-item" href="#">UK</a>
+                                                <a class="dropdown-item" href="#">Bangla</a>
+                                                <a class="dropdown-item" href="#">Hindi</a>
+                                                <a class="dropdown-item" href="#">Spanish</a>
+                                                <a class="dropdown-item" href="#">Latin</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Login -->
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">Account</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="/login" style="color: black;">Login</a>
+                                        </div>
+                                    </div>
+                                    <!-- Cart -->
+                                    <!-- <div class="cart">
+                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="cartCount">0</span></span></a>
+                            </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="alazea-main-menu">
+                <div class="classy-nav-container breakpoint-off">
+                    <div class="container">
+                        <!-- Menu -->
+                        <nav class="classy-navbar justify-content-between" id="alazeaNav">
+
+                            <!-- Nav Brand -->
+                            <a href="index.html" class="nav-brand"><img src="/famm/img/core-img/company_logo.png"
+                                    alt=""></a>
+
+                            <!-- Navbar Toggler -->
+                            <div class="classy-navbar-toggler">
+                                <span class="navbarToggler"><span></span><span></span><span></span></span>
+                            </div>
+
+                            <!-- Menu -->
+                            <div class="classy-menu">
+
+                                <!-- Close Button -->
+                                <div class="classycloseIcon">
+                                    <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                                </div>
+
+                                <!-- Navbar Start -->
+                                <div class="classynav">
+                                    <ul>
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="about.html">About</a></li>
+                                        <li><a href="#">Pages</a>
+                                            <ul class="dropdown">
+                                                <li><a href="/">Home</a></li>
+                                                <li><a href="about.html">About</a></li>
+                                                <li><a href="/shop">Shop</a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="/shop">Shop</a></li>
+                                                        <li><a href="shop-details.html">Shop Details</a></li>
+                                                        <li><a href="cart.html">Shopping Cart</a></li>
+                                                        <li><a href="checkout.html">Checkout</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="portfolio.html">Portfolio</a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="portfolio.html">Portfolio</a></li>
+                                                        <li><a href="single-portfolio.html">Portfolio Details</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="blog.html">Blog</a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="blog.html">Blog</a></li>
+                                                        <li><a href="single-post.html">Blog Details</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="/shop">Shop</a></li>
+                                        <li id="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></li>
+                                        <!-- <li> <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Cart <span class="cart-quantity">(1)</span></span></a></li> -->
+                                        <!-- <li><a href="contact.html">Contact</a></li> -->
+                                    </ul>
+
+                                </div>
+                                <!-- Navbar End -->
+                            </div>
+                        </nav>
+
+                        <!-- Search Form -->
+                        <div class="search-form">
+                            <form action="#" method="get">
+                                <input type="search" name="search" id="search"
+                                    placeholder="Type keywords &amp; press enter...">
+                                <button type="submit" class="d-none"></button>
+                            </form>
+                            <!-- Close Icon -->
+                            <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <% }else{ %>
+            <header class="header-area">
+                <div class="top-header-area">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="top-header-content d-flex align-items-center justify-content-between">
+                                    <!-- Top Header Content -->
+                                    <div class="top-header-meta">
+                                        <a href="#" data-toggle="tooltip" data-placement="bottom"
+                                            title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
+                                                aria-hidden="true"></i> <span>Email:
+                                                infodeercreative@gmail.com</span></a>
+                                        <a href="#" data-toggle="tooltip" data-placement="bottom"
+                                            title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i>
+                                            <span>Call Us: +1 234 122 122</span></a>
+                                    </div>
+
+                                    <!-- Top Header Content -->
+                                    <div class="top-header-meta d-flex">
+                                        <!-- Language Dropdown -->
+                                        <div class="language-dropdown">
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">Language</button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="#">USA</a>
+                                                    <a class="dropdown-item" href="#">UK</a>
+                                                    <a class="dropdown-item" href="#">Bangla</a>
+                                                    <a class="dropdown-item" href="#">Hindi</a>
+                                                    <a class="dropdown-item" href="#">Spanish</a>
+                                                    <a class="dropdown-item" href="#">Latin</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Login -->
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <%= locals.user.name%>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">Profile</a>
+                                                <a class="dropdown-item" href="#">Track and Manage Your Orders</a>
+                                                <a class="dropdown-item" href="#">Buy again</a>
+                                                <a class="dropdown-item" href="#">Return Center</a>
+                                                <a class="dropdown-item" href="#">Customer Service</a>
+                                                <a class="dropdown-item" href="/logout" style="color: black;">Log
+                                                    Out</a>
+                                            </div>
+                                        </div>
+                                        <!-- Cart -->
+                                        <!-- <div class="cart">
+                                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="cartCount">0</span></span></a>
+                                </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="alazea-main-menu">
+                    <div class="classy-nav-container breakpoint-off">
+                        <div class="container">
+                            <!-- Menu -->
+                            <nav class="classy-navbar justify-content-between" id="alazeaNav">
+
+                                <!-- Nav Brand -->
+                                <a href="index.html" class="nav-brand"><img src="/famm/img/core-img/company_logo.png"
+                                        alt=""></a>
+
+                                <!-- Navbar Toggler -->
+                                <div class="classy-navbar-toggler">
+                                    <span class="navbarToggler"><span></span><span></span><span></span></span>
+                                </div>
+
+                                <!-- Menu -->
+                                <div class="classy-menu">
+
+                                    <!-- Close Button -->
+                                    <div class="classycloseIcon">
+                                        <div class="cross-wrap"><span class="top"></span><span class="bottom"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Navbar Start -->
+                                    <div class="classynav">
+                                        <ul>
+                                            <li><a href="/">Home</a></li>
+                                            <li><a href="about.html">About</a></li>
+                                            <li><a href="#">Pages</a>
+                                                <ul class="dropdown">
+                                                    <li><a href="/">Home</a></li>
+                                                    <li><a href="about.html">About</a></li>
+                                                    <li><a href="/shop">Shop</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="/shop">Shop</a></li>
+                                                            <li><a href="shop-details.html">Shop Details</a></li>
+                                                            <li><a href="cart.html">Shopping Cart</a></li>
+                                                            <li><a href="checkout.html">Checkout</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="portfolio.html">Portfolio</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="portfolio.html">Portfolio</a></li>
+                                                            <li><a href="single-portfolio.html">Portfolio Details</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="blog.html">Blog</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="blog.html">Blog</a></li>
+                                                            <li><a href="single-post.html">Blog Details</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="contact.html">Contact</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="/shop">Shop</a></li>
+                                            <li id="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></li>
+                                            <!-- <li><a href="contact.html">Contact</a></li> -->
+                                        </ul>
+
+                                    </div>
+                                    <!-- Navbar End -->
+                                </div>
+                            </nav>
+
+                            <!-- Search Form -->
+                            <div class="search-form">
+                                <form action="#" method="get">
+                                    <input type="search" name="search" id="search"
+                                        placeholder="Type keywords &amp; press enter...">
+                                    <button type="submit" class="d-none"></button>
+                                </form>
+                                <!-- Close Icon -->
+                                <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <% } %> <!-- ##### Header Area End ##### -->
+
+                <!-- ##### Breadcrumb Area Start ##### -->
+                <div class="breadcrumb-area">
+                    <!-- Top Breadcrumb Area -->
+                    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
+                        style="background-image: url(img/bg-img/24.jpg);">
+                        <h2>Payment</h2>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Payment</li>
+
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ##### Breadcrumb Area End ##### -->
+
+                <!-- ##### Checkout Area Start ##### -->
+                <div class="checkout_area mb-100">
+                    <div class="container">
+                        <div class="row justify-content-between">
+
+                            <div class="checkout_details_area clearfix">
+                                <h5>Payment</h5>
+                                <div class="container">
+                                    <div class="row">
+                                        <!-- <div class="col-lg-4 mb-lg-0 mb-3">
+                                    <div class="card p-3">
+                                        <div class="img-box">
+                                            <img src="https://www.freepnglogos.com/uploads/visa-logo-download-png-21.png" alt="">
+                                        </div>
+                                        <div class="number">
+                                            <label class="fw-bold" for="">**** **** **** 1060</label>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <small><span class="fw-bold">Expiry date:</span><span>10/16</span></small>
+                                            <small><span class="fw-bold">Name:</span><span><%= locals.user.name%></span></small>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                        <!-- <div class="col-lg-4 mb-lg-0 mb-3">
+                                    <div class="card p-3">
+                                        <div class="img-box">
+                                            <img src="https://www.freepnglogos.com/uploads/mastercard-png/file-mastercard-logo-svg-wikimedia-commons-4.png"
+                                                alt="">
+                                        </div>
+                                        <div class="number">
+                                            <label class="fw-bold">**** **** **** 1060</label>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <small><span class="fw-bold">Expiry date:</span><span>10/16</span></small>
+                                            <small><span class="fw-bold">Name:</span><span><%= locals.user.name%></span></small>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                        <!-- <div class="col-lg-4 mb-lg-0 mb-3">
+                                    <div class="card p-3">
+                                        <div class="img-box">
+                                            <img src="https://www.freepnglogos.com/uploads/discover-png-logo/credit-cards-discover-png-logo-4.png"
+                                                alt="">
+                                        </div>
+                                        <div class="number">
+                                            <label class="fw-bold">**** **** **** 1060</label>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <small><span class="fw-bold">Expiry date:</span><span>10/16</span></small>
+                                            <small><span class="fw-bold">Name:</span><span><%= locals.user.name%></span></small>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                        <div class="col-12 mt-4">
+                                            <div class="card p-3">
+                                                <p class="mb-0 fw-bold h4">Payment Methods</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="card p-3">
+                                                <form id="paymentForm" action="process_payment.php" method="post"
+                                                    class="payForm">
+                                                    <input type="checkbox" id="onlinePaymentCheckbox"
+                                                        name="paymentMethod" value="card" style="margin-left: 402px;">
+                                                    <label for="onlinePaymentCheckbox">Online Payment</label><br>
+                                                    <input type="checkbox" id="codCheckbox" name="paymentMethod"
+                                                        value="COD" style="margin-left: 402px;">
+                                                    <label for="codCheckbox">Cash On Delivery</label><br><br>
+
+                                                    <input type="hidden" id="selectedPaymentMethod"
+                                                        name="selectedPaymentMethod" value="">
+
+                                                    <input type="button" value="Submit" class="btn btn-primary payment"
+                                                        id="placeBtn">
+                                                </form>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <!-- ##### Checkout Area End ##### -->
+
+                <!-- ##### Footer Area Start ##### -->
+                <footer class="footer-area bg-img" style="background-image: url(img/bg-img/3.jpg);">
+                    <!-- Main Footer Area -->
+                    <div class="main-footer-area">
+                        <div class="container">
+                            <div class="row">
+
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="footer-logo mb-30">
+                                            <a href="#"><img src="/famm/img/core-img/company_logo.png" alt=""></a>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit samet, consectetur adipiscing elit. India situs atione
+                                            mantor</p>
+                                        <div class="social-info">
+                                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="widget-title">
+                                            <h5>QUICK LINK</h5>
+                                        </div>
+                                        <nav class="widget-nav">
+                                            <ul>
+                                                <li><a href="#">Purchase</a></li>
+                                                <li><a href="#">FAQs</a></li>
+                                                <li><a href="#">Payment</a></li>
+                                                <li><a href="#">News</a></li>
+                                                <li><a href="#">Return</a></li>
+                                                <li><a href="#">Advertise</a></li>
+                                                <li><a href="#">Shipping</a></li>
+                                                <li><a href="#">Career</a></li>
+                                                <li><a href="#">Orders</a></li>
+                                                <li><a href="#">Policities</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="widget-title">
+                                            <h5>BEST SELLER</h5>
+                                        </div>
+
+                                        <!-- Single Best Seller Products -->
+                                        <div class="single-best-seller-product d-flex align-items-center">
+                                            <div class="product-thumbnail">
+                                                <a href="shop-details.html"><img src="img/bg-img/4.jpg" alt=""></a>
+                                            </div>
+                                            <div class="product-info">
+                                                <a href="shop-details.html">Cactus Flower</a>
+                                                <p>$10.99</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Single Best Seller Products -->
+                                        <div class="single-best-seller-product d-flex align-items-center">
+                                            <div class="product-thumbnail">
+                                                <a href="shop-details.html"><img src="img/bg-img/5.jpg" alt=""></a>
+                                            </div>
+                                            <div class="product-info">
+                                                <a href="shop-details.html">Tulip Flower</a>
+                                                <p>$11.99</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="widget-title">
+                                            <h5>CONTACT</h5>
+                                        </div>
+
+                                        <div class="contact-information">
+                                            <p><span>Address:</span> 505 Silk Rd, New York</p>
+                                            <p><span>Phone:</span> +1 234 122 122</p>
+                                            <p><span>Email:</span> info.deercreative@gmail.com</p>
+                                            <p><span>Open hours:</span> Mon - Sun: 8 AM to 9 PM</p>
+                                            <p><span>Happy hours:</span> Sat: 2 PM to 4 PM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Bottom Area -->
+                    <div class="footer-bottom-area">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="border-line"></div>
+                                </div>
+                                <!-- Copywrite Text -->
+                                <div class="col-12 col-md-6">
+                                    <div class="copywrite-text">
+                                        <p>&copy;
+                                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                            Copyright &copy;
+                                            <script>document.write(new Date().getFullYear());</script> All rights
+                                            reserved | This template is made with <i class="fa fa-heart-o"
+                                                aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                                target="_blank">Colorlib</a>
+                                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- Footer Nav -->
+                                <div class="col-12 col-md-6">
+                                    <div class="footer-nav">
+                                        <nav>
+                                            <ul>
+                                                <li><a href="#">Home</a></li>
+                                                <li><a href="#">About</a></li>
+                                                <li><a href="#">Service</a></li>
+                                                <li><a href="#">Portfolio</a></li>
+                                                <li><a href="#">Blog</a></li>
+                                                <li><a href="#">Contact</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- ##### Footer Area End ##### -->
+
+                <!-- ##### All Javascript Files ##### -->
+                <!-- jQuery-2.2.4 js -->
+                <script src="/famm/js/jquery/jquery-2.2.4.min.js"></script>
+                <!-- Popper js -->
+                <script src="/famm/js/bootstrap/popper.min.js"></script>
+                <!-- Bootstrap js -->
+                <script src="/famm/js/bootstrap/bootstrap.min.js"></script>
+                <!-- All Plugins js -->
+                <script src="/famm/js/plugins/plugins.js"></script>
+                <!-- Active js -->
+                <script src="/famm/js/active.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+                <script>
+                    document.getElementById("placeBtn").addEventListener("click", function (event) {
+                        event.preventDefault();
+                        var onlinePaymentCheckbox = document.getElementById("onlinePaymentCheckbox");
+                        var codCheckbox = document.getElementById("codCheckbox");
+
+                        if (onlinePaymentCheckbox.checked) {
+                            document.getElementById("selectedPaymentMethod").value = "card";
+                        } else if (codCheckbox.checked) {
+                            document.getElementById("selectedPaymentMethod").value = "COD";
+                        }
+
+
+                        var selectedPaymentMethodValue = document.getElementById("selectedPaymentMethod").value;
+
+
+                        if (selectedPaymentMethodValue === "card") {
+                            $.ajax({
+                                url: "/payment/createOrder?method=card",
+                                type: "POST",
+                                success: function (res) {
+                                    if (res.success) {
+                                        var options = {
+                                            "key": "" + res.key_id + "",
+                                            "amount": "" + res.amount + "",
+                                            currency: "INR",
+                                            "orderId": "" + res.orderid + "",
+                                            "handler": function (response) {
+                                                // alert("payment successfull")
+                                                window.location.href = "/payment/orderSucessfull";
+                                            },
+                                            "prefill": {
+                                                "contact": "" + res.contact + "",
+                                                "name": "" + res.name + "",
+                                                "email": "" + res.email + ""
+                                            },
+                                            "theme": {
+                                                "color": "#2300a3"
+                                            }
+                                        }
+
+                                        var razorpayObject = new Razorpay(options)
+                                        razorpayObject.on('payment.failed', function (response) {
+                                            alert("payment failed")
+
+                                        })
+                                        razorpayObject.open()
+                                    } else {
+                                        alert(res.msg)
+                                    }
+                                }
+                            })
+                        } else if (selectedPaymentMethodValue === "COD") {
+                            var form = document.createElement("form");
+                            form.method = "POST";
+                            form.action = "/order/payment?method=COD"; 
+
+                            var input = document.createElement("input");
+                            input.type = "hidden";
+                            input.name = "method";
+                            input.value = "COD";
+
+                            form.appendChild(input);
+                            document.body.appendChild(form);
+                            form.submit();
+                        } else {
+                            alert("select a payment method")
+                        }
+                    })
+                </script>
+
+</body>
+
+</html>

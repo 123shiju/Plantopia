@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>Plantopia</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/famm/img/core-img/company_logo.png">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="/famm/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+
+        }
+
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 70%;
+        }
+
+        .close {
+            color: #f00b0b;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Styles for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        /* Other styles... */
+    </style>
+</head>
+
+<body>
+    <!-- ##### Header Area Start ##### -->
+    <% if(!user){ %>
+        <header class="header-area">
+            <div class="top-header-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="top-header-content d-flex align-items-center justify-content-between">
+                                <!-- Top Header Content -->
+                                <div class="top-header-meta">
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom"
+                                        title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
+                                            aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i
+                                            class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122
+                                            122</span></a>
+                                </div>
+
+                                <!-- Top Header Content -->
+                                <div class="top-header-meta d-flex">
+                                    <!-- Language Dropdown -->
+                                    <div class="language-dropdown">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">Language</button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">USA</a>
+                                                <a class="dropdown-item" href="#">UK</a>
+                                                <a class="dropdown-item" href="#">Bangla</a>
+                                                <a class="dropdown-item" href="#">Hindi</a>
+                                                <a class="dropdown-item" href="#">Spanish</a>
+                                                <a class="dropdown-item" href="#">Latin</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Login -->
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">Account</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="/login" style="color: black;">Login</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="alazea-main-menu">
+                <div class="classy-nav-container breakpoint-off">
+                    <div class="container">
+                        <!-- Menu -->
+                        <nav class="classy-navbar justify-content-between" id="alazeaNav">
+
+                            <!-- Nav Brand -->
+                            <a href="/" class="nav-brand"><img src="/famm/img/core-img/company_logo.png" alt=""></a>
+
+                            <!-- Navbar Toggler -->
+                            <div class="classy-navbar-toggler">
+                                <span class="navbarToggler"><span></span><span></span><span></span></span>
+                            </div>
+
+                            <!-- Menu -->
+                            <div class="classy-menu">
+
+                                <!-- Close Button -->
+                                <div class="classycloseIcon">
+                                    <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                                </div>
+
+                                <!-- Navbar Start -->
+                                <div class="classynav">
+                                    <ul>
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="about.html">About</a></li>
+                                        <li><a href="#">Pages</a>
+                                            <ul class="dropdown">
+                                                <li><a href="/">Home</a></li>
+                                                <li><a href="about.html">About</a></li>
+                                                <li><a href="/shop">Shop</a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="/shop">Shop</a></li>
+                                                        <li><a href="shop-details.html">Shop Details</a></li>
+                                                        <li><a href="cart.html">Shopping Cart</a></li>
+                                                        <li><a href="checkout.html">Checkout</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="portfolio.html">Portfolio</a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="portfolio.html">Portfolio</a></li>
+                                                        <li><a href="single-portfolio.html">Portfolio Details</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="blog.html">Blog</a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="blog.html">Blog</a></li>
+                                                        <li><a href="single-post.html">Blog Details</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="/shop">Shop</a></li>
+                                        <li><a href="portfolio.html">Portfolio</a></li>
+                                    </ul>
+
+                                    <!-- Search Icon -->
+                                    <div id="searchIcon">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </div>
+
+                                </div>
+                                <!-- Navbar End -->
+                            </div>
+                        </nav>
+
+                        <!-- Search Form -->
+                        <div class="search-form">
+                            <form action="#" method="get">
+                                <input type="search" name="search" id="search"
+                                    placeholder="Type keywords &amp; press enter...">
+                                <button type="submit" class="d-none"></button>
+                            </form>
+                            <!-- Close Icon -->
+                            <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <% }else{ %>
+            <header class="header-area">
+                <div class="top-header-area">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="top-header-content d-flex align-items-center justify-content-between">
+                                    <!-- Top Header Content -->
+                                    <div class="top-header-meta">
+                                        <a href="#" data-toggle="tooltip" data-placement="bottom"
+                                            title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
+                                                aria-hidden="true"></i> <span>Email:
+                                                infodeercreative@gmail.com</span></a>
+                                        <a href="#" data-toggle="tooltip" data-placement="bottom"
+                                            title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i>
+                                            <span>Call Us: +1 234 122 122</span></a>
+                                    </div>
+
+                                    <!-- Top Header Content -->
+                                    <div class="top-header-meta d-flex">
+                                        <!-- Language Dropdown -->
+                                        <div class="language-dropdown">
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">Language</button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="#">USA</a>
+                                                    <a class="dropdown-item" href="#">UK</a>
+                                                    <a class="dropdown-item" href="#">Bangla</a>
+                                                    <a class="dropdown-item" href="#">Hindi</a>
+                                                    <a class="dropdown-item" href="#">Spanish</a>
+                                                    <a class="dropdown-item" href="#">Latin</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Login -->
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <%= locals.user.name%>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">Profile</a>
+                                                <a class="dropdown-item" href="#">Track and Manage Your Orders</a>
+                                                <a class="dropdown-item" href="#">Buy again</a>
+                                                <a class="dropdown-item" href="#">Return Center</a>
+                                                <a class="dropdown-item" href="#">Customer Service</a>
+                                                <a class="dropdown-item" href="/logout" style="color: black;">Log
+                                                    out</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ***** Navbar Area ***** -->
+                <div class="alazea-main-menu">
+                    <div class="classy-nav-container breakpoint-off">
+                        <div class="container">
+                            <!-- Menu -->
+                            <nav class="classy-navbar justify-content-between" id="alazeaNav">
+
+                                <!-- Nav Brand -->
+                                <a href="/" class="nav-brand"><img src="/famm/img/core-img/company_logo.png" alt=""></a>
+
+                                <!-- Navbar Toggler -->
+                                <div class="classy-navbar-toggler">
+                                    <span class="navbarToggler"><span></span><span></span><span></span></span>
+                                </div>
+
+                                <!-- Menu -->
+                                <div class="classy-menu">
+
+                                    <!-- Close Button -->
+                                    <div class="classycloseIcon">
+                                        <div class="cross-wrap"><span class="top"></span><span class="bottom"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Navbar Start -->
+                                    <div class="classynav">
+                                        <ul>
+                                            <li><a href="/">Home</a></li>
+                                            <li><a href="about.html">About</a></li>
+                                            <li><a href="#">Pages</a>
+                                                <ul class="dropdown">
+                                                    <li><a href="/">Home</a></li>
+                                                    <li><a href="about.html">About</a></li>
+                                                    <li><a href="/shop">Shop</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="/shop">Shop</a></li>
+                                                            <li><a href="shop-details.html">Shop Details</a></li>
+                                                            <li><a href="cart.html">Shopping Cart</a></li>
+                                                            <li><a href="checkout.html">Checkout</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="portfolio.html">Portfolio</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="portfolio.html">Portfolio</a></li>
+                                                            <li><a href="single-portfolio.html">Portfolio Details</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="blog.html">Blog</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="blog.html">Blog</a></li>
+                                                            <li><a href="single-post.html">Blog Details</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="contact.html">Contact</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="/shop">Shop</a></li>
+                                            <li id="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></li>
+                                        </ul>
+
+                                        <!-- Search Icon -->
+
+
+                                    </div>
+                                    <!-- Navbar End -->
+                                </div>
+                            </nav>
+
+                            <!-- Search Form -->
+                            <div class="search-form">
+                                <form action="#" method="get">
+                                    <input type="search" name="search" id="search"
+                                        placeholder="Type keywords &amp; press enter...">
+                                    <button type="submit" class="d-none"></button>
+                                </form>
+                                <!-- Close Icon -->
+                                <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <% } %>
+                <!-- ##### Header Area End ##### -->
+
+                <!-- ##### Breadcrumb Area Start ##### -->
+                <div class="breadcrumb-area">
+                    <!-- Top Breadcrumb Area -->
+                    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
+                        style="background-image: url(img/bg-img/24.jpg);">
+                        <h2>Cart</h2>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ##### Breadcrumb Area End ##### -->
+
+                <!-- ##### Cart Area Start ##### -->
+                <div class="cart-area section-padding-0-100 clearfix">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="cart-table clearfix">
+                                    <% if (cartItems && cartItems.length> 0 ) { %>
+                                        <table class="table table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th>Products</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>TOTAL</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% cartItems.forEach(item=> { %>
+                                                    <tr class="productContainer">
+                                                        <td class="cart_product_img">
+                                                            <a href="#"><img src="/productImages/<%= item.image %>"
+                                                                    alt="<%= item.name %>" width="100px"
+                                                                    height="100px"></a>
+                                                            <h5>
+                                                                <%= item.name %>
+                                                            </h5>
+                                                        </td>
+                                                        <td class="qty">
+                                                            <div class="quantity">
+                                                                <div class="row">
+                                                                    <button class="decrementBtn"><i
+                                                                            class="fas fa-minus"></i></button>
+                                                                    <input class="productQuantity"
+                                                                        value="<%= item.quantity %>" readonly
+                                                                        style="width: 30px;margin-left: 25px">
+                                                                    <button class="incrementBtn"
+                                                                        style="margin-left: 25px"><i
+                                                                            class="fas fa-plus"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <div id="outOfStockModal" class="modal">
+                                                            <div class="modal-content">
+                                                                <span class="close">&times;</span>
+                                                                <p style="color: red; font-weight: 600; ">Sorry !!!, the
+                                                                    selected product is out of stock.</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <input class="productId" type="hidden"
+                                                            value="<%= item.productId %>">
+                                                        <td class="price"><span>
+                                                                <%= item.price %>
+                                                            </span></td>
+                                                        <td class="total_price"><span
+                                                                id="total-price-<%= item.productId %>">$<%=
+                                                                    (item.quantity * item.price).toFixed(2) %></span>
+                                                        </td>
+                                                        <td class="action"><a
+                                                                href="/cart/removeProduct?id=<%= item.productId %>"
+                                                                class="remove-link"><i class="icon_close"
+                                                                    onclick="removeProduct('<%= item.productId %>')"></i></a>
+                                                        </td>
+                                                        <input type="hidden" class="productStock"
+                                                            value="<%= item.productId.stock %>">
+
+                                                    </tr>
+                                                    <% }) %>
+                                            </tbody>
+                                        </table>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <!-- Coupon Discount -->
+                            <div class="col-12 col-lg-6">
+                                <div class="coupon-discount mt-70">
+                                    <h5>COUPON DISCOUNT</h5>
+                                   
+                                    <button id="showCouponsBtn" class="btn alazea-btn">Show Coupons</button>
+
+                                    <div id="couponPopup" class="popup">
+                                        <div class="popup-content">
+                                            <span class="close" id="closePopup">&times;</span>
+                                            <h2>Available Coupons</h2>
+                                            <ul id="couponList">
+                                                
+                                            </ul>
+                                            <p id="purchaseMoreMessage" class="purchase-more-message" style="display: block;
+                                                color: rgb(240, 11, 11);
+                                                font-family: 'classyfonts';
+                                                font-size: larger;
+                                                font-weight: 900;">Purchase more to unlock coupons. !!!</p>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- Button to show the modal -->
+
+
+                                    <br>
+                                    <br>
+                                    <form id="couponForm" action=" " method="post">
+                                        <input type="text" id="coupon-code" placeholder="Enter your coupon code">
+                                        <input type="hidden" value="<%= cart.coupen%>" id="coupenVal">
+                                        <button type="submit" id="applyCouponBtn">APPLY COUPON</button>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                            <!-- Cart Totals -->
+                            <div class="col-12 col-lg-6">
+                                <div class="cart-totals-area mt-70">
+                                    <h5 class="title--">Cart Total</h5>
+                                    <div class="subtotal d-flex justify-content-between">
+                                        <h5>Subtotal</h5>
+                                        <h5><span id="sub-total"></span></h5>
+                                    </div>
+                                    <div class="shipping d-flex justify-content-between">
+                                        <h5>Shipping:</h5>
+                                        <div class="shipping-address">
+                                            <h5 id="shipping_charge">
+                                                <%= cart.shipping_charge%>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div class="total d-flex justify-content-between">
+                                        <h5>Grand Total:</h5>
+                                        <h5><span id="grand-total"></span></h5>
+                                    </div>
+                                    <div class="checkout-btn">
+                                        <button class="btn alazea-btn w-100" id="checkoutBtn">PROCEED TO
+                                            CHECKOUT</button>
+
+                                    </div>
+                                    <% } else { %>
+                                        <p>Cart is empty.</p>
+                                        <% } %>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ##### Cart Area End ##### -->
+
+                <!-- ##### Footer Area Start ##### -->
+                <footer class="footer-area bg-img" style="background-image: url(img/bg-img/3.jpg);">
+                    <!-- Main Footer Area -->
+                    <div class="main-footer-area">
+                        <div class="container">
+                            <div class="row">
+
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="footer-logo mb-30">
+                                            <a href="#"><img src="/famm/img/core-img/company_logo" alt=""></a>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit samet, consectetur adipiscing elit. India situs atione
+                                            mantor</p>
+                                        <div class="social-info">
+                                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="widget-title">
+                                            <h5>QUICK LINK</h5>
+                                        </div>
+                                        <nav class="widget-nav">
+                                            <ul>
+                                                <li><a href="#">Purchase</a></li>
+                                                <li><a href="#">FAQs</a></li>
+                                                <li><a href="#">Payment</a></li>
+                                                <li><a href="#">News</a></li>
+                                                <li><a href="#">Return</a></li>
+                                                <li><a href="#">Advertise</a></li>
+                                                <li><a href="#">Shipping</a></li>
+                                                <li><a href="#">Career</a></li>
+                                                <li><a href="#">Orders</a></li>
+                                                <li><a href="#">Policities</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="widget-title">
+                                            <h5>BEST SELLER</h5>
+                                        </div>
+
+                                        <!-- Single Best Seller Products -->
+                                        <div class="single-best-seller-product d-flex align-items-center">
+                                            <div class="product-thumbnail">
+                                                <a href="shop-details.html"><img src="img/bg-img/4.jpg" alt=""></a>
+                                            </div>
+                                            <div class="product-info">
+                                                <a href="shop-details.html">Cactus Flower</a>
+                                                <p>$10.99</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Single Best Seller Products -->
+                                        <div class="single-best-seller-product d-flex align-items-center">
+                                            <div class="product-thumbnail">
+                                                <a href="shop-details.html"><img src="img/bg-img/5.jpg" alt=""></a>
+                                            </div>
+                                            <div class="product-info">
+                                                <a href="shop-details.html">Tulip Flower</a>
+                                                <p>$11.99</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="widget-title">
+                                            <h5>CONTACT</h5>
+                                        </div>
+
+                                        <div class="contact-information">
+                                            <p><span>Address:</span> 505 Silk Rd, New York</p>
+                                            <p><span>Phone:</span> +1 234 122 122</p>
+                                            <p><span>Email:</span> info.deercreative@gmail.com</p>
+                                            <p><span>Open hours:</span> Mon - Sun: 8 AM to 9 PM</p>
+                                            <p><span>Happy hours:</span> Sat: 2 PM to 4 PM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal HTML -->
+                    <div id="emptyCartModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <p>Your cart is empty. Please add items to your cart before proceeding to checkout.</p>
+                        </div>
+                    </div>
+
+                    <!-- Footer Bottom Area -->
+                    <div class="footer-bottom-area">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="border-line"></div>
+                                </div>
+                                <!-- Copywrite Text -->
+                                <div class="col-12 col-md-6">
+                                    <div class="copywrite-text">
+                                        <p>&copy;
+                                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                            Copyright &copy;
+                                            <script>document.write(new Date().getFullYear());</script> All rights
+                                            reserved | This template is made with <i class="fa fa-heart-o"
+                                                aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                                target="_blank">Colorlib</a>
+                                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- Footer Nav -->
+                                <div class="col-12 col-md-6">
+                                    <div class="footer-nav">
+                                        <nav>
+                                            <ul>
+                                                <li><a href="#">Home</a></li>
+                                                <li><a href="#">About</a></li>
+                                                <li><a href="#">Service</a></li>
+                                                <li><a href="#">Portfolio</a></li>
+                                                <li><a href="#">Blog</a></li>
+                                                <li><a href="#">Contact</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- ##### Footer Area End ##### -->
+
+                <!-- ##### All Javascript Files ##### -->
+                <!-- jQuery-2.2.4 js -->
+                <script src="/famm/js/jquery/jquery-2.2.4.min.js"></script>
+                <!-- Popper js -->
+                <script src="/famm/js/bootstrap/popper.min.js"></script>
+                <!-- Bootstrap js -->
+                <script src="/famm/js/bootstrap/bootstrap.min.js"></script>
+                <!-- All Plugins js -->
+                <script src="/famm/js/plugins/plugins.js"></script>
+                <!-- Active js -->
+                <script src="/famm/js/active.js"></script>
+                <script src="/javascript/cartQuantity.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+                <script>
+                    function removeProduct(productId) {
+                        const removeUrl = "/cart/removeProduct?id=" + productId;
+                        fetch(removeUrl, { method: "GET" })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    const productRow = document.querySelector(`tr[data-product-id="${productId}"]`);
+                                    if (productRow) {
+                                        productRow.remove();
+
+                                        location.reload();
+                                    }
+                                } else {
+                                    console.error("Failed to remove product.");
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Error removing product:", error);
+                            });
+                    }
+
+
+                </script>
+
+
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const showCouponsBtn = document.getElementById("showCouponsBtn");
+                        const couponPopup = document.getElementById("couponPopup");
+                        const couponList = document.getElementById("couponList");
+                        const closePopup = document.getElementById("closePopup");
+                        const couponForm = document.getElementById("couponForm");
+                        const couponCodeInput = document.getElementById("coupon-code");
+                        const grandTotalElement = document.getElementById("grand-total");
+
+
+                        showCouponsBtn.addEventListener("click", async () => {
+                            try {
+                                const response = await fetch("/coupen/popCoupen", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                });
+
+                                if (response.ok) {
+                                    const responseJson = await response.json();
+
+                                    const couponListElement = document.getElementById("couponList");
+                                    const purchaseMoreMessage = document.getElementById("purchaseMoreMessage");
+
+                                    if (responseJson.message) {
+
+                                        couponListElement.innerHTML = "";
+                                        purchaseMoreMessage.style.display = "block";
+                                    } else {
+
+                                        purchaseMoreMessage.style.display = "none";
+                                        responseJson.forEach((coupon) => {
+                                            const li = document.createElement("li");
+                                            li.textContent = coupon.code;
+                                            couponListElement.appendChild(li);
+                                        });
+                                    }
+
+                                    couponPopup.style.display = "block";
+                                } else {
+                                    console.error("Error fetching coupons:", response.statusText);
+                                }
+                            } catch (error) {
+                                console.error("Error fetching coupons:", error);
+                            }
+                        });
+
+
+
+
+                        closePopup.addEventListener("click", () => {
+                            couponPopup.style.display = "none";
+                        });
+
+
+                        applyCouponBtn.addEventListener("click", async () => {
+                            applyCouponBtn.disabled = true
+
+                            const couponCode = couponCodeInput.value;
+
+
+
+                            const grandTotal = grandTotalElement.textContent
+
+
+
+
+
+
+                            try {
+
+                                const response = await fetch("/cart/loadCart", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({ couponCode, grand_total: grandTotal })
+
+                                });
+                                if (response.ok) {
+                                    const result = await response.json();
+
+                                
+
+                                    if (result.updatedTotal !== undefined) {
+                                        const updatedTotal = result.updatedTotal.toFixed(2);
+                                        grandTotalElement.textContent = updatedTotal;
+
+                                
+                                        const couponDiscount = result.coupen.discount;
+                                        const coupenValElement = document.getElementById("coupenVal");
+                                        coupenValElement.textContent = couponDiscount; 
+                                    } else {
+                                        console.error("Invalid response format");
+                                    }
+                                } else {
+                                    console.error("Coupon application error:", response.statusText);
+                                }
+
+
+                            } catch (error) {
+                                console.error("Coupon application error:", error);
+                            } finally {
+                                applyCouponBtn.disabled = false;
+                            }
+                        });
+
+
+
+
+                    });
+
+
+                    const closeButton = document.querySelector('.modal .close');
+                    const outOfStockModal = document.getElementById('outOfStockModal');
+
+                    closeButton.addEventListener('click', () => {
+                        outOfStockModal.style.display = 'none';
+                    });
+
+                </script>
+
+
+
+</body>
+
+</html>

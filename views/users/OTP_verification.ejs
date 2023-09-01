@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/famm/css/user/OTP_verification.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        /* Add this CSS to fill the height */
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+    
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-image: url(/famm/img/loginpage/tropical-leaves-plants-background_161844-342.avif);
+          background-size: cover;
+          background-position: center;
+        }
+    
+        .card {
+          width: 100%;
+          max-width: 400px;
+          padding: 20px;
+          background-color: rgba(255, 255, 255, 0.9);
+        }
+      </style>
+</head>
+<body >
+    <form action="" method="post">
+        <div class="d-flex justify-content-center align-items-center" style="background-image: url(/famm/img/loginpage/tropical-leaves-plants-background_161844-342.avif);">
+            <div class="card py-5 px-3">
+                <h5 class="m-0">OTP verification for Login</h5><span class="mobile-text">Enter the code we just send on youe Email <b class="text-danger"></b></span>
+                <div class="d-flex flex-row mt-3"><input type="text" class="form-control" autofocus=""name="otp"></div>
+                <div class="text-center mt-5">
+                  <span class="d-block mobile-text">Don't receive the code?</span>
+                  <span class="font-weight-bold text-danger cursor" id="resendBtn">Resend</span>
+                  <span class="d-none" id="timer"></span>
+                </div>
+              
+                <% 
+                if(typeof message !=='undefined' ){
+                    %>
+                    <p style="color: rgb(241, 36, 0);"><%= message %></p>
+                    <%
+                } 
+                %>
+                <input type="submit" value="login">
+            </div>
+        </div>
+        
+    </form>
+    
+    <script>
+      let countdown = 60;
+    
+      function startTimer() {
+        console.log("start")
+        const timerElement = document.getElementById('timer');
+        const resendBtn = document.getElementById('resendBtn');
+    
+        timerElement.classList.remove('d-none');
+        resendBtn.classList.add('d-none');
+    
+        const interval = setInterval(() => {
+          if (countdown > 0) {
+            timerElement.textContent = `Please wait ${countdown} seconds before resending`;
+            countdown--;
+          } else {
+            clearInterval(interval);
+            timerElement.classList.add('d-none');
+            resendBtn.classList.remove('d-none');
+          }
+        }, 1000);
+      }
+    
+      function resendOTP() {
+        fetch('/resend', {
+          method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.message);
+        })
+        .catch(error => {
+          console.error('Error resending OTP:', error);
+        });
+      }
+    
+      document.getElementById('resendBtn').addEventListener('click', () => {
+        console.log("hello")
+        startTimer();
+        resendOTP();
+      });
+    </script>
+    
+</body>
+</html>

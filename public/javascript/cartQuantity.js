@@ -98,18 +98,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const productStock = parseInt(productContainer.querySelector('.productStock').value);
 
     fetch(`/cart/updatequantity/${productId}/${newQuantity}`, {
-      method: 'PUT',
-      headers: {
-        'Cache-Control': 'no-cache',
-      },
+        method: 'PUT',
+        headers: {
+            'Cache-Control': 'no-cache',
+        },
     })
-      .then(response => {
+    .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok');
         }
         return response.json();
-      })
-      .then(data => {
+    })
+    .then(data => {
         const updatedQuantity = data.product.quantity;
 
         quantityInput.value = updatedQuantity;
@@ -122,15 +122,22 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSubTotalAndGrandTotal();
 
         if (data.product.productId.stock === 0) {
-          outOfStockModal.style.display = "block";
-          increaseButton.disabled = true;
+          
+            Swal.fire({
+                icon: 'error',
+                title: 'Out of Stock',
+                text: 'Sorry, the selected product is out of stock.',
+            });
+
+            increaseButton.disabled = true;
         } else {
-          outOfStockModal.style.display = "none";
-          increaseButton.disabled = false;
+           
+            increaseButton.disabled = false;
         }
-      })
-      .catch(error => console.error(error));
-  }
+    })
+    .catch(error => console.error(error));
+}
+
 
 
 

@@ -187,10 +187,10 @@
                                 <div class="top-header-meta">
                                     <a href="#" data-toggle="tooltip" data-placement="bottom"
                                         title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
-                                            aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
+                                            aria-hidden="true"></i> <span>Email: plantopia@gmail.com</span></a>
                                     <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i
-                                            class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122
-                                            122</span></a>
+                                            class="fa fa-phone" aria-hidden="true"></i> <span>Call Us:
+                                            +91-7012995486</span></a>
                                 </div>
 
                                 <!-- Top Header Content -->
@@ -220,10 +220,7 @@
                                             <a class="dropdown-item" href="/login" style="color: black;">Login</a>
                                         </div>
                                     </div>
-                                    <!-- Cart -->
-                                    <!-- <div class="cart">
-                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="cartCount">0</span></span></a>
-                            </div> -->
+                                
                                 </div>
                             </div>
                         </div>
@@ -287,8 +284,7 @@
                                         </li>
                                         <li><a href="/shop">Shop</a></li>
                                         <li id="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></li>
-                                        <!-- <li> <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Cart <span class="cart-quantity">(1)</span></span></a></li> -->
-                                        <!-- <li><a href="contact.html">Contact</a></li> -->
+                                    
                                     </ul>
 
                                 </div>
@@ -363,10 +359,7 @@
                                                     Out</a>
                                             </div>
                                         </div>
-                                        <!-- Cart -->
-                                        <!-- <div class="cart">
-                                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="cartCount">0</span></span></a>
-                                </div> -->
+                                    
                                     </div>
                                 </div>
                             </div>
@@ -432,7 +425,7 @@
                                             </li>
                                             <li><a href="/shop">Shop</a></li>
                                             <li id="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></li>
-                                            <!-- <li><a href="contact.html">Contact</a></li> -->
+                                        
                                         </ul>
 
                                     </div>
@@ -489,50 +482,6 @@
                                 <h5>Payment</h5>
                                 <div class="container">
                                     <div class="row">
-                                        <!-- <div class="col-lg-4 mb-lg-0 mb-3">
-                                    <div class="card p-3">
-                                        <div class="img-box">
-                                            <img src="https://www.freepnglogos.com/uploads/visa-logo-download-png-21.png" alt="">
-                                        </div>
-                                        <div class="number">
-                                            <label class="fw-bold" for="">**** **** **** 1060</label>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <small><span class="fw-bold">Expiry date:</span><span>10/16</span></small>
-                                            <small><span class="fw-bold">Name:</span><span><%= locals.user.name%></span></small>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                        <!-- <div class="col-lg-4 mb-lg-0 mb-3">
-                                    <div class="card p-3">
-                                        <div class="img-box">
-                                            <img src="https://www.freepnglogos.com/uploads/mastercard-png/file-mastercard-logo-svg-wikimedia-commons-4.png"
-                                                alt="">
-                                        </div>
-                                        <div class="number">
-                                            <label class="fw-bold">**** **** **** 1060</label>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <small><span class="fw-bold">Expiry date:</span><span>10/16</span></small>
-                                            <small><span class="fw-bold">Name:</span><span><%= locals.user.name%></span></small>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                        <!-- <div class="col-lg-4 mb-lg-0 mb-3">
-                                    <div class="card p-3">
-                                        <div class="img-box">
-                                            <img src="https://www.freepnglogos.com/uploads/discover-png-logo/credit-cards-discover-png-logo-4.png"
-                                                alt="">
-                                        </div>
-                                        <div class="number">
-                                            <label class="fw-bold">**** **** **** 1060</label>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <small><span class="fw-bold">Expiry date:</span><span>10/16</span></small>
-                                            <small><span class="fw-bold">Name:</span><span><%= locals.user.name%></span></small>
-                                        </div>
-                                    </div>
-                                </div> -->
                                         <div class="col-12 mt-4">
                                             <div class="card p-3">
                                                 <p class="mb-0 fw-bold h4">Payment Methods</p>
@@ -753,10 +702,13 @@
                                             "key": "" + res.key_id + "",
                                             "amount": "" + res.amount + "",
                                             currency: "INR",
-                                            "orderId": "" + res.orderid + "",
+                                            "orderId": "" + res.order_id + "",
                                             "handler": function (response) {
-                                                // alert("payment successfull")
-                                                window.location.href = "/payment/orderSucessfull";
+                                                alert(response.razorpay_payment_id);
+                                                 alert(response.razorpay_signature);
+                                                 alert(response.order_id);
+                                                verification(response.razorpay_payment_id,response.order_id,response.razorpay_signature)
+
                                             },
                                             "prefill": {
                                                 "contact": "" + res.contact + "",
@@ -779,22 +731,57 @@
                                     }
                                 }
                             })
+                            function verification(payment_id,order_id,razorpay_signature) {
+
+
+
+
+                                const data = {
+                                    payment_id: payment_id,
+                                    order_id: order_id
+
+                                }
+                            
+                        
+
+                                fetch('/payment/verifyPayment', {
+                                    method: 'POST',
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        'x-razorpay-signature': razorpay_signature
+                                    },
+                                    body: JSON.stringify(data)
+                                })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.success) {
+                                            window.location.href = "/payment/orderSucessfull";
+                                        } else {
+                                            console.log("payment  verification failed")
+                                        }
+                                    }).catch(error => {
+                                        console.error("Error verifying payment:", error);
+
+                                    });
+                            }
+
                         } else if (selectedPaymentMethodValue === "COD") {
-                            var form = document.createElement("form");
-                            form.method = "POST";
-                            form.action = "/order/payment?method=COD"; 
+                        var form = document.createElement("form");
+                        form.method = "POST";
+                        form.action = "/order/payment?method=COD";
 
-                            var input = document.createElement("input");
-                            input.type = "hidden";
-                            input.name = "method";
-                            input.value = "COD";
+                        var input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = "method";
+                        input.value = "COD";
 
-                            form.appendChild(input);
-                            document.body.appendChild(form);
-                            form.submit();
-                        } else {
-                            alert("select a payment method")
-                        }
+                        
+                        form.appendChild(input);
+                        document.body.appendChild(form);
+                        form.submit();
+                    } else {
+                        alert("select a payment method")
+                    }
                     })
                 </script>
 

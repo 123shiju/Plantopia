@@ -40,10 +40,9 @@
                                 <div class="top-header-meta">
                                     <a href="#" data-toggle="tooltip" data-placement="bottom"
                                         title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
-                                            aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
+                                            aria-hidden="true"></i> <span>Email: plantopia@gmail.com</span></a>
                                     <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i
-                                            class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122
-                                            122</span></a>
+                                            class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +91-7012995486</span></a>
                                 </div>
 
                                 <!-- Top Header Content -->
@@ -73,10 +72,7 @@
                                             <a class="dropdown-item" href="/login" style="color: black;">Login</a>
                                         </div>
                                     </div>
-                                    <!-- Cart -->
-                                    <!-- <div class="cart">
-                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="cartCount">0</span></span></a>
-                            </div> -->
+                            
                                 </div>
                             </div>
                         </div>
@@ -140,8 +136,7 @@
                                         </li>
                                         <li><a href="/shop">Shop</a></li>
                                         <li id="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></li>
-                                        <!-- <li> <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Cart <span class="cart-quantity">(1)</span></span></a></li> -->
-                                        <!-- <li><a href="contact.html">Contact</a></li> -->
+                                    
                                     </ul>
 
                                 </div>
@@ -175,10 +170,10 @@
                                         <a href="#" data-toggle="tooltip" data-placement="bottom"
                                             title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
                                                 aria-hidden="true"></i> <span>Email:
-                                                infodeercreative@gmail.com</span></a>
+                                                plantopia@gmail.com</span></a>
                                         <a href="#" data-toggle="tooltip" data-placement="bottom"
                                             title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i>
-                                            <span>Call Us: +1 234 122 122</span></a>
+                                            <span>Call Us: +91-7012995486</span></a>
                                     </div>
 
                                     <!-- Top Header Content -->
@@ -206,7 +201,7 @@
                                                 aria-expanded="false">
                                                 <%= locals.user.name%>
                                             </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"  style="background-color: #70c745; color: black;">
                                                 <a class="dropdown-item" href="#">Profile</a>
                                                 <a class="dropdown-item" href="#">Track and Manage Your Orders</a>
                                                 <a class="dropdown-item" href="#">Buy again</a>
@@ -216,10 +211,7 @@
                                                     Out</a>
                                             </div>
                                         </div>
-                                        <!-- Cart -->
-                                        <!-- <div class="cart">
-                                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="cartCount">0</span></span></a>
-                                </div> -->
+                                    
                                     </div>
                                 </div>
                             </div>
@@ -288,7 +280,7 @@
                                             <li> <a href="/cart/loadCart"><i class="fa fa-shopping-cart"
                                                         aria-hidden="true"></i> <span>Cart <span
                                                             class="cart-quantity">(1)</span></span></a></li>
-                                            <!-- <li><a href="contact.html">Contact</a></li> -->
+                                           
                                         </ul>
 
                                     </div>
@@ -320,18 +312,6 @@
                     <h2>Checkout</h2>
                 </div>
 
-                <!-- <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Checkout</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div> -->
                 <!-- ##### Breadcrumb Area End ##### -->
 
                 <!-- ##### Checkout Area Start ##### -->
@@ -485,7 +465,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <!-- Update totalSubtotal with the subtotal for this cartItem -->
+                                                
                                                     <% let subtotal=0; %>
                                                         <% cartItem.products.forEach(productItem=> { %>
                                                             <% subtotal +=parseFloat(productItem.total_price); %>
@@ -493,7 +473,7 @@
                                                                     <% totalSubtotal +=subtotal; %>
                                                                         <% }); %>
 
-                                                                            <!-- Display the calculated values outside the loop -->
+                                                                        
                                                                             <div
                                                                                 class="subtotal d-flex justify-content-between align-items-center">
                                                                                 <h5>Subtotal</h5>
@@ -700,12 +680,7 @@
                                 document.getElementById('addNewAddressBtn').addEventListener('click', function () {
 
                                     window.location.href = '/order/getNewaddress';
-                                });
-
-                                //   document.getElementById('EditAdressBtn').addEventListener('click', function() {
-
-                                // window.location.href = '/order/getEdit_address?id=${<%= user._id%>}&addressId=${<%= address._id %>}';
-                                // });
+                                })
 
                                 document.getElementById('defaultAddress').addEventListener('click', function () {
                                     window.location.href = '/order/getDeaultAddress';
@@ -715,40 +690,9 @@
                                 const subtotal = parseFloat(document.getElementById('subtotal').textContent)
                                 const shipping_charge = parseFloat(document.getElementById('shipping_charge').textContent)
                                 const ordertotal = subtotal + shipping_charge
-                                // const grand_totalElement = document.getElementById('ordertotal')
-                                // grand_totalElement.textContent = ordertotal.toFixed(2)
+                            
 
                             </script>
-
-
-                            <!-- <script>
-                                $(document).ready(function () {
-                                    console.log("start")
-                                    $('#EditAdressBtn').on('click', function () {
-                                        const userId = $(this).attr('userId');
-                                        const addressId = $(this).attr('addressId');
-
-                                        $.ajax({
-                                            type: 'GET',
-                                            url: `/order/getEdit_address?id=${userId}&addressId=${addressId}`,
-                                            success: function (response) {
-                                                console.log("url getted")
-                                                if (response.redirectUrl) {
-                                                    window.location.href = response.redirectUrl;
-                                                } else {
-                                                    console.error('No redirect URL found in the response.');
-                                                }
-                                            },
-                                            error: function (error) {
-                                                console.error('AJAX Error:', error);
-                                            }
-                                        });
-                                    });
-                                });
-
-
-
-                            </script> -->
                             <% } %>
 </body>
 

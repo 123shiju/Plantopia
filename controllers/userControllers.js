@@ -1,9 +1,12 @@
 const collection = require("../models/userModel")
 const productcollection = require("../models/productModel")
 const categorycollection = require("../models/categoryModel")
+const wishListCollection = require('../models/wishlistModel')
 const bcrypt = require('bcrypt')
 const nodemailer = require("nodemailer")
 const randomstring = require('randomstring');
+const offerCollection = require('../models/offerModel')
+const { body, validationResult } = require('express-validator');
 
 const twilio = require('twilio')
 const NodeCache = require('node-cache');
@@ -77,12 +80,16 @@ const loadshop = async (req, res) => {
         }
 
         if (categoryFilter) {
-           
+
             const category = await categorycollection.findOne({ category_name: categoryFilter });
             if (category) {
                 filterQuery.product_category = category._id;
             }
         }
+
+
+
+
 
         if (minPrice && !isNaN(minPrice)) {
             filterQuery.sale_price = { ...filterQuery.sale_price, $gte: parseFloat(minPrice) };
@@ -100,18 +107,53 @@ const loadshop = async (req, res) => {
             sortOption.sale_price = sortOrder === 'asc' ? 1 : -1;
         }
 
+
+        const currentDate = new Date();
+
+
+        
+
+
         let productData;
 
         if (Object.keys(filterQuery).length === 0 && !sortOrder) {
-            productData = await productcollection.find();
+            productData = await productcollection.find().populate('product_category', 'category_name');;
+
+
         } else {
-            
-            productData = await productcollection
-                .find(filterQuery)
-                .sort(sortOption)
-                .exec();
-           
+
+
+            let productDataQuery = productcollection.find(filterQuery).sort(sortOption);
+
+            productDataQuery.populate('product_category', 'category_name');
+
+
+            productData = await productDataQuery.exec();
+
+
+
         }
+        const categoryOffer = await offerCollection.findOne({
+            startDate: { $lte: currentDate },
+            endDate: { $gte: currentDate }
+        });
+
+        if (categoryOffer) {
+            updatedProductData = productData.map((product) => {
+                if (
+                    product.product_category &&
+                    product.product_category.category_name === categoryOffer.category
+                ) {
+                    if (categoryOffer.discountType === 'percentage') {
+                        product.sale_price *= (100 - categoryOffer.discountValue) / 100;
+                    } else if (categoryOffer.discountType === 'fixed') {
+                        product.sale_price -= categoryOffer.discountValue;
+                    }
+                }
+                return product;
+            });
+        }
+       
 
         const categoryData = await categorycollection.find();
 
@@ -138,6 +180,27 @@ const loadRegister = async (req, res) => {
 
 const insertuser = async (req, res) => {
     try {
+
+
+        [
+            body('name').notEmpty().withMessage('name is required'),
+            body('email')
+                .isEmail().withMessage('Invalid email')
+                .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+                .withMessage('Invalid email format')
+            ,
+            body('phoneNumber').isMobilePhone('any', { strictMode: false }).withMessage('Invalid phone number'),
+            body('password')
+                .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
+                .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/)
+                .withMessage('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@#$%^&+=)')
+
+        ]
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
         const { name, email, password } = req.body;
         const phoneNumber = '+91' + req.body.number;
 
@@ -162,6 +225,11 @@ const insertuser = async (req, res) => {
 
             const spassword = await securepassword(req.body.password);
 
+            function generateReferralCode() {
+                return Math.random().toString(36).substring(2, 10).toUpperCase();
+            }
+
+            const referral_code = generateReferralCode()
             const newUser = new collection({
                 name: name,
                 email: email,
@@ -169,7 +237,8 @@ const insertuser = async (req, res) => {
                 password: spassword,
                 is_admin: 0,
                 otpExpiration: otpExpiration,
-                otp: otp
+                otp: otp,
+                referral_code: referral_code
             });
 
             req.session.email = email
@@ -216,9 +285,25 @@ const loginLoad = async (req, res) => {
 
 const verifyLogin = async (req, res) => {
     try {
+        [
+            body('email')
+                .isEmail()
+                .withMessage('Invalid email'),
+            body('password')
+                .notEmpty()
+                .withMessage('Password is required')
+        ]
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        
         const email = req.body.email;
         const password = req.body.password;
+
         const userData = await collection.findOne({ email: email });
+
         if (userData) {
             const passwordMatch = await bcrypt.compare(password, userData.password);
             if (!passwordMatch) {
@@ -359,6 +444,96 @@ const otpResend = async (req, res) => {
     }
 }
 
+const getAbout = async (req, res) => {
+    try {
+
+        res.render('about')
+    } catch (error) {
+        res.status(500).json({ error: "can't get this page" })
+    }
+}
+
+const getBlog = async (req, res) => {
+    try {
+        res.render('blog_list')
+    } catch (error) {
+        res.status(500).json({ error: "can't get this page" })
+    }
+}
+
+const getProfille = async (req, res) => {
+    try {
+        res.render('profile')
+    } catch (error) {
+        res.status(404).json({ error: "Can't Load this Page" })
+    }
+}
+
+const addwishList = async (req, res) => {
+    try {
+        const id = req.query.id;
+
+
+        const existingProduct = await wishListCollection.findOne({ product: id });
+
+
+
+        if (existingProduct) {
+
+            return res.status(200).json({ message: "Product already added to wishlist" });
+        } else {
+
+            const prdtData = await productcollection.findOne({ _id: id });
+
+            if (prdtData) {
+                const wishList = new wishListCollection({
+                    product: prdtData._id,
+                });
+                await wishList.save();
+
+
+
+                return res.status(200).json({ message: "Product added to wishlist" });
+            } else {
+                return res.status(404).json({ error: "Product not found" });
+            }
+        }
+    } catch (error) {
+        return res.status(500).json({ error: "Can't get this page" });
+    }
+};
+
+const wishList = async (req, res) => {
+    try {
+        const user = req.session.user
+        if (user) {
+            const wishListData = await wishListCollection.find().populate('product')
+
+            res.render('wishlist', { wishListData, user })
+        } else {
+            res.status(500).json({ error: "can't fetch wishlist data" })
+        }
+    } catch (error) {
+        res.status(500).json({ error: "can't load wishlist details" })
+    }
+}
+
+
+
+const RemoveWishList = async (req, res) => {
+    try {
+
+        const removedProduct = await wishListCollection.deleteOne({ _id: req.query.id });
+        if (removedProduct) {
+            res.redirect('/getwishList')
+        } else {
+            res.status(500).json({ error: "can't remove wishlist product" })
+        }
+    } catch (error) {
+        res.status(500).json({ error: "can't remove wishlist product" })
+    }
+}
+
 
 module.exports = {
     loadHome,
@@ -371,7 +546,13 @@ module.exports = {
     loadshop,
     productdetails,
     userLogout,
-    otpResend
+    otpResend,
+    getAbout,
+    getBlog,
+    getProfille,
+    addwishList,
+    wishList,
+    RemoveWishList
 
 
 }

@@ -83,8 +83,14 @@ const userschema=new mongoose.Schema({
         defaultValue:{
             type:Boolean,
             default:true
-        }
-    }]
+        },  
+    }],
+    referral_code:{
+        type:String
+    },
+    referredBy:{
+        type:String
+    }
     
 })
 

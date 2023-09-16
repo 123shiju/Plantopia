@@ -7,11 +7,11 @@ const port=process.env.PORT || 3000
 const DBURI=process.env.MONGODB_URI
 const ejs=require("ejs")
 const path=require("path")
-const router = express.Router();
-const bodyParser = require('body-parser');
+const roer = express.Router();
 const nocache=require('nocache')
 const cors=require('cors')
 
+const bodyParser = require('body-parser');
 
 app.use(nocache())
 app.use(express.json());
@@ -43,6 +43,9 @@ app.use('/payment',paymentRoute)
 
 const coupenRoute=require("./routers/coupenRoute")
 app.use('/coupen',coupenRoute)
+
+const invoiceRoute=require('./routers/invoiceRoute')
+app.use('/invoice',invoiceRoute)
 
 mongoose.connect(DBURI,{
   useNewUrlParser:true,

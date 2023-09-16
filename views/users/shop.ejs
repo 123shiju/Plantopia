@@ -25,10 +25,6 @@
 </head>
 
 <body>
-    <!-- ##### Header Area Start ##### -->
-
-
-    <!-- ***** Top Header Area ***** -->
     <% if(!user){ %>
         <header class="header-area">
             <div class="top-header-area">
@@ -40,7 +36,7 @@
                                 <div class="top-header-meta">
                                     <a href="#" data-toggle="tooltip" data-placement="bottom"
                                         title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
-                                            aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
+                                            aria-hidden="true"></i> <span>Email: Plantopia@gmail.com</span></a>
                                     <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i
                                             class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122
                                             122</span></a>
@@ -73,10 +69,6 @@
                                             <a class="dropdown-item" href="/login" style="color: black;">Login</a>
                                         </div>
                                     </div>
-                                    <!-- Cart -->
-                                    <!-- <div class="cart">
-                                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="cartCount">0</span></span></a>
-                                </div> -->
                                 </div>
                             </div>
                         </div>
@@ -140,8 +132,6 @@
                                         </li>
                                         <li><a href="/shop">Shop</a></li>
                                         <li id="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></li>
-                                        <!-- <li> <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Cart <span class="cart-quantity">(1)</span></span></a></li> -->
-                                        <!-- <li><a href="contact.html">Contact</a></li> -->
                                     </ul>
 
                                 </div>
@@ -206,7 +196,8 @@
                                                 aria-expanded="false">
                                                 <%= locals.user.name%>
                                             </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                                style="background-color: #70c745; color: black;">
                                                 <a class="dropdown-item" href="#">Profile</a>
                                                 <a class="dropdown-item" href="#">Track and Manage Your Orders</a>
                                                 <a class="dropdown-item" href="#">Buy again</a>
@@ -216,10 +207,6 @@
                                                     Out</a>
                                             </div>
                                         </div>
-                                        <!-- Cart -->
-                                        <!-- <div class="cart">
-                                        <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="cartCount">0</span></span></a>
-                                    </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -288,7 +275,6 @@
                                             <li> <a href="/cart/loadCart"><i class="fa fa-shopping-cart"
                                                         aria-hidden="true"></i> <span>Cart <span
                                                             class="cart-quantity">(1)</span></span></a></li>
-                                            <!-- <li><a href="contact.html">Contact</a></li> -->
                                         </ul>
 
                                     </div>
@@ -333,10 +319,6 @@
                                 <div class="col-12">
                                     <div
                                         class="shop-sorting-data d-flex flex-wrap align-items-center justify-content-between">
-                                        <!-- Shop Page Count -->
-                                        <!-- <div class="shop-page-count">
-                            <p>Showing 1–9 of 72 results</p>
-                        </div> -->
                                         <!-- Search by Terms -->
                                         <div class="search_by_terms">
                                             <form action="#" method="post" class="form-inline">
@@ -362,133 +344,121 @@
                                 <!-- Sidebar Area -->
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="shop-sidebar-area">
-
-                                        <!-- Shop Widget -->
-                                        <!-- <form id="searchForm">
-                                            <input type="text" name="query" placeholder="Search by name or price"
-                                                style="border-color: #1de91d;border-radius: 6px;">
-                                            <input type="number" name="minPrice" placeholder="Min Price"
-                                                style="margin-top: 15px ;border-color: #1de91d;border-radius: 6px;">
-                                            <input type="number" name="maxPrice" placeholder="Max Price"
-                                                style="margin-top: 15px;border-color: #1de91d;border-radius: 6px;">
-                                            <button type="submit"
-                                                style="border-color: #1de91d;border-radius: 6px;">Search</button>
-                                        </form> -->
-
                                         <form action="/shop" method="GET">
                                             <input type="text" name="query" placeholder="Search by Name or Price" style="border-color: #02d702;width: 204px;text-align: center; outline: none;
                                             border-color: green;
                                             box-shadow: 0 0 2px green;  border: 2px solid green; ">
-                                            <input type="text" name="categoryFilter" placeholder="Filter by Category"  style="border-color: #02d702;width: 204px;text-align: center; margin-top: 31px ;border: 2px solid green; ">
-                                            <input type="number" name="minPrice" placeholder="Min Price"  style="border-color: #02d702;width: 204px;text-align: center; margin-top: 31px; border: 2px solid green; ">
-                                            <input type="number" name="maxPrice" placeholder="Max Price"  style="border-color: #02d702;width: 204px;text-align: center; margin-top: 31px; border: 2px solid green; ">
+                                            <input type="text" name="categoryFilter" placeholder="Filter by Category"
+                                                style="border-color: #02d702;width: 204px;text-align: center; margin-top: 31px ;border: 2px solid green; ">
+                                            <input type="number" name="minPrice" placeholder="Min Price"
+                                                style="border-color: #02d702;width: 204px;text-align: center; margin-top: 31px; border: 2px solid green; ">
+                                            <input type="number" name="maxPrice" placeholder="Max Price"
+                                                style="border-color: #02d702;width: 204px;text-align: center; margin-top: 31px; border: 2px solid green; ">
                                             <select name="sortOrder" style="margin-top: 31px ;border-color: #02d702">
-                                              <option value="">Sort Order</option>
-                                              <option value="asc">Ascending</option>
-                                              <option value="desc">Descending</option>
+                                                <option value="">Sort Order</option>
+                                                <option value="asc">Ascending</option>
+                                                <option value="desc">Descending</option>
                                             </select>
-                                            <button type="submit" style="margin-top: 31px;border-color: #02d702">Apply</button> 
-                                          </form>
-                                       
+                                            <button type="submit"
+                                                style="margin-top: 31px;border-color: #02d702">Apply</button>
+                                        </form>
+
                                         <ul id="searchResults"></ul>
 
-                                        
-                                            <!-- Shop Widget -->
-                                            <div class="shop-widget category mb-50">
-                                                <h4 class="widget-title"></h4>
-                                                <div class="widget-desc">
-                                                    <!-- Single Checkbox -->
-                                                    <div class="shop-widget category mb-50">
-                                                        
-                                                    </div>
 
-                                                    <!-- Container for filtered products -->
-                                                    <div id="filtered-products" class="mb-50">
-                                                        <!-- Display filtered products here -->
-                                                    </div>
+                                        <!-- Shop Widget -->
+                                        <div class="shop-widget category mb-50">
+                                            <h4 class="widget-title"></h4>
+                                            <div class="widget-desc">
+                                                <!-- Single Checkbox -->
+                                                <div class="shop-widget category mb-50">
 
                                                 </div>
+
+                                                <!-- Container for filtered products -->
+                                                <div id="filtered-products" class="mb-50">
+                                                    <!-- Display filtered products here -->
+                                                </div>
+
                                             </div>
-                                          
+                                        </div>
 
 
 
-                                                    <!-- Shop Widget -->
-                                                    <div class="shop-widget sort-by mb-50">
-                                                        <h4 class="widget-title"></h4>
-                                                        <div class="widget-desc">
-                                                            <!-- Single Checkbox -->
-                                                            
+
+                                        <!-- Shop Widget -->
+                                        <div class="shop-widget sort-by mb-50">
+                                            <h4 class="widget-title"></h4>
+                                            <div class="widget-desc">
+                                                <!-- Single Checkbox -->
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Shop Widget -->
+                                        <div class="shop-widget best-seller mb-50">
+                                            <h4 class="widget-title">Best Seller</h4>
+                                            <div class="widget-desc">
+
+                                                <!-- Single Best Seller Products -->
+                                                <div class="single-best-seller-product d-flex align-items-center">
+                                                    <div class="product-thumbnail">
+                                                        <a href="shop-details.html"><img src="/famm/img/bg-img/4.jpg"
+                                                                alt=""></a>
+                                                    </div>
+                                                    <div class="product-info">
+                                                        <a href="shop-details.html">Cactus Flower</a>
+                                                        <p>$10.99</p>
+                                                        <div class="ratings">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
                                                         </div>
                                                     </div>
+                                                </div>
 
-                                                    <!-- Shop Widget -->
-                                                    <div class="shop-widget best-seller mb-50">
-                                                        <h4 class="widget-title">Best Seller</h4>
-                                                        <div class="widget-desc">
-
-                                                            <!-- Single Best Seller Products -->
-                                                            <div
-                                                                class="single-best-seller-product d-flex align-items-center">
-                                                                <div class="product-thumbnail">
-                                                                    <a href="shop-details.html"><img
-                                                                            src="/famm/img/bg-img/4.jpg" alt=""></a>
-                                                                </div>
-                                                                <div class="product-info">
-                                                                    <a href="shop-details.html">Cactus Flower</a>
-                                                                    <p>$10.99</p>
-                                                                    <div class="ratings">
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <!-- Single Best Seller Products -->
-                                                            <div
-                                                                class="single-best-seller-product d-flex align-items-center">
-                                                                <div class="product-thumbnail">
-                                                                    <a href="shop-details.html"><img
-                                                                            src="/famm/img/bg-img/5.jpg" alt=""></a>
-                                                                </div>
-                                                                <div class="product-info">
-                                                                    <a href="shop-details.html">Tulip Flower</a>
-                                                                    <p>$11.99</p>
-                                                                    <div class="ratings">
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <!-- Single Best Seller Products -->
-                                                            <div
-                                                                class="single-best-seller-product d-flex align-items-center">
-                                                                <div class="product-thumbnail">
-                                                                    <a href="shop-details.html"><img
-                                                                            src="/famm/img/bg-img/34.jpg" alt=""></a>
-                                                                </div>
-                                                                <div class="product-info">
-                                                                    <a href="shop-details.html">Recuerdos Plant</a>
-                                                                    <p>$9.99</p>
-                                                                    <div class="ratings">
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
+                                                <!-- Single Best Seller Products -->
+                                                <div class="single-best-seller-product d-flex align-items-center">
+                                                    <div class="product-thumbnail">
+                                                        <a href="shop-details.html"><img src="/famm/img/bg-img/5.jpg"
+                                                                alt=""></a>
+                                                    </div>
+                                                    <div class="product-info">
+                                                        <a href="shop-details.html">Tulip Flower</a>
+                                                        <p>$11.99</p>
+                                                        <div class="ratings">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                <!-- Single Best Seller Products -->
+                                                <div class="single-best-seller-product d-flex align-items-center">
+                                                    <div class="product-thumbnail">
+                                                        <a href="shop-details.html"><img src="/famm/img/bg-img/34.jpg"
+                                                                alt=""></a>
+                                                    </div>
+                                                    <div class="product-info">
+                                                        <a href="shop-details.html">Recuerdos Plant</a>
+                                                        <p>$9.99</p>
+                                                        <div class="ratings">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -504,21 +474,12 @@
                                                     <div class="single-product-area mb-50">
                                                         <!-- Product Image -->
                                                         <div class="product-img">
-                                                            <a href="shop-details.html"><img
-                                                                    src="/productImages/<%=p.image[0]%>"
-                                                                    alt="<%=p.image[0]%>" width="400px"
-                                                                    height="400px"></a>
+                                                        <img src="/productImages/<%=p.image[0]%>" alt="<%=p.image[0]%>" width="400px" height="400px">
                                                             <!-- Product Tag -->
                                                             <div class="product-tag">
-                                                                <a href="#"><%=p.discount %> % OFF</a>
-                                                            </div>
-                                                            <div class="product-meta d-flex">
-                                                                <a href="#" class="wishlist-btn"><i
-                                                                        class="icon_heart_alt"></i></a>
-                                                                <a href="/cart/loadCart?id=<%= p._id%>"
-                                                                    class="add-to-cart-btn">Add to cart</a>
-                                                                <a href="#" class="compare-btn"><i
-                                                                        class="arrow_left-right_alt"></i></a>
+                                                                <a href="#">
+                                                                    <%=p.discount %> % OFF
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         <!-- Product Info -->
@@ -537,12 +498,14 @@
                                                                     <span class="out-of-stock" style="    font-style: normal;
                                                                   font-family: 'classyfont">Out of Stock !!!</span>
                                                                     <% } else { %>
-                                                                        <a href="#"><%=p.discount %> % OFF</a>
+                                                                        <a href="#">
+                                                                            <%=p.discount %> % OFF
+                                                                        </a>
                                                                         <% } %>
                                                             </div>
                                                         </div>
 
-                                                    </div>  
+                                                    </div>
                                                 </div>
                                                 <% })%>
 
@@ -551,16 +514,6 @@
 
 
                                         </div>
-
-                                        <!-- Pagination -->
-                                        <!-- <nav aria-label="Page navigation">
-                                            <ul class="pagination">
-                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#"><i
-                                                            class="fa fa-angle-right"></i></a></li>
-                                            </ul>
-                                        </nav> -->
                                     </div>
                                 </div>
                             </div>
@@ -570,7 +523,9 @@
                     <!-- ##### Shop Area End ##### -->
 
                     <!-- ##### Footer Area Start ##### -->
-                    <footer class="footer-area bg-img" ;;style="background-image: url(/famm/img/bg-img/3.jpg)">
+                    <footer class="footer-area bg-img" style="background-image: url(/famm/img/bg-img/3.jpg)">
+
+
 
                         <!-- Main Footer Area -->
                         <div class="main-footer-area">
@@ -741,7 +696,7 @@
                                 const response = await fetch(`/shop?${queryParams}`);
                                 const products = await response.json();
 
-                                // Display search results on the webpage
+                            
                                 searchResults.innerHTML = "";
                                 products.forEach((product) => {
                                     const li = document.createElement("li");
@@ -760,5 +715,4 @@
                     </script>
 
 </body>
-
 </html>

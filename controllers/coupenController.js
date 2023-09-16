@@ -18,13 +18,19 @@ const loadcoupens = async (req, res) => {
 
 const popCoupens = async (req, res) => {
     try {
+      
+
+    
       const user = req.session.user;
+   
   
       const cart = await cartcollection
         .findOne({ user: user._id })
         .populate('products.productId');
   
       const coupen = await coupenCollection.find();
+
+  
   
       if (cart && cart.Grand_total >= 10000) {
         res.json(coupen);

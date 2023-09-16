@@ -23,6 +23,7 @@ orderRoute.get('/delete_address',auth.isLogin,auth.userblock,orderController.loa
 orderRoute.post("/makeDefault",orderController.makeDefaultAddress)
 orderRoute.get('/orderDetails',auth.isLogin,auth.userblock,orderController.loadorderDetails)
 orderRoute.get('/ordersuccess',auth.isLogin,auth.userblock,orderController.orderSuccess)
+orderRoute.get('/OrderFullDetails',auth.isLogin,auth.userblock,orderController.loadOrderFullDetails)
 
 
 

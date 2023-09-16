@@ -137,7 +137,7 @@
             <div class="inputBox">
               <form action="" method="post">
               <input  type="text" name="email" placeholder="email" required id="email" required>
-              <label  style="display: none;" id="errorEmail"><u style="color: red;"> Email is required</u></label>
+              <label  style="display: none;" id="errorEmail"><u style="color: red;"> Invalid email format or too short</u></label>
               <input  type="password" name="password" placeholder="Password" required id="password" required> 
               <label  style="display: none;" id="errorPassword"><u style="color: red;"> Password is required</u></label>
             </div> 
@@ -157,19 +157,20 @@
     </div>
   
   <script>
-    $(document).ready(function () {
-        $("#email").blur(function () {
-          var text = $(this).val();
-          // Regular expression for email validation
-          var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  
-          if (!emailRegex.test(text) || text.length < 4) {
-            $("#errorEmail").show();
-          } else {
-            $("#errorEmail").hide();
-          }
-        });
-      });
+   $(document).ready(function () {
+    $("#email").blur(function () {
+      var text = $(this).val();
+      // Regular expression for email validation
+      var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+      if (!emailRegex.test(text) || text.length < 4) {
+        // Display a validation message or take appropriate action
+        $("#errorEmail").show()
+      }else{
+        $("#errorEmail").hide()
+      }
+    });
+  });
   
     $(document).ready(function(){
       $("#password").blur(function(){

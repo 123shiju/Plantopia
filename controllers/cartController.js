@@ -16,7 +16,10 @@ const addToCart = async (req, res) => {
     }
 
     const productId = req.query.id;
+  
     const product = await productcollection.findById(productId);
+    console.log("product from cart:",product)
+
 
     if (!product) {
       return res.status(404).json({ error: 'Product not found.' });
@@ -27,6 +30,7 @@ const addToCart = async (req, res) => {
     }
 
     let cart = await cartcollection.findOne({ user: user._id }).populate('products.productId');
+    console.log("cart products:",cart)
     if (!cart) {
       cart = new cartcollection({ user: user._id, products: [], sub_total: 0, Grand_total: 0 });
     }
@@ -65,6 +69,7 @@ const addToCart = async (req, res) => {
 
     const cartItems = cart.products.map(item => {
       const productData = item.productId;
+
       const total_price = item.quantity * (productData ? productData.sale_price : 0);
       let image = 'No Image Available';
       if (productData && productData.image && productData.image.length > 0) {
@@ -74,13 +79,14 @@ const addToCart = async (req, res) => {
         productId: productData ? productData._id : null,
         name: productData ? productData.product_name : 'Product Name Not Available',
         price: productData ? productData.sale_price : 0,
-        quantity: productData.quantity,
+        quantity: item.quantity,
         image: image,
         total_price: total_price,
         shipping_charge: cart.shipping_charge,
         stock: productData ? productData.stock : 0
       };
     });
+
 
     await Promise.all([cart.save(), product.save()]);
     res.redirect('/cart/loadCart');
@@ -121,11 +127,13 @@ const loadcart = async (req, res) => {
 
     const coupen = await coupenCollection.find();
 
+  
 
     const coupon = req.session.coupon;
     let couponDiscount = 0;
     if (coupon) {
       couponDiscount = coupon.discount;
+    
     }
 
 
@@ -144,6 +152,7 @@ const loadcart = async (req, res) => {
         shipping_charge: cart.shipping_charge
       };
     });
+  
 
     res.render('cart', { cartItems, user, cart, coupen, grandTotal });
   } catch (error) {

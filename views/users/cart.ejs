@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
 
     <!-- Title -->
     <title>Plantopia</title>
@@ -17,7 +17,6 @@
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="/famm/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
     <style>
         .modal {
             display: none;
@@ -104,10 +103,10 @@
                                 <div class="top-header-meta">
                                     <a href="#" data-toggle="tooltip" data-placement="bottom"
                                         title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
-                                            aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
+                                            aria-hidden="true"></i> <span>Email: plantopia@gmail.com</span></a>
                                     <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i
-                                            class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122
-                                            122</span></a>
+                                            class="fa fa-phone" aria-hidden="true"></i> <span>Call Us:
+                                            +91-7012995486</span></a>
                                 </div>
 
                                 <!-- Top Header Content -->
@@ -268,7 +267,8 @@
                                                 aria-expanded="false">
                                                 <%= locals.user.name%>
                                             </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                                style="background-color: #70c745;">
                                                 <a class="dropdown-item" href="#">Profile</a>
                                                 <a class="dropdown-item" href="#">Track and Manage Your Orders</a>
                                                 <a class="dropdown-item" href="#">Buy again</a>
@@ -424,24 +424,19 @@
                                                         <td class="qty">
                                                             <div class="quantity">
                                                                 <div class="row">
-                                                                    <button class="decrementBtn"><i
-                                                                            class="fas fa-minus"></i></button>
+                                                                    <button class="decrementBtn"><i class="fas fa-minus"
+                                                                            style="color: #70c745;"></i></button>
                                                                     <input class="productQuantity"
                                                                         value="<%= item.quantity %>" readonly
                                                                         style="width: 30px;margin-left: 25px">
                                                                     <button class="incrementBtn"
-                                                                        style="margin-left: 25px"><i
-                                                                            class="fas fa-plus"></i></button>
+                                                                        style="margin-left: 25px ;"><i
+                                                                            class="fas fa-plus"
+                                                                            style="color: #70c745;"></i></button>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <div id="outOfStockModal" class="modal">
-                                                            <div class="modal-content">
-                                                                <span class="close">&times;</span>
-                                                                <p style="color: red; font-weight: 600; ">Sorry !!!, the
-                                                                    selected product is out of stock.</p>
-                                                            </div>
-                                                        </div>
+
 
                                                         <input class="productId" type="hidden"
                                                             value="<%= item.productId %>">
@@ -455,10 +450,13 @@
                                                         <td class="action"><a
                                                                 href="/cart/removeProduct?id=<%= item.productId %>"
                                                                 class="remove-link"><i class="icon_close"
-                                                                    onclick="removeProduct('<%= item.productId %>')"></i></a>
+                                                                    onclick="removeProduct('<%= item.productId %>')"
+                                                                    )></i></a>
                                                         </td>
+
                                                         <input type="hidden" class="productStock"
-                                                            value="<%= item.productId.stock %>">
+                                                            value="<%= item.productId ? item.productId.stock : 0 %>">
+
 
                                                     </tr>
                                                     <% }) %>
@@ -476,27 +474,8 @@
                             <div class="col-12 col-lg-6">
                                 <div class="coupon-discount mt-70">
                                     <h5>COUPON DISCOUNT</h5>
-                                   
+
                                     <button id="showCouponsBtn" class="btn alazea-btn">Show Coupons</button>
-
-                                    <div id="couponPopup" class="popup">
-                                        <div class="popup-content">
-                                            <span class="close" id="closePopup">&times;</span>
-                                            <h2>Available Coupons</h2>
-                                            <ul id="couponList">
-                                                
-                                            </ul>
-                                            <p id="purchaseMoreMessage" class="purchase-more-message" style="display: block;
-                                                color: rgb(240, 11, 11);
-                                                font-family: 'classyfonts';
-                                                font-size: larger;
-                                                font-weight: 900;">Purchase more to unlock coupons. !!!</p>
-                                        </div>
-                                    </div>
-
-
-
-                                    <!-- Button to show the modal -->
 
 
                                     <br>
@@ -523,6 +502,14 @@
                                         <div class="shipping-address">
                                             <h5 id="shipping_charge">
                                                 <%= cart.shipping_charge%>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div class="shipping d-flex justify-content-between" style="display: none;">
+                                        <h5>Coupen Discount:</h5>
+                                        <div class="shipping-address">
+                                            <h5 id="coupen_discount">
+                                                <%= cart.coupen %>
                                             </h5>
                                         </div>
                                     </div>
@@ -707,7 +694,7 @@
                 <!-- Active js -->
                 <script src="/famm/js/active.js"></script>
                 <script src="/javascript/cartQuantity.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                 <script>
                     function removeProduct(productId) {
                         const removeUrl = "/cart/removeProduct?id=" + productId;
@@ -719,18 +706,34 @@
                                     if (productRow) {
                                         productRow.remove();
 
-                                        location.reload();
+                                        // Use SweetAlert for success message
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Product Removed',
+                                            text: 'The product has been removed successfully.',
+                                            timer: 2000 // Automatically close after 2 seconds
+                                        }).then(() => {
+                                            location.reload();
+                                        });
                                     }
                                 } else {
-                                    console.error("Failed to remove product.");
+                                    // Use SweetAlert for error message
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Failed to Remove Product',
+                                        text: 'An error occurred while removing the product.',
+                                    });
                                 }
                             })
                             .catch(error => {
-                                console.error("Error removing product:", error);
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error Removing Product',
+                                    text: 'An error occurred while removing the product: ' + error,
+                                });
                             });
                     }
-
-
                 </script>
 
 
@@ -746,99 +749,99 @@
                         const grandTotalElement = document.getElementById("grand-total");
 
 
-                        showCouponsBtn.addEventListener("click", async () => {
-                            try {
-                                const response = await fetch("/coupen/popCoupen", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                });
+                        $("#showCouponsBtn").on("click", function () {
 
-                                if (response.ok) {
-                                    const responseJson = await response.json();
+                            console.log("response from frontend showcoupon");
+                            $.ajax({
+                                type: "GET",
+                                url: "/coupen/popCoupen",
+                                dataType: "json",
+                                success: function (response) {
 
-                                    const couponListElement = document.getElementById("couponList");
-                                    const purchaseMoreMessage = document.getElementById("purchaseMoreMessage");
 
-                                    if (responseJson.message) {
+                                    if (response.message) {
 
-                                        couponListElement.innerHTML = "";
-                                        purchaseMoreMessage.style.display = "block";
+                                        Swal.fire({
+                                            icon: 'info',
+                                            title: 'No Coupons Available',
+                                            text: 'Sorry, there are no coupons available at the moment.',
+                                        });
                                     } else {
 
-                                        purchaseMoreMessage.style.display = "none";
-                                        responseJson.forEach((coupon) => {
-                                            const li = document.createElement("li");
-                                            li.textContent = coupon.code;
-                                            couponListElement.appendChild(li);
+                                        const couponCodes = response.map(coupon => coupon.code).join('\n');
+                                        Swal.fire({
+                                            title: 'Available Coupons',
+                                            html: '<pre>' + couponCodes + '</pre>',
                                         });
                                     }
+                                },
+                                error: function (xhr, status, error) {
 
-                                    couponPopup.style.display = "block";
-                                } else {
-                                    console.error("Error fetching coupons:", response.statusText);
+                                    console.error("Error Fetching Coupons:", error);
+
                                 }
-                            } catch (error) {
-                                console.error("Error fetching coupons:", error);
-                            }
+                            });
                         });
 
 
 
-
-                        closePopup.addEventListener("click", () => {
-                            couponPopup.style.display = "none";
-                        });
 
 
                         applyCouponBtn.addEventListener("click", async () => {
-                            applyCouponBtn.disabled = true
-
+                            applyCouponBtn.disabled = true;
                             const couponCode = couponCodeInput.value;
-
-
-
-                            const grandTotal = grandTotalElement.textContent
-
-
-
-
-
+                            const grandTotal = grandTotalElement.textContent;
 
                             try {
-
                                 const response = await fetch("/cart/loadCart", {
                                     method: "POST",
                                     headers: {
                                         "Content-Type": "application/json"
                                     },
                                     body: JSON.stringify({ couponCode, grand_total: grandTotal })
-
                                 });
                                 if (response.ok) {
                                     const result = await response.json();
 
-                                
 
                                     if (result.updatedTotal !== undefined) {
                                         const updatedTotal = result.updatedTotal.toFixed(2);
                                         grandTotalElement.textContent = updatedTotal;
 
-                                
-                                        const couponDiscount = result.coupen.discount;
-                                        const coupenValElement = document.getElementById("coupenVal");
-                                        coupenValElement.textContent = couponDiscount; 
+                                        const couponDiscount = result.coupon.discount;
+                                        const couponValElement = document.getElementById("couponVal");
+                                        couponValElement.textContent = couponDiscount;
+
+                                        $(".shipping").css("display", "block");
+
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Coupon Applied',
+                                            text: 'Coupon applied successfully.',
+                                        });
                                     } else {
-                                        console.error("Invalid response format");
+
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Coupon Application Error',
+                                            text: 'Invalid response format.',
+                                        });
                                     }
                                 } else {
-                                    console.error("Coupon application error:", response.statusText);
+
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Coupon Application Error',
+                                        text: `Error: ${response.message}`,
+                                    });
                                 }
-
-
                             } catch (error) {
-                                console.error("Coupon application error:", error);
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Coupon Application Error',
+                                    text: `Error: ${error}`,
+                                });
                             } finally {
                                 applyCouponBtn.disabled = false;
                             }

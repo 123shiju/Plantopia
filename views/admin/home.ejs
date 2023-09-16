@@ -13,10 +13,8 @@
     <link rel="stylesheet" href="/famm/admin/css/bootstrap.min.css">
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="/famm/admin/css/templatemo-style.css">
-    <!--
-	Product Admin CSS Template
-	https://templatemo.com/tm-524-product-admin
-	-->
+
+
 </head>
 
 <body id="reportsPage">
@@ -51,9 +49,7 @@
                                 </span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Daily Report</a>
-                                <a class="dropdown-item" href="#">Weekly Report</a>
-                                <a class="dropdown-item" href="#">Yearly Report</a>
+                                <a class="dropdown-item" href="/admin/GetorderReport">Download Orders Report</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -100,183 +96,100 @@
                 </div>
             </div>
             <!-- row -->
-            <div class="row tm-content-row">
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+            <div style="width: 1113px;margin-left: 16px;">
+                <div class="tm-block-col">
                     <div class="tm-bg-primary-dark tm-block">
-                        <h2 class="tm-block-title">Latest Hits</h2>
+                        <h2 class="tm-block-title">orders Reports</h2>
                         <canvas id="lineChart"></canvas>
+                        <div id="orderData" data-orderdata="<%= JSON.stringify(orders) %>"></div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                    <div class="tm-bg-primary-dark tm-block">
-                        <h2 class="tm-block-title">Performance</h2>
-                        <canvas id="barChart"></canvas>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                    <div class="tm-bg-primary-dark tm-block tm-block-taller">
-                        <h2 class="tm-block-title">Storage Information</h2>
-                        <div id="pieChartContainer">
-                            <canvas id="pieChart" class="chartjs-render-monitor" width="200" height="200"></canvas>
-                        </div>                        
-                    </div>
-                </div>
-            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-overflow">
-                        <h2 class="tm-block-title">Notification List</h2>
-                        <div class="tm-notification-items">
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="/public/famm/admin/img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Jessica</b> and <b>6 others</b> sent you new <a href="#"
-                                            class="tm-notification-link">product updates</a>. Check new orders.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="/public/famm/admin/img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Oliver Too</b> and <b>6 others</b> sent you existing <a href="#"
-                                            class="tm-notification-link">product updates</a>. Read more reports.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="/public/famm/admin/img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Victoria</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">order updates</a>. Read order information.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="/public/famm/admin/img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Laura Cute</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">product records</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="/public/famm/admin/img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Samantha</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">order stuffs</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="/public/famm/admin/img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Sophie</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">product updates</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="/public/famm/admin/img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Lily A</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">product updates</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="/public/famm/admin/img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Amara</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">product updates</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="/public/famm/admin/img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Cinthela</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">product updates</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <div class=" tm-block-col">
-                <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
-                    <h2 class="tm-block-title">Orders List</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col-2">ORDER ID</th>
-                                <th scope="col-2">STATUS</th>
-                                <th scope="col-2">Customer Name</th>
-                                <th scope="col-2">Date</th>
-                                <th scope="col-2">Total Amount</th>
-                                <th scope="col-2">Total Quantity</th>
-                                <th scope="col-2" style="text-align: center;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% orders.forEach(order=> { %>
+
+
+                <div class=" tm-block-col">
+                    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll"
+                        style="margin-left: 15px;width: 1119px;">
+                        <h2 class="tm-block-title">Orders List</h2>
+                        <table class="table" style="width: 103%;">
+                            <thead>
                                 <tr>
-                                    <td scope="row"><b>#<%= order.orderId %></b></td>
-                                    <td>
-                                        <div class="tm-status-circle moving"></div>
-                                        <%= order.orderStatus %>
-                                    </td>
-                                    <td>
-                                        <%= order.user.name%>
-                                    </td>
-                                    <td><b>
-                                            <%= order.createdAt.toLocaleString('en-IN', { day: '2-digit' ,
-                                                month: '2-digit' , year: 'numeric' }) %>
-                                        </b></td>
-                                    <td><b>$<%= order.orderTotal.toFixed(2) %></b></td>
-                                    <td><b>
-                                            <%= getTotalQuantity(order.items) %>
-                                        </b></td>
-                                    <% function getTotalQuantity(items) { let totalQuantity=0; items.forEach(item=> {
-                                        totalQuantity += item.quantity;
-                                        });
-                                        return totalQuantity;
-                                        } %>
-
-                                        <td>
-                                            <div class="row">
-                                                <button style="border-color: #4e657a;
-                                                border-radius: 8px;
-                                                width: 56px; background-color:  #4e657a;">
-                                                    <a href="/admin/Cancel_order?id=<%= order.orderId %>"
-                                                        style="color: white;">Cancel </a>
-                                                </button>
-                                                 <button style="border-color: #4e657a;
-                                                border-radius: 8px;
-                                                width: 56px; background-color:  #4e657a;">
-                                                    <a href="/admin/order_details?id=<%= order.orderId %>"
-                                                        style="color: white;">Details</a>
-                                                </button>
-                                            </div>
-                                            
-                                        </td>
+                                    <th scope="col-2">ORDER ID</th>
+                                    <th scope="col-2">STATUS</th>
+                                    <th scope="col-2">Customer Name</th>
+                                    <th scope="col-2">Date</th>
+                                    <th scope="col-2">payment Method</th>
+                                    <th scope="col-2">Total Amount</th>
+                                    <th scope="col-2">Total Quantity</th>
+                                    <th scope="col-2" style="text-align: center;">Action</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                <% orders.forEach(order=> { %>
+                                    <tr>
+                                        <td scope="row"><b>#<%= order.orderId %></b></td>
+                                        <td>
+                                            <div class="tm-status-circle moving"></div>
+                                            <%= order.orderStatus %>
+                                        </td>
+                                        <td>
+                                            <%= order.user.name%>
+                                        </td>
+                                        <td><b>
+                                                <%= order.createdAt.toLocaleString('en-IN', { day: '2-digit' ,
+                                                    month: '2-digit' , year: 'numeric' }) %>
+                                            </b></td>
+                                        <td>
+                                            <%= order.payment_Method%>
+                                        </td>
+                                        <td><b>$<%= order.orderTotal.toFixed(2) %></b></td>
+                                        <td><b>
+                                                <%= getTotalQuantity(order.items) %>
+                                            </b></td>
+                                        <% function getTotalQuantity(items) { let totalQuantity=0; items.forEach(item=>
+                                            {
+                                            totalQuantity += item.quantity;
+                                            });
+                                            return totalQuantity;
+                                            } %>
 
-                                <% }) %>
-                        </tbody>
-                    </table>
+                                            <td>
+                                                <div class="row">
+                                                    <button style="border-color: #4e657a;
+                                                border-radius: 8px;
+                                                width: 56px; background-color:  #4e657a;">
+                                                        <a href="/admin/Cancel_order?id=<%= order.orderId %>"
+                                                            style="color: white;">Cancel </a>
+                                                    </button>
+                                                    <button style="border-color: #4e657a;
+                                                border-radius: 8px;
+                                                width: 56px; background-color:  #4e657a;">
+                                                        <a href="/admin/order_details?id=<%= order.orderId %>"
+                                                            style="color: white;">Details</a>
+                                                    </button>
+                                                </div>
+
+                                            </td>
+                                    </tr>
+
+                                    <% }) %>
+                            </tbody>
+                        </table>
 
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <footer class="tm-footer row tm-mt-small">
-        <div class="col-12 font-weight-light">
-            <p class="text-center text-white mb-0 px-4 small">
-                Copyright &copy; <b>2018</b> All rights reserved.
+        <footer class="tm-footer row tm-mt-small">
+            <div class="col-12 font-weight-light">
+                <p class="text-center text-white mb-0 px-4 small">
+                    Copyright &copy; <b>2018</b> All rights reserved.
 
-                Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
-            </p>
-        </div>
-    </footer>
+                    Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template
+                        Mo</a>
+                </p>
+            </div>
+        </footer>
     </div>
 
     <script src="/famm/admin/js/jquery-3.3.1.min.js"></script>
@@ -288,31 +201,97 @@
     <script src="/famm/admin/js/bootstrap.min.js"></script>
     <!-- https://getbootstrap.com/ -->
     <script src="/famm/admin/js/tooplate-scripts.js"></script>
-    <script>
-        Chart.defaults.global.defaultFontColor = 'white';
-        let ctxLine,
-            ctxBar,
-            ctxPie,
-            optionsLine,
-            optionsBar,
-            optionsPie,
-            configLine,
-            configBar,
-            configPie,
-            lineChart;
-        barChart, pieChart;
-        // DOM is ready
-        $(function () {
-            drawLineChart(); // Line Chart
-            drawBarChart(); // Bar Chart
-            drawPieChart(); // Pie Chart
+    <!-- Include Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            $(window).resize(function () {
-                updateLineChart();
-                updateBarChart();
-            });
-        })
-    </script>
+
+
+    <script>
+   
+    var orderDataElement = document.getElementById('orderData');
+    var orderData = JSON.parse(orderDataElement.getAttribute('data-orderdata'));
+
+
+    function formatDate(date) {
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        return new Date(date).toLocaleDateString('en-US', options);
+    }
+    var orderLabels = orderData.map(order => formatDate(order.createdAt));
+    var orderCounts = orderData.map(order => order.orderTotal);
+
+
+    var numDataPoints = orderCounts.length;
+    var amplitude = 500;
+    var frequency = 0.1;
+    var waveData = [];
+    for (var i = 0; i < numDataPoints; i++) {
+        var value = amplitude * Math.sin(frequency * i);
+        waveData.push(value);
+    }
+
+
+    var ctx = document.getElementById('lineChart').getContext('2d');
+    var lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: orderLabels, 
+            datasets: [
+                {
+                    label: 'Company Growth',
+                    data: waveData, 
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                },
+                {
+                    label: 'Order Counts',
+                    data: orderCounts,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                }
+            ]
+        },
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date',
+                        color: 'white' 
+                    },
+                    ticks: {
+                        color: 'white' 
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Value',
+                        color: 'white' 
+                    },
+                    ticks: {
+                        color: 'white' 
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white' 
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+
+
+
+
+
+
 </body>
 
 </html>

@@ -4,7 +4,8 @@ const orderCollection = require("../models/OrderModel")
 const bcrypt = require('bcrypt')
 const userCollection = require("../models/userModel")
 const productDBCollection = require("../models/productModel")
-
+const offerCollection = require("../models/offerModel")
+const { body, validationResult } = require('express-validator');
 const securepassword = async (password) => {
     try {
 
@@ -26,6 +27,19 @@ const loadLogin = async (req, res) => {
 
 const verifyLogin = async (req, res) => {
     try {
+        [
+            body('email')
+                .isEmail()
+                .withMessage('Invalid email'),
+            body('password')
+                .notEmpty()
+                .withMessage('Password is required')
+        ]
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
         const email = req.body.email
         const password = req.body.password
         const userData = await adminCollection.findOne({ email: email })
@@ -64,9 +78,9 @@ const loadDashboard = async (req, res) => {
                 select: 'address'
             });
 
-            console.log(orders)
 
-          res.render('home', { orders });
+
+        res.render('home', { orders });
     } catch (error) {
         console.log(error.message);
     }
@@ -116,8 +130,9 @@ const UnBlockuser = async (req, res) => {
 const loadCategory = async (req, res) => {
 
     try {
+        const offerdata = await offerCollection.find()
         const categoryData = await categoryCollection.find()
-        res.render('category', { category: categoryData })
+        res.render('category', { category: categoryData, offers: offerdata })
     } catch (error) {
         console.log(error.message);
     }
@@ -279,6 +294,57 @@ const getorderDetails = async (req, res) => {
 }
 
 
+const GetOffer_page = async (req, res) => {
+    try {
+        const id = req.query.id
+        const cat_Data = await categoryCollection.find({ _id: id })
+        res.render('Add_offer', { cat_Data })
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while fetching this page' })
+    }
+}
+
+const ApplyOffer = async (req, res) => {
+    try {
+        const { name, category, discountType, discountValue, startDate, endDate } = req.body
+
+
+        const offer = new offerCollection({
+            name: name,
+            category: category,
+            discountType: discountType,
+            discountValue: discountValue,
+            startDate: startDate,
+            endDate: endDate
+
+        })
+
+        await offer.save()
+        req.flash('success', 'Offer applied successfully!');
+        res.redirect("/admin/category")
+
+    } catch (error) {
+        res.status(500).json({ error: 'An error occured while apply offer' })
+    }
+}
+
+
+
+const GetOrder_Report=async(req,res)=>{
+    try {
+        const orders = await orderCollection.find()
+        .populate({ path: 'user', select: 'name' })
+        .populate('items.product', 'name')
+        .populate({
+            path: 'shipping_address',
+            model: 'userdb',
+            select: 'address'
+        });
+        res.render('Reports.ejs',{ orders })
+    } catch (error) {
+        res.status(500).json({ error: 'An error occured while apply offer' })
+    }
+}
 
 module.exports = {
     loadLogin,
@@ -295,5 +361,9 @@ module.exports = {
     updateCategory,
     loadlogout,
     Cancelorder,
-    getorderDetails
+    getorderDetails,
+    GetOffer_page,
+    ApplyOffer,
+    GetOrder_Report
+
 }

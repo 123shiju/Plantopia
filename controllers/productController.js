@@ -4,6 +4,7 @@ const categorycollection = require('../models/categoryModel')
 const loadHome = async (req, res) => {
     try {
         const productData = await collection.find({ list: false })
+        console.log("shop producs:",productData)
       
         const productIds = productData.map(product => product.product_category);
     

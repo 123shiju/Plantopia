@@ -18,894 +18,1068 @@
     <link rel="stylesheet" href="/famm/style.css">
     <style>
         #image-container {
-          overflow: hidden;
-          width: 400px;
-          height: 400px;
-          position: relative;
+            overflow: hidden;
+            width: 400px;
+            height: 400px;
+            position: relative;
         }
-    
+
         #zoomed-image {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          cursor: zoom-in;
-          transform-origin: 0 0;
-          transform: scale(1);
-          transition: transform 0.3s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: zoom-in;
+            transform-origin: 0 0;
+            transform: scale(1);
+            transition: transform 0.3s ease;
         }
-    
+
         .image-container:hover .zoomed-image {
-          transform: scale(2);
+            transform: scale(2);
         }
-    
+
         /* Placeholder for the zoomed image */
         .zoomed-image-placeholder {
-          display: none;
+            display: none;
         }
-      </style>
+
+        .wrapper {
+    padding: 50px;
+    margin: 0 auto;
+    display: block;
+    width: 100px;
+  }
+  
+  .icon-wishlist {
+    cursor: pointer;
+    width: 22px;
+    height: 21px;
+    opacity: .5;
+    background: 
+    
+   url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0LjI1IDQiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQuMjUgNDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxwYXRoIGQ9Ik0yLjEyLDRDMi4xLDQsMi4wNywzLjk5LDIuMDUsMy45OEMxLjk4LDMuOTIsMC4zLDIuNjgsMC4wNCwxLjYyYy0wLjEtMC40My0wLjAxLTAuODgsMC4yNC0xLjJDMC41LDAuMTUsMC44MSwwLDEuMTYsMAoJCWMwLjUsMCwwLjgsMC4yNiwwLjk2LDAuNTFDMi4yOCwwLjI2LDIuNTksMCwzLjA4LDBjMC4zNSwwLDAuNjYsMC4xNSwwLjg4LDAuNDNjMC4yNSwwLjMyLDAuMzQsMC43NywwLjI0LDEuMgoJCUMzLjk1LDIuNjgsMi4yNywzLjkyLDIuMiwzLjk4QzIuMTgsMy45OSwyLjE1LDQsMi4xMiw0eiBNMS4xNiwwLjI1Yy0wLjM1LDAtMC41NywwLjE4LTAuNjgsMC4zM0MwLjI4LDAuODQsMC4yLDEuMjIsMC4yOSwxLjU3CgkJYzAuMjEsMC44NSwxLjUxLDEuOSwxLjg0LDIuMTVjMC4zMy0wLjI1LDEuNjMtMS4zMSwxLjg0LTIuMTVjMC4wOC0wLjM1LDAuMDEtMC43My0wLjE5LTAuOThDMy42NSwwLjQzLDMuNDMsMC4yNSwzLjA4LDAuMjUKCQljLTAuNjcsMC0wLjg0LDAuNTctMC44NCwwLjU4QzIuMjMsMC44OCwyLjE4LDAuOTIsMi4xMiwwLjkyaDBjLTAuMDYsMC0wLjEtMC4wNC0wLjEyLTAuMDlDMiwwLjgxLDEuODMsMC4yNSwxLjE2LDAuMjV6Ii8+CjwvZz4KPC9zdmc+Cg==');
+    
+    &:hover {
+      opacity: 1;
+    }
+    
+    &.in-wishlist {
+      opacity: 1;
+      animation-name: wishlist-ani;
+      animation-duration: 1000ms;
+      background: 
+       
+    url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjE5NyAtODYuNzIgODE0LjA5NSA3NjgiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMTk3IC04Ni43MiA4MTQuMDk1IDc2ODsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe2ZpbGw6IzIwMjAyMDt9DQoJLnN0MXtmaWxsOiNDQUQ3NDc7fQ0KPC9zdHlsZT4NCjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik02MDQuMDQ3LDY4MS4yOGMtMy44NCwwLTkuNi0xLjkyLTEzLjQ0LTMuODRjLTEzLjQ0LTExLjUyLTMzNi0yNDkuNi0zODUuOTItNDUzLjEyDQoJYy0xOS4yLTgyLjU2LTEuOTItMTY4Ljk2LDQ2LjA4LTIzMC40YzQyLjI0LTUxLjg0LDEwMS43Ni04MC42NCwxNjguOTYtODAuNjRjOTYsMCwxNTMuNiw0OS45MiwxODQuMzIsOTcuOTINCgljMzAuNzItNDgsOTAuMjQtOTcuOTIsMTg0LjMyLTk3LjkyYzY3LjIsMCwxMjYuNzIsMjguOCwxNjguOTYsODIuNTZjNDgsNjEuNDQsNjUuMjgsMTQ3Ljg0LDQ2LjA4LDIzMC40DQoJYy00OCwyMDEuNi0zNzAuNTYsNDM5LjY4LTM4NCw0NTEuMkM2MTUuNTY4LDY3OS4zNiw2MDkuODA3LDY4MS4yOCw2MDQuMDQ3LDY4MS4yOHoiLz4NCjxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik00MTkuNzI4LTM4LjcyYy02Ny4yLDAtMTA5LjQ0LDM0LjU2LTEzMC41Niw2My4zNmMtMzguNCw0OS45Mi01My43NiwxMjIuODgtMzYuNDgsMTkwLjA4DQoJYzQwLjMyLDE2My4yLDI4OS45MiwzNjQuOCwzNTMuMjgsNDEyLjhjNjMuMzYtNDgsMzEyLjk2LTI1MS41MiwzNTMuMjgtNDEyLjhjMTUuMzYtNjcuMiwxLjkyLTE0MC4xNi0zNi40OC0xODguMTYNCgljLTI0Ljk2LTMwLjcyLTY3LjItNjUuMjgtMTM0LjQtNjUuMjhjLTEyOC42NCwwLTE2MS4yOCwxMDkuNDQtMTYxLjI4LDExMS4zNmMtMS45Miw5LjYtMTEuNTIsMTcuMjgtMjMuMDQsMTcuMjhsMCwwDQoJYy0xMS41MiwwLTE5LjItNy42OC0yMy4wNC0xNy4yOEM1ODEuMDA4LDY4LjgsNTQ4LjM2Ny0zOC43Miw0MTkuNzI4LTM4LjcyeiIvPg0KPC9zdmc+DQo=');
+      
+    }
+  }
+  
+  @keyframes wishlist-ani {
+      0%   {transform: scale(1);}
+      25%  {transform: scale(.5);}
+      50%  {transform: scale(1.2);}
+      100% {transform: scale(1);}
+  }
+    </style>
 </head>
 
 <body>
     <!-- ##### Header Area Start ##### -->
-   
 
-        <!-- ***** Top Header Area ***** -->
-        <%
-        if(!user){
-            %>
-            <header class="header-area">
-        <div class="top-header-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="top-header-content d-flex align-items-center justify-content-between">
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta">
-                                <a href="#" data-toggle="tooltip" data-placement="bottom" title="infodeercreative@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
-                                <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122 122</span></a>
-                            </div>
 
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta d-flex">
-                                <!-- Language Dropdown -->
-                                <div class="language-dropdown">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">USA</a>
-                                            <a class="dropdown-item" href="#">UK</a>
-                                            <a class="dropdown-item" href="#">Bangla</a>
-                                            <a class="dropdown-item" href="#">Hindi</a>
-                                            <a class="dropdown-item" href="#">Spanish</a>
-                                            <a class="dropdown-item" href="#">Latin</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Login -->
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="/login" style="color: black;">Login</a>
-                                    </div>
-                                </div>
-                                <!-- Cart -->
-                                <!-- <div class="cart">
-                                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="cartCount">0</span></span></a>
-                                </div> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="alazea-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="alazeaNav">
-
-                        <!-- Nav Brand -->
-                        <a href="/" class="nav-brand"><img src="/famm/img/core-img/company_logo.png" alt=""></a>
-
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
-
-                        <!-- Menu -->
-                        <div class="classy-menu">
-
-                            <!-- Close Button -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Navbar Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="dropdown">
-                                            <li><a href="/">Home</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="/shop">Shop</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="/shop">Shop</a></li>
-                                                    <li><a href="shop-details.html">Shop Details</a></li>
-                                                    <li><a href="cart.html">Shopping Cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio.html">Portfolio</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="portfolio.html">Portfolio</a></li>
-                                                    <li><a href="single-portfolio.html">Portfolio Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="blog.html">Blog</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-post.html">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="contact.html">Contact</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="/shop">Shop</a></li>
-                                    <li><a href="portfolio.html">Portfolio</a></li>
-                                </ul>
-
-                                <!-- Search Icon -->
-                                <div id="searchIcon">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </div>
-
-                            </div>
-                            <!-- Navbar End -->
-                        </div>
-                    </nav>
-
-                    <!-- Search Form -->
-                    <div class="search-form">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type keywords &amp; press enter...">
-                            <button type="submit" class="d-none"></button>
-                        </form>
-                        <!-- Close Icon -->
-                        <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-            </header>
-        <%
-    }else{
-        %>
+    <!-- ***** Top Header Area ***** -->
+    <% if(!user){ %>
         <header class="header-area">
-        <div class="top-header-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="top-header-content d-flex align-items-center justify-content-between">
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta">
-                                <a href="#" data-toggle="tooltip" data-placement="bottom" title="infodeercreative@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
-                                <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122 122</span></a>
+            <div class="top-header-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="top-header-content d-flex align-items-center justify-content-between">
+                                <!-- Top Header Content -->
+                                <div class="top-header-meta">
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom"
+                                        title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
+                                            aria-hidden="true"></i> <span>Email: plantopia@gmail.com</span></a>
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i
+                                            class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122
+                                            122</span></a>
+                                </div>
+
+                                <!-- Top Header Content -->
+                                <div class="top-header-meta d-flex">
+                                    <!-- Language Dropdown -->
+                                    <div class="language-dropdown">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">Language</button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">USA</a>
+                                                <a class="dropdown-item" href="#">UK</a>
+                                                <a class="dropdown-item" href="#">Bangla</a>
+                                                <a class="dropdown-item" href="#">Hindi</a>
+                                                <a class="dropdown-item" href="#">Spanish</a>
+                                                <a class="dropdown-item" href="#">Latin</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Login -->
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">Account</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="/login" style="color: black;">Login</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="alazea-main-menu">
+                <div class="classy-nav-container breakpoint-off">
+                    <div class="container">
+                        <!-- Menu -->
+                        <nav class="classy-navbar justify-content-between" id="alazeaNav">
+
+                            <!-- Nav Brand -->
+                            <a href="/" class="nav-brand"><img src="/famm/img/core-img/company_logo.png" alt=""></a>
+
+                            <!-- Navbar Toggler -->
+                            <div class="classy-navbar-toggler">
+                                <span class="navbarToggler"><span></span><span></span><span></span></span>
                             </div>
 
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta d-flex">
-                                <!-- Language Dropdown -->
-                                <div class="language-dropdown">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">USA</a>
-                                            <a class="dropdown-item" href="#">UK</a>
-                                            <a class="dropdown-item" href="#">Bangla</a>
-                                            <a class="dropdown-item" href="#">Hindi</a>
-                                            <a class="dropdown-item" href="#">Spanish</a>
-                                            <a class="dropdown-item" href="#">Latin</a>
+                            <!-- Menu -->
+                            <div class="classy-menu">
+
+                                <!-- Close Button -->
+                                <div class="classycloseIcon">
+                                    <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                                </div>
+
+                                <!-- Navbar Start -->
+                                <div class="classynav">
+                                    <ul>
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="about.html">About</a></li>
+                                        <li><a href="#">Pages</a>
+                                            <ul class="dropdown">
+                                                <li><a href="/">Home</a></li>
+                                                <li><a href="about.html">About</a></li>
+                                                <li><a href="/shop">Shop</a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="/shop">Shop</a></li>
+                                                        <li><a href="shop-details.html">Shop Details</a></li>
+                                                        <li><a href="cart.html">Shopping Cart</a></li>
+                                                        <li><a href="checkout.html">Checkout</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="portfolio.html">Portfolio</a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="portfolio.html">Portfolio</a></li>
+                                                        <li><a href="single-portfolio.html">Portfolio Details</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="blog.html">Blog</a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="blog.html">Blog</a></li>
+                                                        <li><a href="single-post.html">Blog Details</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="/shop">Shop</a></li>
+                                        <li><a href="portfolio.html">Portfolio</a></li>
+                                    </ul>
+
+                                    <!-- Search Icon -->
+                                    <div id="searchIcon">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </div>
+
+                                </div>
+                                <!-- Navbar End -->
+                            </div>
+                        </nav>
+
+                        <!-- Search Form -->
+                        <div class="search-form">
+                            <form action="#" method="get">
+                                <input type="search" name="search" id="search"
+                                    placeholder="Type keywords &amp; press enter...">
+                                <button type="submit" class="d-none"></button>
+                            </form>
+                            <!-- Close Icon -->
+                            <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <% }else{ %>
+            <header class="header-area">
+                <div class="top-header-area">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="top-header-content d-flex align-items-center justify-content-between">
+                                    <!-- Top Header Content -->
+                                    <div class="top-header-meta">
+                                        <a href="#" data-toggle="tooltip" data-placement="bottom"
+                                            title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
+                                                aria-hidden="true"></i> <span>Email:
+                                                infodeercreative@gmail.com</span></a>
+                                        <a href="#" data-toggle="tooltip" data-placement="bottom"
+                                            title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i>
+                                            <span>Call Us: +1 234 122 122</span></a>
+                                    </div>
+
+                                    <!-- Top Header Content -->
+                                    <div class="top-header-meta d-flex">
+                                        <!-- Language Dropdown -->
+                                        <div class="language-dropdown">
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">Language</button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="#">USA</a>
+                                                    <a class="dropdown-item" href="#">UK</a>
+                                                    <a class="dropdown-item" href="#">Bangla</a>
+                                                    <a class="dropdown-item" href="#">Hindi</a>
+                                                    <a class="dropdown-item" href="#">Spanish</a>
+                                                    <a class="dropdown-item" href="#">Latin</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Login -->
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle mr-30" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <%= locals.user.name%>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"  style="background-color: #70c745; color: black;" >
+                                                <a class="dropdown-item" href="#">Profile</a>
+                                                <a class="dropdown-item" href="#">Track and Manage Your Orders</a>
+                                                <a class="dropdown-item" href="/getwishList" id="wishlist-link">Wish List</a>
+                                                <a class="dropdown-item" href="#">Buy again</a>
+                                                <a class="dropdown-item" href="#">Return Center</a>
+                                                <a class="dropdown-item" href="#">Customer Service</a>
+                                                <a class="dropdown-item" href="/logout" style="color: black;">Log
+                                                    out</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Login -->
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= locals.user.name%></button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Profile</a>
-                                        <a class="dropdown-item" href="#">Track and Manage Your Orders</a>
-                                        <a class="dropdown-item" href="#">Buy again</a>
-                                        <a class="dropdown-item" href="#">Return Center</a>
-                                        <a class="dropdown-item" href="#">Customer Service</a>
-                                        <a class="dropdown-item" href="/logout" style="color: black;">Log out</a>
-                                    </div>
-                                </div>
-                                <!-- Cart -->
-                                <!-- <div class="cart">
-                                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span id="cartCount">0</span></span></a>
-                                </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- ***** Navbar Area ***** -->
-        <div class="alazea-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="alazeaNav">
+                <!-- ***** Navbar Area ***** -->
+                <div class="alazea-main-menu">
+                    <div class="classy-nav-container breakpoint-off">
+                        <div class="container">
+                            <!-- Menu -->
+                            <nav class="classy-navbar justify-content-between" id="alazeaNav">
 
-                        <!-- Nav Brand -->
-                        <a href="/" class="nav-brand"><img src="/famm/img/core-img/company_logo.png" alt=""></a>
+                                <!-- Nav Brand -->
+                                <a href="/" class="nav-brand"><img src="/famm/img/core-img/company_logo.png" alt=""></a>
 
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
+                                <!-- Navbar Toggler -->
+                                <div class="classy-navbar-toggler">
+                                    <span class="navbarToggler"><span></span><span></span><span></span></span>
+                                </div>
 
-                        <!-- Menu -->
-                        <div class="classy-menu">
+                                <!-- Menu -->
+                                <div class="classy-menu">
 
-                            <!-- Close Button -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
+                                    <!-- Close Button -->
+                                    <div class="classycloseIcon">
+                                        <div class="cross-wrap"><span class="top"></span><span class="bottom"></span>
+                                        </div>
+                                    </div>
 
-                            <!-- Navbar Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="dropdown">
+                                    <!-- Navbar Start -->
+                                    <div class="classynav">
+                                        <ul>
                                             <li><a href="/">Home</a></li>
                                             <li><a href="about.html">About</a></li>
-                                            <li><a href="/shop">Shop</a>
+                                            <li><a href="#">Pages</a>
                                                 <ul class="dropdown">
-                                                    <li><a href="/shop">Shop</a></li>
-                                                    <li><a href="shop-details.html">Shop Details</a></li>
-                                                    <li><a href="cart.html">Shopping Cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
+                                                    <li><a href="/">Home</a></li>
+                                                    <li><a href="about.html">About</a></li>
+                                                    <li><a href="/shop">Shop</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="/shop">Shop</a></li>
+                                                            <li><a href="shop-details.html">Shop Details</a></li>
+                                                            <li><a href="cart.html">Shopping Cart</a></li>
+                                                            <li><a href="checkout.html">Checkout</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="portfolio.html">Portfolio</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="portfolio.html">Portfolio</a></li>
+                                                            <li><a href="single-portfolio.html">Portfolio Details</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="blog.html">Blog</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="blog.html">Blog</a></li>
+                                                            <li><a href="single-post.html">Blog Details</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="contact.html">Contact</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="portfolio.html">Portfolio</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="portfolio.html">Portfolio</a></li>
-                                                    <li><a href="single-portfolio.html">Portfolio Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="blog.html">Blog</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-post.html">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="/shop">Shop</a></li>
+                                            <li id="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></li>
+                                            <li><a href="/cart/addToCart"><i class="fa fa-shopping-cart"
+                                                        aria-hidden="true"></i> <span>Cart <span
+                                                            class="cart-quantity">(1)</span></span></a></li>
                                         </ul>
-                                    </li>
-                                    <li><a href="/shop">Shop</a></li>
-                                    <li id="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></li>
-                                    <li><a href="/cart/addToCart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Cart <span class="cart-quantity">(1)</span></span></a></li>
-                                </ul>
 
-                                <!-- Search Icon -->
+                                        <!-- Search Icon -->
 
 
-                            </div>
-                            <!-- Navbar End -->
-                        </div>
-                    </nav>
-
-                    <!-- Search Form -->
-                    <div class="search-form">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type keywords &amp; press enter...">
-                            <button type="submit" class="d-none"></button>
-                        </form>
-                        <!-- Close Icon -->
-                        <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-        <%
-    }
-    %>
-
-        
-    <!-- ##### Header Area End ##### -->
-
-    <!-- ##### Breadcrumb Area Start ##### -->
-    <div class="breadcrumb-area">
-        <!-- Top Breadcrumb Area -->
-        <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(img/bg-img/24.jpg);">
-            <h2>SHOP DETAILS</h2>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Shop Details</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ##### Breadcrumb Area End ##### -->
-
-    <!-- ##### Single Product Details Area Start ##### -->
-    <section class="single_product_details_area mb-50">
-        <div class="produts-details--content mb-50">
-            <div class="container">
-                <div class="row justify-content-between">
-
-                    <div class="col-12 col-md-6 col-lg-5">
-                        <div class="single_product_thumb">
-                            <div id="product_details_slider" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    <!-- First carousel item -->
-                                    <div class="carousel-item active">
-                                      <a class="product-img" href="/productImages/<%= prdtdetails[0].image[0] %>" title="Product Image">
-                                        <img src="/productImages/<%= prdtdetails[0].image[0] %>" class="zoomed-image-placeholder" alt="Image">
-                                        <img class="d-block w-100" src="/productImages/<%= prdtdetails[0].image[0] %>" alt="<%= prdtdetails[0].image[0] %>" id="zoomed-image1">
-                                      </a>
                                     </div>
-                                  
-                                    <!-- Second carousel item -->
-                                    <div class="carousel-item">
-                                      <a class="product-img" href="/productImages/<%= prdtdetails[0].image[1] %>" title="Product Image">
-                                        <img src="/productImages/<%= prdtdetails[0].image[1] %>" class="zoomed-image-placeholder" alt="Image">
-                                        <img class="d-block w-100" src="/productImages/<%= prdtdetails[0].image[1] %>" alt="<%= prdtdetails[0].image[1] %>" id="zoomed-image2">
-                                      </a>
-                                    </div>
-                                  
-                                    <!-- Third carousel item -->
-                                    <div class="carousel-item">
-                                      <a class="product-img" href="/productImages/<%= prdtdetails[0].image[2] %>" title="Product Image">
-                                        <img src="/productImages/<%= prdtdetails[0].image[2] %>" class="zoomed-image-placeholder" alt="Image">
-                                        <img class="d-block w-100" src="/productImages/<%= prdtdetails[0].image[2] %>" alt="<%= prdtdetails[0].image[2] %>" id="zoomed-image3">
-                                      </a>
-                                    </div>
-                                  </div>
-                                  
-                                <ol class="carousel-indicators">
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(/productImages/<%=prdtdetails[0].image[0]%>);"></li>
+                                    <!-- Navbar End -->
+                                </div>
+                            </nav>
 
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(/productImages/<%=prdtdetails[0].image[1]%>);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(/productImages/<%=prdtdetails[0].image[2]%>);">
-                                    </li>
-                                </ol>
+                            <!-- Search Form -->
+                            <div class="search-form">
+                                <form action="#" method="get">
+                                    <input type="search" name="search" id="search"
+                                        placeholder="Type keywords &amp; press enter...">
+                                    <button type="submit" class="d-none"></button>
+                                </form>
+                                <!-- Close Icon -->
+                                <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
                             </div>
                         </div>
                     </div>
-                    <% if (prdtdetails.length > 0){ %>
-                    <div class="col-12 col-md-6">
-                        <div class="single_product_desc">
-                             <h1><span><%= prdtdetails[0].product_name%></span></h1>
-                             <div style="background-color: orangered; width: 200px;">
-                                <h3 style="color: rgb(233, 222, 222);height: 50px;width: 100px;position: initial;padding-left: 25px;font-style: oblique;font-weight: 100;font-family: revert;padding-top: 4px;"
-                            ;>save<%= prdtdetails[0].discount%>%offer</h3>
-                             </div>
-                            <h4 class="price"><del>₹<%= prdtdetails[0].product_price%></del></h4>
-                            <h4 class="price" style="margin-left: 79px;
-                            margin-top: -65px;">₹<%= prdtdetails[0].sale_price%></h4>
-                            <div class="short_overview">
-                                <label>description</label>
-                                <p><%= prdtdetails[0].description%></p>
+                </div>
+            </header>
+            <% } %>
+
+
+                <!-- ##### Header Area End ##### -->
+
+                <!-- ##### Breadcrumb Area Start ##### -->
+                <div class="breadcrumb-area">
+                    <!-- Top Breadcrumb Area -->
+                    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
+                        style="background-image: url(img/bg-img/24.jpg);">
+                        <h2>SHOP DETAILS</h2>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"></i> Home</a></li>
+                                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Shop Details</li>
+                                    </ol>
+                                </nav>
                             </div>
-
-                            <div class="cart--area d-flex flex-wrap align-items-center">
-                                <!-- Add to Cart Form -->
-                                <div class="cart clearfix d-flex align-items-center" >
-                                    <!-- <div class="quantity">
-                                        <span class="qty-minus" onclick="changeQuantity('<%= prdtdetails[0]._id %>', -1); return false;">
-                                            <i class="fa fa-minus" aria-hidden="true"></i>
-                                        </span>
-                                        <input type="number" class="qty-text" id="qty-<%= prdtdetails[0]._id %>" step="1" min="1" max="12" name="quantity" value="1">
-                                        <span class="qty-plus" onclick="changeQuantity('<%= prdtdetails[0]._id %>', 1); return false;">
-                                            <i class="fa fa-plus" aria-hidden="true"></i>
-                                        </span>
-                                    </div> -->
-                                    <!-- <button type="submit" value="5" class="btn alazea-btn ml-15" id="addtocart">Add to cart</button> -->
-                                    <!-- <a href="/cart/addToCart?id=<%= prdtdetails[0]._id%>" class="btn alazea-btn ml-15">Add to cart</a> -->
-                                    <form action="/cart/addToCart" method="GET">
-                                        <input type="hidden" name="id" value="<%= prdtdetails[0]._id %>">
-                                        <button type="submit" class="btn alazea-btn ml-15">Add to cart</button>
-                                    </form>
-                                    
-
-                                </div>
-                                <!-- Wishlist & Compare -->
-                                <!-- <div class="wishlist-compare d-flex flex-wrap align-items-center">
-                                    <a href="#" class="wishlist-btn ml-15"><i class="icon_heart_alt"></i></a>
-                                    <a href="#" class="compare-btn ml-15"><i class="arrow_left-right_alt"></i></a>
-                                </div> -->
-                            </div>
-
-                            <div class="products--meta">
-                                <p><span>SKU:</span> <span><%= prdtdetails[0].stock%></span></p>
-                                <% if (prdtdetails[0].product_category && prdtdetails[0].product_category.category_name) { %>
-                                    <p>Category: <%= prdtdetails[0].product_category.category_name %></p>
-                                  <% } else { %>
-                                    <p>Category not found</p>
-                                  <% } %>
-                                <p>
-                                    <span>Share on:</span>
-                                    <span>
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                                </span>
-                                </p>
-                            </div>
-
                         </div>
                     </div>
-                    <% }else { 
-                        %>
-                        <p>product details not found.</p>
-                    <% } %>
                 </div>
-            </div>
-        </div>
+                <!-- ##### Breadcrumb Area End ##### -->
 
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="product_details_tab clearfix">
-                        <!-- Tabs -->
-                        <ul class="nav nav-tabs" role="tablist" id="product-details-tab">
-                            <li class="nav-item">
-                                <a href="#description" class="nav-link active" data-toggle="tab" role="tab">Description</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#addi-info" class="nav-link" data-toggle="tab" role="tab">Additional Information</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#reviews" class="nav-link" data-toggle="tab" role="tab">Reviews <span class="text-muted">(1)</span></a>
-                            </li>
-                        </ul>
-                        <!-- Tab Content -->
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade show active" id="description">
-                                <div class="description_area">
-                                    <p><%= prdtdetails[0].description%></p>
+                <!-- ##### Single Product Details Area Start ##### -->
+                <section class="single_product_details_area mb-50">
+                    <div class="produts-details--content mb-50">
+                        <div class="container">
+                            <div class="row justify-content-between">
+
+                                <div class="col-12 col-md-6 col-lg-5">
+                                    <div class="single_product_thumb">
+                                        <div id="product_details_slider" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <!-- First carousel item -->
+                                                <div class="carousel-item active">
+                                                    <a class="product-img"
+                                                        href="/productImages/<%= prdtdetails[0].image[0] %>"
+                                                        title="Product Image">
+                                                        <img src="/productImages/<%= prdtdetails[0].image[0] %>"
+                                                            class="zoomed-image-placeholder" alt="Image">
+                                                        <img class="d-block w-100"
+                                                            src="/productImages/<%= prdtdetails[0].image[0] %>"
+                                                            alt="<%= prdtdetails[0].image[0] %>" id="zoomed-image1">
+                                                    </a>
+                                                </div>
+
+                                                <!-- Second carousel item -->
+                                                <div class="carousel-item">
+                                                    <a class="product-img"
+                                                        href="/productImages/<%= prdtdetails[0].image[1] %>"
+                                                        title="Product Image">
+                                                        <img src="/productImages/<%= prdtdetails[0].image[1] %>"
+                                                            class="zoomed-image-placeholder" alt="Image">
+                                                        <img class="d-block w-100"
+                                                            src="/productImages/<%= prdtdetails[0].image[1] %>"
+                                                            alt="<%= prdtdetails[0].image[1] %>" id="zoomed-image2">
+                                                    </a>
+                                                </div>
+
+                                                <!-- Third carousel item -->
+                                                <div class="carousel-item">
+                                                    <a class="product-img"
+                                                        href="/productImages/<%= prdtdetails[0].image[2] %>"
+                                                        title="Product Image">
+                                                        <img src="/productImages/<%= prdtdetails[0].image[2] %>"
+                                                            class="zoomed-image-placeholder" alt="Image">
+                                                        <img class="d-block w-100"
+                                                            src="/productImages/<%= prdtdetails[0].image[2] %>"
+                                                            alt="<%= prdtdetails[0].image[2] %>" id="zoomed-image3">
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <ol class="carousel-indicators">
+                                                <li class="active" data-target="#product_details_slider"
+                                                    data-slide-to="0"
+                                                    style="background-image: url(/productImages/<%=prdtdetails[0].image[0]%>);">
+                                                </li>
+
+                                                </li>
+                                                <li data-target="#product_details_slider" data-slide-to="1"
+                                                    style="background-image: url(/productImages/<%=prdtdetails[0].image[1]%>);">
+                                                </li>
+                                                <li data-target="#product_details_slider" data-slide-to="2"
+                                                    style="background-image: url(/productImages/<%=prdtdetails[0].image[2]%>);">
+                                                </li>
+                                            </ol>
+                                        </div>
+                                    </div>
                                 </div>
+                                <% if (prdtdetails.length> 0){ %>
+                                    <div class="col-12 col-md-6">
+                                        <div class="single_product_desc">
+                                            <h1><span>
+                                                    <%= prdtdetails[0].product_name%>
+                                                </span></h1>
+                                            <div style="background-color: orangered; width: 200px;">
+                                                <h3 style="color: rgb(233, 222, 222);height: 50px;width: 100px;position: initial;padding-left: 25px;font-style: oblique;font-weight: 100;font-family: revert;padding-top: 4px;"
+                                                    ;>save<%= prdtdetails[0].discount%>%offer</h3>
+                                            </div>
+                                            <h4 class="price"><del>₹<%= prdtdetails[0].product_price%></del></h4>
+                                            <h4 class="price" style="margin-left: 79px;
+                            margin-top: -65px;">₹<%= prdtdetails[0].sale_price%>
+                                            </h4>
+                                            <div class="short_overview">
+                                                <label>description</label>
+                                                <p>
+                                                    <%= prdtdetails[0].description%>
+                                                </p>
+                                            </div>
+
+                                            <div class="cart--area d-flex flex-wrap align-items-center">
+                                                <!-- Add to Cart Form -->
+                                                <div class="cart clearfix d-flex align-items-center">
+                                                
+                                                    <form action="/cart/addToCart" method="GET">
+                                                        <input type="hidden" name="id"
+                                                            value="<%= prdtdetails[0]._id %>">
+                                                        <button type="submit" class="btn alazea-btn ml-15">Add to
+                                                            cart</button>
+                                                    </form>
+
+
+                                                </div>
+
+                                                <!-- Wishlist & Compare -->
+                                                <div class="product-meta d-flex"  style="margin-left: 20px;">
+                                                    <a href="#"
+                                                        class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="products--meta">
+                                                <p><span>SKU:</span> <span>
+                                                        <%= prdtdetails[0].stock%>
+                                                    </span></p>
+                                                <% if (prdtdetails[0].product_category &&
+                                                    prdtdetails[0].product_category.category_name) { %>
+                                                    <p>Category: <%= prdtdetails[0].product_category.category_name %>
+                                                    </p>
+                                                    <% } else { %>
+                                                        <p>Category not found</p>
+                                                        <% } %>
+                                                            <p>
+                                                                <span>Share on:</span>
+                                                                <span>
+                                                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                                                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                                                                </span>
+                                                            </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <% }else { %>
+                                        <p>product details not found.</p>
+                                        <% } %>
                             </div>
-                            <div role="tabpanel" class="tab-pane fade" id="addi-info">
-                                <div class="additional_info_area">
-                                    <p>What should I do if I receive a damaged parcel?
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit impedit similique qui, itaque delectus labore.</span></p>
-                                    <p>I have received my order but the wrong item was delivered to me.
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis quam voluptatum beatae harum tempore, ab?</span></p>
-                                    <p>Product Receipt and Acceptance Confirmation Process
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum ducimus, temporibus soluta impedit minus rerum?</span></p>
-                                    <p>How do I cancel my order?
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum eius eum, minima!</span></p>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="reviews">
-                                <div class="reviews_area">
-                                    <ul>
-                                        <li>
-                                            <div class="single_user_review mb-15">
-                                                <div class="review-rating">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <span>for Quality</span>
-                                                </div>
-                                                <div class="review-details">
-                                                    <p>by <a href="#">Colorlib</a> on <span>12 Sep 2018</span></p>
-                                                </div>
-                                            </div>
-                                            <div class="single_user_review mb-15">
-                                                <div class="review-rating">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <span>for Design</span>
-                                                </div>
-                                                <div class="review-details">
-                                                    <p>by <a href="#">Colorlib</a> on <span>12 Sep 2018</span></p>
-                                                </div>
-                                            </div>
-                                            <div class="single_user_review">
-                                                <div class="review-rating">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <span>for Value</span>
-                                                </div>
-                                                <div class="review-details">
-                                                    <p>by <a href="#">Colorlib</a> on <span>12 Sep 2018</span></p>
-                                                </div>
-                                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="product_details_tab clearfix">
+                                    <!-- Tabs -->
+                                    <ul class="nav nav-tabs" role="tablist" id="product-details-tab">
+                                        <li class="nav-item">
+                                            <a href="#description" class="nav-link active" data-toggle="tab"
+                                                role="tab">Description</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#addi-info" class="nav-link" data-toggle="tab"
+                                                role="tab">Additional Information</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#reviews" class="nav-link" data-toggle="tab" role="tab">Reviews
+                                                <span class="text-muted">(1)</span></a>
                                         </li>
                                     </ul>
-                                </div>
-
-                                <div class="submit_a_review_area mt-50">
-                                    <h4>Submit A Review</h4>
-                                    <form action="#" method="post">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group d-flex align-items-center">
-                                                    <span class="mr-15">Your Ratings:</span>
-                                                    <div class="stars">
-                                                        <input type="radio" name="star" class="star-1" id="star-1">
-                                                        <label class="star-1" for="star-1">1</label>
-                                                        <input type="radio" name="star" class="star-2" id="star-2">
-                                                        <label class="star-2" for="star-2">2</label>
-                                                        <input type="radio" name="star" class="star-3" id="star-3">
-                                                        <label class="star-3" for="star-3">3</label>
-                                                        <input type="radio" name="star" class="star-4" id="star-4">
-                                                        <label class="star-4" for="star-4">4</label>
-                                                        <input type="radio" name="star" class="star-5" id="star-5">
-                                                        <label class="star-5" for="star-5">5</label>
-                                                        <span></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-group">
-                                                    <label for="name">Nickname</label>
-                                                    <input type="email" class="form-control" id="name" placeholder="Nazrul">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-group">
-                                                    <label for="options">Reason for your rating</label>
-                                                    <select class="form-control" id="options">
-                                                          <option>Quality</option>
-                                                          <option>Value</option>
-                                                          <option>Design</option>
-                                                          <option>Price</option>
-                                                          <option>Others</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label for="comments">Comments</label>
-                                                    <textarea class="form-control" id="comments" rows="5" data-max-length="150"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <button type="submit" class="btn alazea-btn">Submit Your Review</button>
+                                    <!-- Tab Content -->
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane fade show active" id="description">
+                                            <div class="description_area">
+                                                <p>
+                                                    <%= prdtdetails[0].description%>
+                                                </p>
                                             </div>
                                         </div>
-                                    </form>
+                                        <div role="tabpanel" class="tab-pane fade" id="addi-info">
+                                            <div class="additional_info_area">
+                                                <p>What should I do if I receive a damaged parcel?
+                                                    <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                                        Reprehenderit impedit similique qui, itaque delectus
+                                                        labore.</span>
+                                                </p>
+                                                <p>I have received my order but the wrong item was delivered to me.
+                                                    <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                                        Facilis quam voluptatum beatae harum tempore, ab?</span>
+                                                </p>
+                                                <p>Product Receipt and Acceptance Confirmation Process
+                                                    <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                                        Dolorum ducimus, temporibus soluta impedit minus rerum?</span>
+                                                </p>
+                                                <p>How do I cancel my order?
+                                                    <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                                        Nostrum eius eum, minima!</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane fade" id="reviews">
+                                            <div class="reviews_area">
+                                                <ul>
+                                                    <li>
+                                                        <div class="single_user_review mb-15">
+                                                            <div class="review-rating">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <span>for Quality</span>
+                                                            </div>
+                                                            <div class="review-details">
+                                                                <p>by <a href="#">Colorlib</a> on <span>12 Sep
+                                                                        2018</span></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="single_user_review mb-15">
+                                                            <div class="review-rating">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <span>for Design</span>
+                                                            </div>
+                                                            <div class="review-details">
+                                                                <p>by <a href="#">Colorlib</a> on <span>12 Sep
+                                                                        2018</span></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="single_user_review">
+                                                            <div class="review-rating">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <span>for Value</span>
+                                                            </div>
+                                                            <div class="review-details">
+                                                                <p>by <a href="#">Colorlib</a> on <span>12 Sep
+                                                                        2018</span></p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="submit_a_review_area mt-50">
+                                                <h4>Submit A Review</h4>
+                                                <form action="#" method="post">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group d-flex align-items-center">
+                                                                <span class="mr-15">Your Ratings:</span>
+                                                                <div class="stars">
+                                                                    <input type="radio" name="star" class="star-1"
+                                                                        id="star-1">
+                                                                    <label class="star-1" for="star-1">1</label>
+                                                                    <input type="radio" name="star" class="star-2"
+                                                                        id="star-2">
+                                                                    <label class="star-2" for="star-2">2</label>
+                                                                    <input type="radio" name="star" class="star-3"
+                                                                        id="star-3">
+                                                                    <label class="star-3" for="star-3">3</label>
+                                                                    <input type="radio" name="star" class="star-4"
+                                                                        id="star-4">
+                                                                    <label class="star-4" for="star-4">4</label>
+                                                                    <input type="radio" name="star" class="star-5"
+                                                                        id="star-5">
+                                                                    <label class="star-5" for="star-5">5</label>
+                                                                    <span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="name">Nickname</label>
+                                                                <input type="email" class="form-control" id="name"
+                                                                    placeholder="Nazrul">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="options">Reason for your rating</label>
+                                                                <select class="form-control" id="options">
+                                                                    <option>Quality</option>
+                                                                    <option>Value</option>
+                                                                    <option>Design</option>
+                                                                    <option>Price</option>
+                                                                    <option>Others</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="comments">Comments</label>
+                                                                <textarea class="form-control" id="comments" rows="5"
+                                                                    data-max-length="150"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <button type="submit" class="btn alazea-btn">Submit Your
+                                                                Review</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- ##### Single Product Details Area End ##### -->
+
+                <!-- ##### Related Product Area Start ##### -->
+                <div class="related-products-area">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Section Heading -->
+                                <div class="section-heading text-center">
+                                    <h2>Related Products</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <!-- Single Product Area -->
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="single-product-area mb-100">
+                                    <!-- Product Image -->
+                                    <div class="product-img">
+                                        <a href="shop-details.html"><img src="/famm/bg-img/40.png" alt=""></a>
+                                        <!-- Product Tag -->
+                                        <div class="product-tag">
+                                            <a href="#">Hot</a>
+                                        </div>
+                                        <div class="product-meta d-flex">
+                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+                                            <a href="/cart" class="add-to-cart-btn">Add to cart</a>
+                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+                                        </div>
+                                    </div>
+                                    <!-- Product Info -->
+                                    <div class="product-info mt-15 text-center">
+                                        <a href="shop-details.html">
+                                            <p>Cactus Flower</p>
+                                        </a>
+                                        <h6>$10.99</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Single Product Area -->
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="single-product-area mb-100">
+                                    <!-- Product Image -->
+                                    <div class="product-img">
+                                        <a href="shop-details.html"><img src="/famm/img/bg-img/41.png" alt=""></a>
+                                        <div class="product-meta d-flex">
+                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+                                            <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
+                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+                                        </div>
+                                    </div>
+                                    <!-- Product Info -->
+                                    <div class="product-info mt-15 text-center">
+                                        <a href="shop-details.html">
+                                            <p>Cactus Flower</p>
+                                        </a>
+                                        <h6>$10.99</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Single Product Area -->
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="single-product-area mb-100">
+                                    <!-- Product Image -->
+                                    <div class="product-img">
+                                        <a href="shop-details.html"><img src="/famm/img/bg-img/42.png" alt=""></a>
+                                        <div class="product-meta d-flex">
+                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+                                            <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
+                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+                                        </div>
+                                    </div>
+                                    <!-- Product Info -->
+                                    <div class="product-info mt-15 text-center">
+                                        <a href="shop-details.html">
+                                            <p>Cactus Flower</p>
+                                        </a>
+                                        <h6>$10.99</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Single Product Area -->
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="single-product-area mb-100">
+                                    <!-- Product Image -->
+                                    <div class="product-img">
+                                        <a href="shop-details.html"><img src="/famm/img/bg-img/43.png" alt=""></a>
+                                        <!-- Product Tag -->
+                                        <div class="product-tag sale-tag">
+                                            <a href="#">Hot</a>
+                                        </div>
+                                        <div class="product-meta d-flex">
+                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+                                            <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
+                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+                                        </div>
+                                    </div>
+                                    <!-- Product Info -->
+                                    <div class="product-info mt-15 text-center">
+                                        <a href="shop-details.html">
+                                            <p>Cactus Flower</p>
+                                        </a>
+                                        <h6>$10.99</h6>
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Single Product Details Area End ##### -->
+                <!-- ##### Related Product Area End ##### -->
 
-    <!-- ##### Related Product Area Start ##### -->
-    <div class="related-products-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <!-- Section Heading -->
-                    <div class="section-heading text-center">
-                        <h2>Related Products</h2>
-                    </div>
-                </div>
-            </div>
+                <!-- ##### Footer Area Start ##### -->
+                <footer class="footer-area bg-img" style="background-image: url(/famm/img/bg-img/3.jpg);">
+                    <!-- Main Footer Area -->
+                    <div class="main-footer-area">
+                        <div class="container">
+                            <div class="row">
 
-            <div class="row">
-
-                <!-- Single Product Area -->
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="single-product-area mb-100">
-                        <!-- Product Image -->
-                        <div class="product-img">
-                            <a href="shop-details.html"><img src="/famm/bg-img/40.png" alt=""></a>
-                            <!-- Product Tag -->
-                            <div class="product-tag">
-                                <a href="#">Hot</a>
-                            </div>
-                            <div class="product-meta d-flex">
-                                <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                <a href="/cart" class="add-to-cart-btn">Add to cart</a>
-                                <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                            </div>
-                        </div>
-                        <!-- Product Info -->
-                        <div class="product-info mt-15 text-center">
-                            <a href="shop-details.html">
-                                <p>Cactus Flower</p>
-                            </a>
-                            <h6>$10.99</h6>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Product Area -->
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="single-product-area mb-100">
-                        <!-- Product Image -->
-                        <div class="product-img">
-                            <a href="shop-details.html"><img src="/famm/img/bg-img/41.png" alt=""></a>
-                            <div class="product-meta d-flex">
-                                <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                            </div>
-                        </div>
-                        <!-- Product Info -->
-                        <div class="product-info mt-15 text-center">
-                            <a href="shop-details.html">
-                                <p>Cactus Flower</p>
-                            </a>
-                            <h6>$10.99</h6>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Product Area -->
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="single-product-area mb-100">
-                        <!-- Product Image -->
-                        <div class="product-img">
-                            <a href="shop-details.html"><img src="/famm/img/bg-img/42.png" alt=""></a>
-                            <div class="product-meta d-flex">
-                                <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                            </div>
-                        </div>
-                        <!-- Product Info -->
-                        <div class="product-info mt-15 text-center">
-                            <a href="shop-details.html">
-                                <p>Cactus Flower</p>
-                            </a>
-                            <h6>$10.99</h6>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Product Area -->
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="single-product-area mb-100">
-                        <!-- Product Image -->
-                        <div class="product-img">
-                            <a href="shop-details.html"><img src="/famm/img/bg-img/43.png" alt=""></a>
-                            <!-- Product Tag -->
-                            <div class="product-tag sale-tag">
-                                <a href="#">Hot</a>
-                            </div>
-                            <div class="product-meta d-flex">
-                                <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                            </div>
-                        </div>
-                        <!-- Product Info -->
-                        <div class="product-info mt-15 text-center">
-                            <a href="shop-details.html">
-                                <p>Cactus Flower</p>
-                            </a>
-                            <h6>$10.99</h6>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- ##### Related Product Area End ##### -->
-
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area bg-img" style="background-image: url(/famm/img/bg-img/3.jpg);">
-        <!-- Main Footer Area -->
-        <div class="main-footer-area">
-            <div class="container">
-                <div class="row">
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="footer-logo mb-30">
-                                <a href="#"><img src="/famm/img/core-img/company_logo.png" alt=""></a>
-                            </div>
-                            <p>Your Green Haven. Discover premium plants, expert care tips, and eco-friendly practices for a flourishing and sustainable experience.</p>
-                            <div class="social-info">
-                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>QUICK LINK</h5>
-                            </div>
-                            <nav class="widget-nav">
-                                <ul>
-                                    <li><a href="#">Purchase</a></li>
-                                    <li><a href="#">FAQs</a></li>
-                                    <li><a href="#">Payment</a></li>
-                                    <li><a href="#">News</a></li>
-                                    <li><a href="#">Return</a></li>
-                                    <li><a href="#">Advertise</a></li>
-                                    <li><a href="#">Shipping</a></li>
-                                    <li><a href="#">Career</a></li>
-                                    <li><a href="#">Orders</a></li>
-                                    <li><a href="#">Policities</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>BEST SELLER</h5>
-                            </div>
-
-                            <!-- Single Best Seller Products -->
-                            <div class="single-best-seller-product d-flex align-items-center">
-                                <div class="product-thumbnail">
-                                    <a href="shop-details.html"><img src="/famm/img/bg-img/4.jpg" alt=""></a>
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="footer-logo mb-30">
+                                            <a href="#"><img src="/famm/img/core-img/company_logo.png" alt=""></a>
+                                        </div>
+                                        <p>Your Green Haven. Discover premium plants, expert care tips, and eco-friendly
+                                            practices for a flourishing and sustainable experience.</p>
+                                        <div class="social-info">
+                                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="product-info">
-                                    <a href="shop-details.html">Cactus Flower</a>
-                                    <p>$10.99</p>
-                                </div>
-                            </div>
 
-                            <!-- Single Best Seller Products -->
-                            <div class="single-best-seller-product d-flex align-items-center">
-                                <div class="product-thumbnail">
-                                    <a href="shop-details.html"><img src="/famm/img/bg-img/5.jpg" alt=""></a>
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="widget-title">
+                                            <h5>QUICK LINK</h5>
+                                        </div>
+                                        <nav class="widget-nav">
+                                            <ul>
+                                                <li><a href="#">Purchase</a></li>
+                                                <li><a href="#">FAQs</a></li>
+                                                <li><a href="#">Payment</a></li>
+                                                <li><a href="#">News</a></li>
+                                                <li><a href="#">Return</a></li>
+                                                <li><a href="#">Advertise</a></li>
+                                                <li><a href="#">Shipping</a></li>
+                                                <li><a href="#">Career</a></li>
+                                                <li><a href="#">Orders</a></li>
+                                                <li><a href="#">Policities</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
                                 </div>
-                                <div class="product-info">
-                                    <a href="shop-details.html">Tulip Flower</a>
-                                    <p>$11.99</p>
+
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="widget-title">
+                                            <h5>BEST SELLER</h5>
+                                        </div>
+
+                                        <!-- Single Best Seller Products -->
+                                        <div class="single-best-seller-product d-flex align-items-center">
+                                            <div class="product-thumbnail">
+                                                <a href="shop-details.html"><img src="/famm/img/bg-img/4.jpg"
+                                                        alt=""></a>
+                                            </div>
+                                            <div class="product-info">
+                                                <a href="shop-details.html">Cactus Flower</a>
+                                                <p>$10.99</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Single Best Seller Products -->
+                                        <div class="single-best-seller-product d-flex align-items-center">
+                                            <div class="product-thumbnail">
+                                                <a href="shop-details.html"><img src="/famm/img/bg-img/5.jpg"
+                                                        alt=""></a>
+                                            </div>
+                                            <div class="product-info">
+                                                <a href="shop-details.html">Tulip Flower</a>
+                                                <p>$11.99</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Single Footer Widget -->
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="single-footer-widget">
+                                        <div class="widget-title">
+                                            <h5>CONTACT</h5>
+                                        </div>
+
+                                        <div class="contact-information">
+                                            <p><strong>ADDRESS:</strong> 306 Plantopia enterprisers maradu,
+                                                street no 134,
+                                                Kochi</p>
+                                            <p><strong>Contact:</strong> +91 70 12 99 54 86 </p>
+                                            <p><strong>EMAIL:</strong>plantopia@gmail.com</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>CONTACT</h5>
+                    <!-- Footer Bottom Area -->
+                    <div class="footer-bottom-area">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="border-line"></div>
+                                </div>
+                                <!-- Copywrite Text -->
+                                <div class="col-12 col-md-6">
+                                    <div class="copywrite-text">
+                                        <p>&copy;
+                                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                            Copyright &copy;
+                                            <script>document.write(new Date().getFullYear());</script> All rights
+                                            reserved | This template is made with <i class="fa fa-heart-o"
+                                                aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                                target="_blank">Colorlib</a>
+                                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- Footer Nav -->
+                                <div class="col-12 col-md-6">
+                                    <div class="footer-nav">
+                                        <nav>
+                                            <ul>
+                                                <li><a href="#">Home</a></li>
+                                                <li><a href="#">About</a></li>
+                                                <li><a href="#">Service</a></li>
+                                                <li><a href="#">Portfolio</a></li>
+                                                <li><a href="#">Blog</a></li>
+                                                <li><a href="#">Contact</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="contact-information">
-                                <p><strong>ADDRESS:</strong> 306 Plantopia enterprisers maradu,
-                                    street no 134,
-                                    Kochi</p>
-                                 <p><strong>Contact:</strong> +91 70 12 99 54 86 </p>
-                                 <p><strong>EMAIL:</strong>plantopia@gmail.com</p>
-                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </footer>
+                <!-- ##### Footer Area End ##### -->
 
-        <!-- Footer Bottom Area -->
-        <div class="footer-bottom-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="border-line"></div>
-                    </div>
-                    <!-- Copywrite Text -->
-                    <div class="col-12 col-md-6">
-                        <div class="copywrite-text">
-                            <p>&copy; <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-</p>
-                        </div>
-                    </div>
-                    <!-- Footer Nav -->
-                    <div class="col-12 col-md-6">
-                        <div class="footer-nav">
-                            <nav>
-                                <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Service</a></li>
-                                    <li><a href="#">Portfolio</a></li>
-                                    <li><a href="#">Blog</a></li>
-                                    <li><a href="#">Contact</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- ##### Footer Area End ##### -->
+                <!-- ##### All Javascript Files ##### -->
+                <!-- jQuery-2.2.4 js -->
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <!-- Popper js -->
+                <script src="/famm/js/bootstrap/popper.min.js"></script>
+                <!-- Bootstrap js -->
+                <script src="/famm/js/bootstrap/bootstrap.min.js"></script>
+                <!-- All Plugins js -->
+                <script src="/famm/js/plugins/plugins.js"></script>
+                <!-- Active js -->
+                <script src="/famm/js/active.js"></script>
+               
+                <script>
+                    // Function to handle zooming on mouse move for each image
+                    function handleImageZoom(e) {
+                        const imageIds = ['zoomed-image1', 'zoomed-image2', 'zoomed-image3'];
 
-    <!-- ##### All Javascript Files ##### -->
-    <!-- jQuery-2.2.4 js -->
-    <script src="/famm/js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
-    <script src="/famm/js/bootstrap/popper.min.js"></script>
-    <!-- Bootstrap js -->
-    <script src="/famm/js/bootstrap/bootstrap.min.js"></script>
-    <!-- All Plugins js -->
-    <script src="/famm/js/plugins/plugins.js"></script>
-    <!-- Active js -->
-    <script src="/famm/js/active.js"></script>
-    <!-- Your script for handling zoom functionality -->
-<script>
-    // Function to handle zooming on mouse move for each image
-    function handleImageZoom(e) {
-      const imageIds = ['zoomed-image1', 'zoomed-image2', 'zoomed-image3'];
-  
-      imageIds.forEach((imageId) => {
-        const zoomedImage = document.getElementById(imageId);
-        const imageContainer = zoomedImage.parentElement;
-        const { left, top, width, height } = imageContainer.getBoundingClientRect();
-        const x = e.clientX - left;
-        const y = e.clientY - top;
-        const scaleX = width / zoomedImage.naturalWidth;
-        const scaleY = height / zoomedImage.naturalHeight;
-  
-        const translateX = -(x / scaleX - width / 2);
-        const translateY = -(y / scaleY - height / 2);
-  
-        zoomedImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(2)`;
-      });
-    }
-  
-    // Add event listener to each image container to handle zooming
-    const imageContainers = document.querySelectorAll('.carousel-item');
-    imageContainers.forEach((imageContainer) => {
-      imageContainer.addEventListener('mousemove', handleImageZoom);
-  
-      // Reset image transformation on mouse leave for each container
-      imageContainer.addEventListener('mouseleave', () => {
-        const zoomedImage = imageContainer.querySelector('.d-block');
-        zoomedImage.style.transform = 'none';
-      });
-    });
+                        imageIds.forEach((imageId) => {
+                            const zoomedImage = document.getElementById(imageId);
+                            const imageContainer = zoomedImage.parentElement;
+                            const { left, top, width, height } = imageContainer.getBoundingClientRect();
+                            const x = e.clientX - left;
+                            const y = e.clientY - top;
+                            const scaleX = width / zoomedImage.naturalWidth;
+                            const scaleY = height / zoomedImage.naturalHeight;
+
+                            const translateX = -(x / scaleX - width / 2);
+                            const translateY = -(y / scaleY - height / 2);
+
+                            zoomedImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(2)`;
+                        });
+                    }
+
+                    // Add event listener to each image container to handle zooming
+                    const imageContainers = document.querySelectorAll('.carousel-item');
+                    imageContainers.forEach((imageContainer) => {
+                        imageContainer.addEventListener('mousemove', handleImageZoom);
+
+                        // Reset image transformation on mouse leave for each container
+                        imageContainer.addEventListener('mouseleave', () => {
+                            const zoomedImage = imageContainer.querySelector('.d-block');
+                            zoomedImage.style.transform = 'none';
+                        });
+                    });
 
 
-  </script>  
+
+
+
+                </script>
+                <script src="/public/famm/wishlist/wishlist.js" type="text/html"></script>
+                <!-- Include SweetAlert from CDN -->
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+                <script>
+
+                    const wishlistIcon = document.querySelector(".wishlist-btn");
+
+
+
+                    wishlistIcon.addEventListener("click", function (event) {
+                        event.preventDefault()
+                        const productIdInput = document.querySelector("input[name='id']");
+                        const productId = productIdInput.value;
+
+
+                        fetch(`/wishlist?id=${productId}`, { method: "GET" })
+                            .then((response) => response.json())
+                            .then((data) => {
+                                if (data.message === "Product added to wishlist") {
+
+                                    Swal.fire({
+                                        title: "Success!",
+                                        text: "Product added to wishlist",
+                                        icon: "success",
+                                    });
+                                } else {
+
+                                    Swal.fire({
+                                        title: "Error!",
+                                        text: "Product already added wishlist!!! ",
+                                        icon: "error",
+                                    });
+                                }
+                            })
+                            .catch((error) => {
+                                
+                                console.error("Error:", error);
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: "An error occurred",
+                                    icon: "error",
+                                });
+                            });
+                    });
+                </script>
+                <script>
+                    $(document).ready(function() {
+                        $('.wishlist-btn').on('click', function(e) {
+                            e.preventDefault();
+                            $(this).toggleClass('in-wishlist');
+                        });
+                    });
+                </script>
+               
+                
+                
+                
+                
+                
+                
+
 </body>
 
 </html>

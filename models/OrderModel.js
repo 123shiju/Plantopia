@@ -41,6 +41,10 @@ const orderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'userdb', 
     required: true
+  },
+  payment_Method:{
+    type:String,
+    require:true
   }
  
 });

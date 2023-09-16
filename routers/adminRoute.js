@@ -4,11 +4,12 @@ const adminController=require("../controllers/adminController")
 const config=require("../config/config")
 const session=require("express-session")
 const adminAuth=require('../middleware/adminAuth')
+const flash = require('express-flash');
 
 admin_route.use(express.static('public'))
 admin_route.set("view engine",'ejs')
 admin_route.set('views','./views/admin')
-
+admin_route.use(flash())
 
 admin_route.use( session({
     secret: config.adminSessionSecret,
@@ -35,4 +36,7 @@ admin_route.get('/delete_category',adminAuth.isLogin,adminController.delete__cat
 admin_route.get('/logout', adminAuth.isLogin,adminController.loadlogout)
 admin_route.get('/Cancel_order', adminAuth.isLogin,adminController.Cancelorder)
 admin_route.get('/order_details',adminAuth.isLogin,adminController.getorderDetails)
+admin_route.get('/addOffer',adminAuth.isLogin,adminController.GetOffer_page)
+admin_route.post('/addOffer',adminController.ApplyOffer)
+admin_route.get('/GetorderReport',adminAuth.isLogin,adminController.GetOrder_Report)
 module.exports=admin_route

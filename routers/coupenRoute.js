@@ -12,7 +12,7 @@ const adminauth=require('../middleware/adminAuth')
 coupenRoute.get("/load_Coupen",adminauth.isLogin,coupenController.loadcoupens)
 coupenRoute.get("/getaddcoupen", adminauth.isLogin,coupenController.loadAddcoupen)
 coupenRoute.post("/getaddcoupen",coupenController.Addcoupen)
-coupenRoute.post("/popCoupen",coupenController.popCoupens)
+coupenRoute.get("/popCoupen",coupenController.popCoupens)
 
 
 

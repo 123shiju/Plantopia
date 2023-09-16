@@ -29,10 +29,16 @@ user_route.get('/OTP', auth.isLogout, userController.loadOTP)
 user_route.post('/OTP', userController.verifyOTP)
 user_route.post('/register', userController.verifyOTP);
 user_route.post('/login', userController.verifyLogin)
-user_route.get('/shop', auth.userblock, auth.isLogin, userController.loadshop);
-user_route.get('/productdetails', auth.userblock, auth.isLogin, auth.userblock, userController.productdetails)
+user_route.get('/shop', userController.loadshop);
+user_route.get('/productdetails', userController.productdetails)
 user_route.get('/logout', auth.userblock, auth.isLogin, auth.userblock, userController.userLogout)
 user_route.post('/resend', userController.otpResend)
+user_route.get('/about', userController.getAbout)
+user_route.get('/blog', userController.getBlog)
+user_route.get('/profile',auth.userblock, auth.isLogin,userController.getProfille)
+user_route.get('/wishlist',auth.userblock, auth.isLogin,userController.addwishList)
+user_route.get('/getwishList',auth.userblock, auth.isLogin,userController.wishList)
+user_route.get('/removewishlistProduct',auth.userblock, auth.isLogin,userController.RemoveWishList)
 
 
 

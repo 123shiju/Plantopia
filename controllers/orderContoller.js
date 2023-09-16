@@ -2,6 +2,85 @@ const orderCollection = require("../models/OrderModel")
 const collection = require("../models/userModel")
 const cartcollection = require("../models/cartModel")
 const shortid = require('shortid');
+const nodemailer = require("nodemailer")
+
+
+
+const sendverifymail = async (email, orderId,orderTotal, req, res) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
+            auth: {
+                user: 'shijukk1997@gmail.com',
+                pass: 'yhumyxuhjqrkgosw'
+            }
+        });
+
+        const mailOptions = {
+            from: 'shijukk1997@gmail.com',
+            to: email,
+            subject: 'Your Plantopia.in order',
+            html: `
+                <p>Order from plantopia.in</p>
+                <p>Thank you for your order. We'll send a confirmation when your order ships.</p>
+                <p>Your estimated delivery date is indicated below.</p>
+                <p>If you would like to view the status of your order or make any changes to it, please visit your orders on plantopia.in</p>
+                <p>Order #: ${orderId}</p>
+                <p>Order Total: ${orderTotal}</p>
+            `,
+        };
+        
+        try {
+            await transporter.sendMail(mailOptions);
+
+        } catch (err) {
+            console.error('Error sending OTP email:', err);
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const sendCancelmail = async (email, orderId,orderTotal, req, res) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
+            auth: {
+                user: 'shijukk1997@gmail.com',
+                pass: 'yhumyxuhjqrkgosw'
+            }
+        });
+
+        const mailOptions = {
+            from: 'shijukk1997@gmail.com',
+            to: email,
+            subject: 'Your Plantopia.in order',
+            html: `
+                <p>Order Cancel from plantopia.in</p>
+                <p>Cancellation for your order. We'll Cancel your order.</p>
+
+                <p>If you would like to view the status of your order or make any changes to it, please visit your orders on plantopia.in</p>
+                <p>Order #: ${orderId}</p>
+                <p>Order Status: Cancelled</p>
+            `,
+        }; 
+        
+        try {
+            await transporter.sendMail(mailOptions);
+
+        } catch (err) {
+            console.error('Error sending OTP email:', err);
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 
 const loadCheckout = async (req, res) => {
@@ -29,7 +108,7 @@ const loadCheckout = async (req, res) => {
                 const defaultAddress = defaultAddresses[0];
                 res.render('checkout', { cart, user, shipping_charge: cart[0].shipping_charge, address: defaultAddress , userGrandTotal});
             } else {
-                res.render('newDetails', { user });
+                res.render('newAddress', { user });
             }
         }
     } catch (error) {
@@ -87,7 +166,7 @@ const loadPayment = async (req, res) => {
 const addNewAddress = async (req, res) => {
     try {
         const user = req.session.user
-        res.render('newDetails', { user })
+        res.render('newAddress', { user })
     } catch (error) {
         console.log(error.message)
     }
@@ -99,6 +178,8 @@ const orderSuccess = async (req, res) => {
     try {
 
         const user = req.session.user;
+        const email=user.email
+   
 
         const cart = await cartcollection.findOne({ user: user._id }).populate('products.productId');
         if (!cart) {
@@ -134,10 +215,15 @@ const orderSuccess = async (req, res) => {
                 })),
                 orderTotal:cart.Grand_total,
                 orderStatus: 'Placed',
-                shipping_address: defaultShippingAddress._id
+                shipping_address: defaultShippingAddress._id,
+                payment_Method:"COD"
             });
 
             await order.save();
+
+            sendverifymail(email, orderId,orderTotal)
+
+
 
         } else {
             console.error(error);
@@ -179,8 +265,13 @@ const showStatus = async (req, res) => {
 }
 const cancelOrder = async (req, res) => {
     try {
-        const orderId = req.query.id
+        const user=req.session.user
+        const email=user.email
+         const orderId = req.query.id
         const updatedOrder = await orderCollection.findByIdAndUpdate({ _id: orderId }, { $set: { orderStatus: 'cancelled' } }, { new: true });
+
+
+        sendCancelmail(email, orderId)
 
         if (!updatedOrder) {
             return res.status(404).json({ message: 'Order not found' });
@@ -317,6 +408,43 @@ const makeDefaultAddress = async (req, res) => {
     }
 }
 
+const loadOrderFullDetails=async(req,res)=>{
+    try {
+
+        const user=req.session.user
+        const id=req.query.id
+        const order = await orderCollection.findOne({
+            'items._id': id
+        }).populate('items.product');
+
+        const userId = order.user._id;
+
+        const userData = await collection.findById(userId);
+
+
+        const defaultShippingAddressId = userData.address.find(addr => addr.defaultValue === true)._id;
+
+        const defaultShippingAddress = user.address.find(addr => addr._id.toString() === defaultShippingAddressId.toString());
+
+
+    
+        const item = order.items.find(item => item._id.toString() === id);
+      
+        res.render('OrderFullDetails',{user,item,order,defaultShippingAddress})
+    } catch (error) {
+        res.status(500).send("can not load order page");
+    }
+}
+
+
+const Getorder_report=async(req,res)=>{
+    try {
+        const orderReport=await orderCollection.find()
+        console.log("order report:",orderReport)
+    } catch (error) {
+        res.status(500).send("can not fetch Details");
+    }
+}
 module.exports = {
     loadCheckout,
     addDetails,
@@ -331,6 +459,8 @@ module.exports = {
     loadDefaultAddress,
     loadDelete_address,
     loadorderDetails,
-    makeDefaultAddress
+    makeDefaultAddress,
+    loadOrderFullDetails,
+    Getorder_report
 
 }

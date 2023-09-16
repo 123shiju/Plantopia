@@ -17,4 +17,5 @@ const paymentController=require('../controllers/paymentController')
 
 payment_route.post('/createOrder',paymentController.createOrder)
 payment_route.get('/orderSucessfull',auth.isLogin,auth.userblock,paymentController.loadOrderSuccess)
+payment_route.post('/verifyPayment',paymentController.paymentVerification)
 module.exports=payment_route

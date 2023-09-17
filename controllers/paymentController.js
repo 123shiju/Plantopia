@@ -72,7 +72,7 @@ const createOrder = async (req, res) => {
                 email: "shijukk1997@gmail.com"
             });
 
-             console.log('new order:',order)
+         
 
         } else {
             return res.status(400).json({ success: false, msg: 'Something went wrong' });
@@ -94,7 +94,7 @@ const paymentVerification = async (req, res) => {
     try {
         const { payment_id, order_id } = req.body
 
-    
+    console.log("headers:",headers)
     
         const razorpay_signature = req.headers['x-razorpay-signature']
     

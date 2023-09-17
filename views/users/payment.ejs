@@ -704,9 +704,7 @@
                                             currency: "INR",
                                             "orderId": "" + res.order_id + "",
                                             "handler": function (response) {
-                                                alert(response.razorpay_payment_id);
-                                                 alert(response.razorpay_signature);
-                                                 alert(response.order_id);
+                                                console.log("response of razorpay in front end:",response)
                                                 verification(response.razorpay_payment_id,response.order_id,response.razorpay_signature)
 
                                             },

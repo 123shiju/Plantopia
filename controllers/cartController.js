@@ -18,7 +18,7 @@ const addToCart = async (req, res) => {
     const productId = req.query.id;
   
     const product = await productcollection.findById(productId);
-    console.log("product from cart:",product)
+    
 
 
     if (!product) {

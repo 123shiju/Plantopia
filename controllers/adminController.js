@@ -131,6 +131,7 @@ const loadCategory = async (req, res) => {
 
     try {
         const offerdata = await offerCollection.find()
+    
         const categoryData = await categoryCollection.find()
         res.render('category', { category: categoryData, offers: offerdata })
     } catch (error) {
@@ -148,6 +149,16 @@ const addCategory = async (req, res) => {
             res.send("Category name cannot be empty");
             return;
         }
+
+        if (categoryName.length < 3) {
+            alert("Category name must be at least 3 characters long");
+            return false; 
+          }
+      
+          if (categoryName.length > 20) {
+            alert("Category name cannot exceed 50 characters");
+            return false;
+          }
 
         const existingCategory = await categoryCollection.findOne({
             category_name: { $regex: '^' + categoryName + '$', $options: 'i' }

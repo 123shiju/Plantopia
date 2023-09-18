@@ -329,7 +329,7 @@
 
 
                             
-                                <% if (wishListData.length > 0) { %>
+                                <<% if (wishListData.length > 0) { %>
                                     <% for (const wishlistItem of wishListData) { %>
                                         <table style="width: 100%; margin-top: 29px;">
                                             <thead>
@@ -337,14 +337,26 @@
                                                 <th></th>
                                                 <th></th>
                                             </thead>
-                                            <tbody >
+                                            <tbody>
                                                 <tr style="margin-bottom: 10px;"> 
-                                                    <td style="width: 400px;"><a href="/productDetails?id=<%= wishlistItem.product._id %>"><img src="/productImages/<%= wishlistItem.product.image[0] %>" alt="<%= wishlistItem.product.product_name %>" width="100px" height="100px"></a></td>
-                                                    <td style="width: 400px;text-align: center;"><%= wishlistItem.product.product_name %></td>
+                                                    <td style="width: 400px;">
+                                                        <% if (wishlistItem.product) { %>
+                                                            <a href="/productDetails?id=<%= wishlistItem.product._id %>">
+                                                                <img src="/productImages/<%= wishlistItem.product.image[0] %>" alt="<%= wishlistItem.product.product_name %>" width="100px" height="100px">
+                                                            </a>
+                                                        <% } %>
+                                                    </td>
+                                                    <td style="width: 400px;text-align: center;">
+                                                        <% if (wishlistItem.product) { %>
+                                                            <%= wishlistItem.product.product_name %>
+                                                        <% } %>
+                                                    </td>
                                                     <td class="action" style="width: 400px;">
-                                                        <a href="/removewishlistProduct?id=<%= wishlistItem._id %>" class="remove-link">
-                                                            <i class="icon_close" onclick="removeWishlistItem('<%= wishlistItem._id %>')"></i>
-                                                        </a>
+                                                        <% if (wishlistItem.product) { %>
+                                                            <a href="/removewishlistProduct?id=<%= wishlistItem._id %>" class="remove-link">
+                                                                <i class="icon_close" onclick="removeWishlistItem('<%= wishlistItem._id %>')"></i>
+                                                            </a>
+                                                        <% } %>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -353,7 +365,7 @@
                                 <% } else { %>
                                     <h4>No wishlist items available.</h4>
                                 <% } %>
-                        
+                                
                         </div>
                     </section>
 

@@ -220,7 +220,7 @@
                                             <a class="dropdown-item" href="/login" style="color: black;">Login</a>
                                         </div>
                                     </div>
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -284,7 +284,7 @@
                                         </li>
                                         <li><a href="/shop">Shop</a></li>
                                         <li id="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></li>
-                                    
+
                                     </ul>
 
                                 </div>
@@ -359,7 +359,7 @@
                                                     Out</a>
                                             </div>
                                         </div>
-                                    
+
                                     </div>
                                 </div>
                             </div>
@@ -425,7 +425,7 @@
                                             </li>
                                             <li><a href="/shop">Shop</a></li>
                                             <li id="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></li>
-                                        
+
                                         </ul>
 
                                     </div>
@@ -704,9 +704,9 @@
                                             currency: "INR",
                                             "orderId": "" + res.order_id + "",
                                             "handler": function (response) {
-                                                console.log("response of razorpay in front end:",response)
-                                                verification(response.razorpay_payment_id,response.order_id,response.razorpay_signature)
-
+                                                window.location.href = "/payment/orderSucessfull"
+                                                verification(response.razorpay_payment_id, response.order_id, response.razorpay_signature)
+                                               
                                             },
                                             "prefill": {
                                                 "contact": "" + res.contact + "",
@@ -729,7 +729,7 @@
                                     }
                                 }
                             })
-                            function verification(payment_id,order_id,razorpay_signature) {
+                            function verification(payment_id, order_id, razorpay_signature) {
 
 
 
@@ -739,8 +739,8 @@
                                     order_id: order_id
 
                                 }
-                            
-                        
+
+
 
                                 fetch('/payment/verifyPayment', {
                                     method: 'POST',
@@ -764,22 +764,22 @@
                             }
 
                         } else if (selectedPaymentMethodValue === "COD") {
-                        var form = document.createElement("form");
-                        form.method = "POST";
-                        form.action = "/order/payment?method=COD";
+                            var form = document.createElement("form");
+                            form.method = "POST";
+                            form.action = "/order/payment?method=COD";
 
-                        var input = document.createElement("input");
-                        input.type = "hidden";
-                        input.name = "method";
-                        input.value = "COD";
+                            var input = document.createElement("input");
+                            input.type = "hidden";
+                            input.name = "method";
+                            input.value = "COD";
 
-                        
-                        form.appendChild(input);
-                        document.body.appendChild(form);
-                        form.submit();
-                    } else {
-                        alert("select a payment method")
-                    }
+
+                            form.appendChild(input);
+                            document.body.appendChild(form);
+                            form.submit();
+                        } else {
+                            alert("select a payment method")
+                        }
                     })
                 </script>
 

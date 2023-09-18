@@ -463,7 +463,10 @@ const getBlog = async (req, res) => {
 
 const getProfille = async (req, res) => {
     try {
-        res.render('profile')
+        const user=req.session.user
+        if(user){
+            res.render('profile',{user})
+        }
     } catch (error) {
         res.status(404).json({ error: "Can't Load this Page" })
     }
@@ -508,7 +511,6 @@ const wishList = async (req, res) => {
         const user = req.session.user
         if (user) {
             const wishListData = await wishListCollection.find().populate('product')
-
             res.render('wishlist', { wishListData, user })
         } else {
             res.status(500).json({ error: "can't fetch wishlist data" })

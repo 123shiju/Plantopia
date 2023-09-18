@@ -30,7 +30,7 @@ const addToCart = async (req, res) => {
     }
 
     let cart = await cartcollection.findOne({ user: user._id }).populate('products.productId');
-    console.log("cart products:",cart)
+  
     if (!cart) {
       cart = new cartcollection({ user: user._id, products: [], sub_total: 0, Grand_total: 0 });
     }

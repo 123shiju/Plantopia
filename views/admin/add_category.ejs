@@ -21,57 +21,66 @@
 </head>
 
 <body>
- 
   <button onclick="toggleAddCategoryWindow()">Add Category</button>
 
-<div id="addCategoryWindow">
-  <form action="" method="post" onsubmit="return validateCategoryForm()">
-    <h2>Add Category</h2>
-    <label for="categoryName">Category Name:</label>
-    <input type="text" id="categoryName" placeholder="Enter category name" required>
-    <label style="display: none; color: red;" id="errorCategory">Category name is required</label>
-    <br>
-    <button type="submit">Add</button> 
-    <button type="button" onclick="closeAddCategoryWindow()">Cancel</button> 
-  </form>
-</div>
+  <div id="addCategoryWindow">
+    <form action="" method="post" onsubmit="return validateCategoryForm()">
+      <h2>Add Category</h2>
+      <label for="categoryName">Category Name:</label>
+      <input type="text" id="categoryName" placeholder="Enter category name" required>
+      <label style="display: none; color: red;" id="errorCategory">Category name is required</label>
+      <br>
+      <button type="submit">Add</button> 
+      <button type="button" onclick="closeAddCategoryWindow()">Cancel</button> 
+    </form>
+    <div id="errorMessage" style="color: red;"></div> <!-- To display server-side error messages -->
+  </div>
 
-<script>
-  function toggleAddCategoryWindow() {
-    var addCategoryWindow = document.getElementById('addCategoryWindow');
-    addCategoryWindow.style.display = (addCategoryWindow.style.display === 'none') ? 'block' : 'none';
-  }
-
-  function validateCategoryForm() {
-    var categoryName = document.getElementById('categoryName').value.trim();
-
-    if (!categoryName) {
-      document.getElementById('errorCategory').style.display = 'block';
-      return false; 
+  <script>
+    function toggleAddCategoryWindow() {
+      var addCategoryWindow = document.getElementById('addCategoryWindow');
+      addCategoryWindow.style.display = (addCategoryWindow.style.display === 'none') ? 'block' : 'none';
     }
 
-    return true; 
-  }
+    function validateCategoryForm() {
+      var categoryName = document.getElementById('categoryName').value.trim();
 
-  function closeAddCategoryWindow() {
-    var addCategoryWindow = document.getElementById('addCategoryWindow');
-    addCategoryWindow.style.display = 'none';
-  }
+      if (!categoryName) {
+        document.getElementById('errorCategory').style.display = 'block';
+        document.getElementById('errorMessage').textContent = 'Category name is required';
+        return false; 
+      }
 
-  document.getElementById('categoryName').addEventListener('input', function() {
-    var categoryName = this.value.trim();
-    var errorCategory = document.getElementById('errorCategory');
-    
-    if (!categoryName) {
-      errorCategory.style.display = 'block';
-    } else {
-      errorCategory.style.display = 'none';
+      // Additional client-side validation can be added here if needed
+
+      return true; 
     }
-  });
 
-</script>
+    function closeAddCategoryWindow() {
+      var addCategoryWindow = document.getElementById('addCategoryWindow');
+      addCategoryWindow.style.display = 'none';
+    }
 
+    document.getElementById('categoryName').addEventListener('input', function() {
+      var categoryName = this.value.trim();
+      var errorCategory = document.getElementById('errorCategory');
+      
+      if (!categoryName) {
+        errorCategory.style.display = 'block';
+      } else {
+        errorCategory.style.display = 'none';
+        document.getElementById('errorMessage').textContent = ''; // Clear the error message
+      }
+    });
+  </script>
   
+  <% if (error) { %>
+    <div style="color: red;">
+      <%= error %>
+    </div>
+  <% } %>
 </body>
+
+
 
 </html>

@@ -697,7 +697,7 @@
                                 url: "/payment/createOrder?method=card",
                                 type: "POST",
                                 success: function (res) {
-                                    console.log("response from backend:", res)
+                                    
                                     if (res.status === 'created') {
                                         var options = {
                                             key: "rzp_test_UnuDDt5EPWXry7", // Enter the Key ID generated from the Dashboard
@@ -711,7 +711,7 @@
                                                 // alert(response.razorpay_payment_id);
                                                 // alert(response.razorpay_order_id);
                                                 // alert(response.razorpay_signature)
-                                                console.log("response ksadlakj:",response);
+                                            
                                                 verification(response, res);
                                             },
                                             prefill: {

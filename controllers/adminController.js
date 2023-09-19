@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt')
 const userCollection = require("../models/userModel")
 const productDBCollection = require("../models/productModel")
 const offerCollection = require("../models/offerModel")
+const pdfDocument = require("pdfkit")
+const fs = require("fs")
 const { body, validationResult } = require('express-validator');
 const securepassword = async (password) => {
     try {
@@ -131,7 +133,7 @@ const loadCategory = async (req, res) => {
 
     try {
         const offerdata = await offerCollection.find()
-    
+
         const categoryData = await categoryCollection.find()
         res.render('category', { category: categoryData, offers: offerdata })
     } catch (error) {
@@ -152,13 +154,13 @@ const addCategory = async (req, res) => {
 
         if (categoryName.length < 3) {
             alert("Category name must be at least 3 characters long");
-            return false; 
-          }
-      
-          if (categoryName.length > 20) {
+            return false;
+        }
+
+        if (categoryName.length > 20) {
             alert("Category name cannot exceed 50 characters");
             return false;
-          }
+        }
 
         const existingCategory = await categoryCollection.findOne({
             category_name: { $regex: '^' + categoryName + '$', $options: 'i' }
@@ -341,21 +343,97 @@ const ApplyOffer = async (req, res) => {
 
 
 
-const GetOrder_Report=async(req,res)=>{
+const GetOrder_Report = async (req, res) => {
     try {
         const orders = await orderCollection.find()
-        .populate({ path: 'user', select: 'name' })
-        .populate('items.product', 'name')
-        .populate({
-            path: 'shipping_address',
-            model: 'userdb',
-            select: 'address'
-        });
-        res.render('Reports.ejs',{ orders })
+            .populate({ path: 'user', select: 'name' })
+            .populate('items.product', 'name')
+            .populate({
+                path: 'shipping_address',
+                model: 'userdb',
+                select: 'address'
+            });
+        res.render('Reports.ejs', { orders })
     } catch (error) {
         res.status(500).json({ error: 'An error occured while apply offer' })
     }
 }
+
+const Download_SalesReport = async (req, res) => {
+    try {
+        const orders = await orderCollection.find()
+            .populate({ path: 'user', select: 'name' })
+            .populate('items.product', 'name')
+            .populate({
+                path: 'shipping_address',
+                model: 'userdb',
+                select: 'address'
+            });
+
+        const PDFDocument = require('pdfkit'); // Import the PDFDocument class
+
+        const doc = new PDFDocument();
+        res.setHeader('Content-Disposition', 'attachment; filename="sales_report.pdf"');
+        res.setHeader('Content-Type', 'application/pdf');
+        doc.pipe(res);
+
+        // Set column positions and widths
+        const columnPositions = [100, 300, 450];
+        const columnWidths = [150, 100, 100];
+
+        for (const order of orders) {
+            // Order details as heading with margin-top
+            doc.font('Helvetica-Bold');
+            doc.text(`Order ID: ${order.orderId}`, 100);
+            doc.text(`User: ${order.user.name}`, 100, doc.y);
+            doc.text(`Order Status: ${order.orderStatus}`, 100, doc.y);
+            doc.text(`Order Total: $${order.orderTotal.toFixed(2)}`, 100, doc.y + 15); // Add margin-top
+
+            // Table header for items
+            doc.font('Helvetica-Bold');
+            doc.text('Product Name', columnPositions[0]);
+            doc.text('Quantity', columnPositions[1]);
+            doc.text('Price', columnPositions[2]);
+
+            // Table rows for items in the order
+            for (const item of order.items) {
+                const productName = item.product.name; // Access the populated product name
+                const quantity = item.quantity.toString();
+                const price = `$${item.price.toFixed(2)}`;
+                doc.font('Helvetica');
+                doc.text(productName, columnPositions[0]);
+                doc.text(quantity, columnPositions[1]);
+                doc.text(price, columnPositions[2]);
+            }
+
+            // Draw horizontal grid lines
+            const startY = doc.y;
+            for (const width of columnWidths.slice(0, -1)) {
+                doc.moveTo(columnPositions[0] + width, startY)
+                   .lineTo(columnPositions[0] + width, doc.y)
+                   .stroke();
+            }
+
+            // Move down for the next order
+            doc.moveDown();
+        }
+
+        // Calculate and add the total amount
+        const totalAmount = orders.reduce((total, order) => total + order.orderTotal, 0);
+        doc.font('Helvetica-Bold');
+        doc.text(`Total Amount: $${totalAmount.toFixed(2)}`, 100);
+
+        doc.end(); // End the PDF document
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Unable to download sales report' });
+    }
+}
+
+
+
+
 
 module.exports = {
     loadLogin,
@@ -375,6 +453,7 @@ module.exports = {
     getorderDetails,
     GetOffer_page,
     ApplyOffer,
-    GetOrder_Report
+    GetOrder_Report,
+    Download_SalesReport
 
 }

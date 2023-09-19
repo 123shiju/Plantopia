@@ -39,4 +39,5 @@ admin_route.get('/order_details',adminAuth.isLogin,adminController.getorderDetai
 admin_route.get('/addOffer',adminAuth.isLogin,adminController.GetOffer_page)
 admin_route.post('/addOffer',adminController.ApplyOffer)
 admin_route.get('/GetorderReport',adminAuth.isLogin,adminController.GetOrder_Report)
+admin_route.get('/DownloadSalesReport',adminAuth.isLogin,adminController.Download_SalesReport)
 module.exports=admin_route

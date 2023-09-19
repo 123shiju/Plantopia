@@ -49,28 +49,29 @@ const createOrder = async (req, res) => {
     await order.save();
 
     await cartcollection.findOneAndDelete({ user: user._id });
-
+     let order_id = order._id.toString()
     const amount = cart.Grand_total * 100 + 100;
     const options = {
         amount: amount,
         currency: 'INR',
-        receipt: 'shijukk1997@gmail.com'
+        receipt:order_id
     };
 
 
     razorpayInstance.orders.create(options, (err, order) => {
         if (!err) {
-            
-            return res.json({
-                success: true,
-                msg: "order Created",
-                order_id: order.id,
-                amount: amount,
-                key_id: RAZORPAY_ID_KEY,
-                contact: "7012995486",
-                name: "shiju k",
-                email: "shijukk1997@gmail.com"
-            });
+       return res.json(order)
+
+            // return res.json({
+            //     success: true,
+            //     msg: "order Created",
+            //     order_id: order.id,
+            //     amount: amount,
+            //     key_id: RAZORPAY_ID_KEY,
+            //     contact: "7012995486",
+            //     name: "shiju k",
+            //     email: "shijukk1997@gmail.com"
+            // });
 
          
 
@@ -92,32 +93,61 @@ const loadOrderSuccess = async (req, res) => {
 
 const paymentVerification = async (req, res) => {
     try {
-        const { payment_id, order_id } = req.body
 
-    console.log("headers:",headers)
-    
-        const razorpay_signature = req.headers['x-razorpay-signature']
-    
-        const key_secret = process.env.RAZORPAY_SECRET_KEY
-    
-        let hmac = crypto.createHmac('sha256', key_secret)
-    
-        hmac.update(order_id + "|" + payment_id)
-    
-        const generated_signature = hmac.digest('hex')
-    
+        const { payment, order } = req.body;
+
+        console.log("order from body is:",req.body.order)
+       
+
+        const razorpay_signature = payment.razorpay_signature;
+       
+
+        const key_secret = process.env.RAZORPAY_SECRET_KEY;
+
+        const hmac = crypto.createHmac('sha256', key_secret);
+
+        
+
+        hmac.update(order.id + "|" + payment.razorpay_payment_id);
+
+
+
+        const generated_signature = hmac.digest('hex');
+     
+
         if (razorpay_signature === generated_signature) {
-            res.json({ success: true })
+
+
+            order_Reciept=req.body.order.receipt
+
+            console.log("reciept is :",order_Reciept)
+
+            const orderDetails=await orderCollection.findOne({_id:order_Reciept})
+            if(orderDetails){
+                const result = await orderCollection.updateOne(
+                    { _id: order_Reciept },
+                    { $set: { orderStatus: "Placed" } }
+                );
+            }else{
+                const result = await orderCollection.updateOne(
+                    { _id: order_Reciept },
+                    { $set: { orderStatus: "Failed" } }
+                );
+            }
+
+        
+
+            res.json({ success: true });
         } else {
-            console.log("payment verification failed");
-            res.json({ success: false, message: "payment verification failed" })
+            console.log("Payment verification failed");
+            res.json({ success: false, message: "Payment verification failed" });
         }
     } catch (error) {
-        return res.status(400).json({ success: false, msg: "payment verification is failed" });
+        console.error("Error:", error);
+        return res.status(400).json({ success: false, msg: "Payment verification failed" });
     }
-    
-    }
-   
+};
+
 module.exports = {
     loadOrderSuccess,
     createOrder,

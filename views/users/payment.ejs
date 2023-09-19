@@ -697,47 +697,57 @@
                                 url: "/payment/createOrder?method=card",
                                 type: "POST",
                                 success: function (res) {
-                                    if (res.success) {
+                                    console.log("response from backend:", res)
+                                    if (res.status === 'created') {
                                         var options = {
-                                            "key": "" + res.key_id + "",
-                                            "amount": "" + res.amount + "",
+                                            key: "rzp_test_UnuDDt5EPWXry7", // Enter the Key ID generated from the Dashboard
+                                            amount: res.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                                             currency: "INR",
-                                            "orderId": "" + res.order_id + "",
-                                            "handler": function (response) {
-                                                window.location.href = "/payment/orderSucessfull"
-                                                verification(response.razorpay_payment_id, response.order_id, response.razorpay_signature)
-                                               
+                                            name: "Plantopia", //your business name
+                                            description: "Test Transaction",
+                                            image: "https://example.com/your_logo",
+                                            order_id: res.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                                            handler: function (response) {
+                                                // alert(response.razorpay_payment_id);
+                                                // alert(response.razorpay_order_id);
+                                                // alert(response.razorpay_signature)
+                                                console.log("response ksadlakj:",response);
+                                                verification(response, res);
                                             },
-                                            "prefill": {
-                                                "contact": "" + res.contact + "",
-                                                "name": "" + res.name + "",
-                                                "email": "" + res.email + ""
+                                            prefill: {
+                                                //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+                                                name: "Gaurav Kumar", //your customer's name
+                                                email: "gaurav.kumar@example.com",
+                                                contact: "9000090000", //Provide the customer's phone number for better conversion rates
                                             },
-                                            "theme": {
-                                                "color": "#2300a3"
-                                            }
-                                        }
+                                            notes: {
+                                                address: "Razorpay Corporate Office",
+                                            },
+                                            theme: {
+                                                color: "#3399cc",
+                                            },
+                                        };
 
                                         var razorpayObject = new Razorpay(options)
+                                        razorpayObject.open()
                                         razorpayObject.on('payment.failed', function (response) {
                                             alert("payment failed")
 
                                         })
-                                        razorpayObject.open()
+
                                     } else {
                                         alert(res.msg)
                                     }
                                 }
                             })
-                            function verification(payment_id, order_id, razorpay_signature) {
+                            function verification(payment,order) {
 
 
 
 
                                 const data = {
-                                    payment_id: payment_id,
-                                    order_id: order_id
-
+                                    payment,
+                                    order
                                 }
 
 
@@ -746,7 +756,6 @@
                                     method: 'POST',
                                     headers: {
                                         "Content-Type": "application/json",
-                                        'x-razorpay-signature': razorpay_signature
                                     },
                                     body: JSON.stringify(data)
                                 })

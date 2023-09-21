@@ -86,13 +86,17 @@ const sendCancelmail = async (email, orderId,orderTotal, req, res) => {
 const loadCheckout = async (req, res) => {
     try {
         const user = req.session.user;
-        const cart = await cartcollection.find();
+        const cart = await cartcollection.find().populate('products.productId', 'product_name')
+
+        console.log(" Cart:",cart)
 
         if (cart.length === 0) {
             return res.status(500).json({ message: "Empty cart!!! add some items" });
         }
 
         const userCart = cart.find(cartItem => cartItem.user.toString() === user._id);
+
+        console.log("usercart:",userCart)
 
         const userGrandTotal = userCart.Grand_total;
 

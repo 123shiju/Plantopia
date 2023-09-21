@@ -96,7 +96,7 @@ const paymentVerification = async (req, res) => {
 
         const { payment, order } = req.body;
 
-        console.log("order from body is:",req.body.order)
+    
        
 
         const razorpay_signature = payment.razorpay_signature;

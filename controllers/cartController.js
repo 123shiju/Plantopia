@@ -353,6 +353,7 @@ const updatecartdetails = async (req, res) => {
 const applyCoupens = async (req, res) => {
   try {
     const { couponCode, grand_total } = req.body;
+    console.log("body details from frondend:", req.body)
     const code = req.body.couponCode;
 
 
@@ -364,14 +365,17 @@ const applyCoupens = async (req, res) => {
     if (!cart) {
       return res.status(404).json({ error: 'Cart not found' });
     }
-
+    console.log("cart details:", cart)
     const coupen = await coupenCollection.findOne({ code: code });
+
+    console.log("coupen details:", coupen)
 
     if (!coupen) {
       return res.status(400).json({ error: 'Coupon code is invalid' });
     }
 
     const coupenvalue = coupen.discount;
+    console.log("coupen discount:",coupenvalue);
 
     const currentDate = new Date();
 

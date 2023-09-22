@@ -236,7 +236,7 @@
                                         <a href="#" data-toggle="tooltip" data-placement="bottom"
                                             title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
                                                 aria-hidden="true"></i> <span>Email:
-                                                infodeercreative@gmail.com</span></a>
+                                               plantopia@gmail.com</span></a>
                                         <a href="#" data-toggle="tooltip" data-placement="bottom"
                                             title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i>
                                             <span>Call Us: +1 234 122 122</span></a>
@@ -392,19 +392,22 @@
                         margin-left: 211px;
                         margin-top: 20px;">
                             <section style="background-color: #eee;">
+                                <form action="" method="post">
                                 <div class="container py-5">
 
                                     <div class="row">
+                                        
                                         <div class="col-lg-4">
+                                            
                                             <div class="card mb-4">
                                                 <div class="card-body text-center">
                                                     <img src="" alt="avatar" class="rounded-circle img-fluid"
                                                         style="width: 150px;">
-                                                    <h5 class="my-3" style="color: black;"><%= user.name %></h5>
+                                                    <input class="my-3" style="color: black;" name="username" value=<%= user.name %> >
                                                     <div class="d-flex justify-content-center mb-2">
                                                         <button type="button" class="btn btn-success" style="width: 72px;margin-right: 21px;"><a href="/editProfile">Edit</a></button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-success ms-1 " style="width: 72px;">Save</button>
+                                                        <input type="submit"
+                                                            class="btn btn-outline-success ms-1 " style="width: 72px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -419,12 +422,6 @@
                                             <div class="card mb-4">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <p class="mb-0" style="color: black;">Full Name</p>
-                                                        </div>
-                                                        <div class="col-sm-9">
-                                                            <p class=" mb-0" style="color: black;"><%= user.name%></p>
-                                                        </div>
                                                     </div>
                                                     <hr>
                                                     <div class="row">
@@ -432,7 +429,7 @@
                                                             <p class="mb-0" style="color: black;">Email</p>
                                                         </div>
                                                         <div class="col-sm-9">
-                                                            <p class=" mb-0" style="color: black;"><%= user.email%></p>
+                                                            <input class=" mb-0" style="color: black;" name ="email" value=<%= user.email%> >
                                                         </div>
                                                     </div>
                                                     <hr>
@@ -441,7 +438,7 @@
                                                             <p class="mb-0" style="color: black;">Phone</p>
                                                         </div>
                                                         <div class="col-sm-9">
-                                                            <p class=" mb-0" style="color: black;"><%= user.mobileNO%></p>
+                                                            <input class=" mb-0" style="color: black;" name="mobno" value=<%= user.mobileNO%> >
                                                         </div>
                                                     </div>
                                                     <hr>
@@ -451,20 +448,31 @@
                                                             <p class="mb-0" style="color: black;">Address</p>
                                                         </div>
                                                         <div class="col-sm-9" style="color: black;">
-                                                            <p class=" mb-0" style="color: black;"><%= address.House_name%><br><%= address.Street_number%><br><%= address.city%><br><%= address.state%><br><%= address.Pincode%></p>
+                                                            <input  class=" mb-0" style="color: black;" name="address1" value=<%= address.House_name%>>
+                                                            <br>
+                                                            <br>
+                                                            <input  class=" mb-0" style="color: black;" name="address2" value=<%= address.Street_number%>>
+                                                            <br>
+                                                            <br>
+                                                            <input  class=" mb-0" style="color: black;" name="address3" value=<%= address.city%>> 
+                                                            <br>
+                                                            <br>
+                                                            <input  class=" mb-0" style="color: black;" name="address4" value=<%= address.state%>>
+                                                            <br>
+                                                            <br>
+                                                            <input  class=" mb-0" style="color: black;" name="address5" value=<%= address.Pincode%>>
+                                                            <br>
+                                                            <br>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         
                                         </div>
+                                    
                                     </div>
                                 </div>
-                                <% if(typeof message !=='undefined' ){ %>
-                                    <p style="color: green;">
-                                      <%= message %>
-                                    </p>
-                                    <% } %>
+                                </form>
                             </section>
                         </div>
                     </div>
@@ -629,7 +637,6 @@
                 <script src="/famm/js/plugins/plugins.js"></script>
                 <!-- Active js -->
                 <script src="/famm/js/active.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
 </body>

@@ -464,8 +464,10 @@ const getBlog = async (req, res) => {
 const getProfille = async (req, res) => {
     try {
         const user=req.session.user
+        const address=user.address[0]
+    
         if(user){
-            res.render('profile',{user})
+            res.render('profile',{user,address})
         }
     } catch (error) {
         res.status(404).json({ error: "Can't Load this Page" })
@@ -536,6 +538,55 @@ const RemoveWishList = async (req, res) => {
     }
 }
 
+const GeteditProfile=async(req,res)=>{
+    try {
+        const user=req.session.user
+        const address=user.address[0]
+    
+        if(user){
+            res.render('Edit_profile',{user,address})
+        }
+    } catch (error) {
+        res.status(500).json({error:"can't get edit profile"})
+    }
+}
+
+
+const updateProfile = async (req, res) => {
+    try {
+        const userId = req.session.user._id;
+        const { username, email, address1, address2, address3, address4, address5, mobno } = req.body;
+
+        const user = await collection.findById(userId);
+        console.log("user before update:", user);
+
+        if (user) {
+            user.name = username;
+            user.email = email;
+            user.mobileNO = mobno;
+
+            if (user.address && user.address.length > 0) {
+                user.address[0].House_name = address1;
+                user.address[0].Street_number = address2;
+                user.address[0].city = address3;
+                user.address[0].state = address4;
+                user.address[0].Pincode = address5;
+            }
+
+            await user.save();
+            console.log("updated user:", user);
+
+            req.flash('success', 'Profile updated successfully');
+            res.redirect("/profile");
+        } else {
+            res.status(404).json({ error: "User not found" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Can't update user profile" });
+    }
+};
+
 
 module.exports = {
     loadHome,
@@ -554,7 +605,9 @@ module.exports = {
     getProfille,
     addwishList,
     wishList,
-    RemoveWishList
+    RemoveWishList,
+    GeteditProfile,
+    updateProfile
 
 
 }

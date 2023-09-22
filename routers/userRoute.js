@@ -5,13 +5,13 @@ const path = require("path")
 const session = require("express-session")
 const config = require("../config/config")
 const auth = require('../middleware/userAuth')
-
+const flash = require('express-flash');
 
 
 
 
 user_route.use(express.static('public'))
-
+user_route.use(flash())
 user_route.set('view engine', 'ejs')
 user_route.set('views', './views/users')
 user_route.use(session({
@@ -39,6 +39,8 @@ user_route.get('/profile',auth.userblock, auth.isLogin,userController.getProfill
 user_route.get('/wishlist',auth.userblock, auth.isLogin,userController.addwishList)
 user_route.get('/getwishList',auth.userblock, auth.isLogin,userController.wishList)
 user_route.get('/removewishlistProduct',auth.userblock, auth.isLogin,userController.RemoveWishList)
+user_route.get('/editProfile',auth.userblock, auth.isLogin,userController.GeteditProfile)
+user_route.post('/editProfile',auth.userblock, auth.isLogin,userController.updateProfile)
 
 
 

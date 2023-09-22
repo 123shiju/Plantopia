@@ -62,18 +62,6 @@ const createOrder = async (req, res) => {
         if (!err) {
        return res.json(order)
 
-            // return res.json({
-            //     success: true,
-            //     msg: "order Created",
-            //     order_id: order.id,
-            //     amount: amount,
-            //     key_id: RAZORPAY_ID_KEY,
-            //     contact: "7012995486",
-            //     name: "shiju k",
-            //     email: "shijukk1997@gmail.com"
-            // });
-
-         
 
         } else {
             return res.status(400).json({ success: false, msg: 'Something went wrong' });
@@ -119,8 +107,6 @@ const paymentVerification = async (req, res) => {
 
 
             order_Reciept=req.body.order.receipt
-
-            console.log("reciept is :",order_Reciept)
 
             const orderDetails=await orderCollection.findOne({_id:order_Reciept})
             if(orderDetails){
